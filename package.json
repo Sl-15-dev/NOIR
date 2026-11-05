@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "150 standalone interactive design components, motion experiments, mockups, and templates.",
+  "description": "168 standalone interactive design components, motion experiments, mockups, and templates.",
   "scripts": {
     "dev": "node scripts/serve.mjs",
     "start": "node scripts/serve.mjs",

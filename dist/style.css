@@ -320,3 +320,8 @@ dialog::backdrop { background: #000000aa; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
 }
+
+.detail-source { display: flex; flex-direction: column; gap: 5px; margin-top: 19px; font-size: 11px; line-height: 1.7; }
+.detail-source > span { color: #737373; }
+.detail-source a { color: #d4d4d4; text-decoration: underline; text-underline-offset: 3px; }
+@media (max-width: 600px) { .detail-source { margin-bottom: 19px; } }

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#090909"><meta name="description" content="A minimal library of 150 UI components, animations, layouts, and templates. Browse live previews and copy the code.">
+<meta name="theme-color" content="#090909"><meta name="description" content="A minimal library of 168 UI components, animations, layouts, and templates. Browse live previews and copy the code.">
 <title>NOIR — Component library</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='8' fill='%23090909'/%3E%3Cpath d='M12 28V12l16 16V12' fill='none' stroke='%23fafafa' stroke-width='3'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="./style.css"><script type="module" src="./app.js"></script>
@@ -14,7 +14,7 @@
 <div class="sidebar-scroll">
 <div class="side-label">Library</div>
 <nav class="workspace-nav" aria-label="Library views">
-<button class="side-item active" data-view="all"><span data-icon="grid"></span><span>All components</span><span class="side-count total-count">150</span></button>
+<button class="side-item active" data-view="all"><span data-icon="grid"></span><span>All components</span><span class="side-count total-count">168</span></button>
 <button class="side-item" data-view="new"><span data-icon="spark"></span><span>New additions</span></button>
 <button class="side-item" data-view="saved"><span data-icon="bookmark"></span><span>Saved</span><span class="side-count saved-count">0</span></button>
 </nav>
@@ -32,19 +32,19 @@
 <div class="top-actions"><button class="search-trigger" id="searchTrigger" aria-label="Search components"><span data-icon="search"></span><span>Search...</span><kbd>⌘ K</kbd></button><button class="docs-link" id="docsButton">Documentation</button></div>
 </header>
 <main>
-<section class="hero" aria-labelledby="heroTitle"><h1 id="heroTitle">Component library</h1><p><span class="total-count">150</span> components, animations, and templates. Preview, customize, and copy.</p></section>
+<section class="hero" aria-labelledby="heroTitle"><h1 id="heroTitle">Component library</h1><p><span class="total-count">168</span> components, animations, and templates. Preview, customize, and copy.</p></section>
 <section class="library-section" id="library" aria-labelledby="libraryTitle">
 <div class="section-heading"><h2 id="libraryTitle">All components</h2><span id="sectionEyebrow" hidden>Library</span></div>
-<div class="browse-tabs" role="tablist" aria-label="Browse library"><button class="browse-tab active" data-view="all" role="tab" aria-selected="true">All <span class="total-count">150</span></button><button class="browse-tab" data-view="new" role="tab" aria-selected="false">New <span id="newCount">0</span></button><button class="browse-tab" data-view="saved" role="tab" aria-selected="false">Saved <span class="saved-count">0</span></button><div class="browse-spacer"></div><button class="density-button active" id="gridView" aria-label="Grid view" aria-pressed="true"><span data-icon="grid"></span></button><button class="density-button" id="listView" aria-label="List view" aria-pressed="false"><span data-icon="list"></span></button></div>
+<div class="browse-tabs" role="tablist" aria-label="Browse library"><button class="browse-tab active" data-view="all" role="tab" aria-selected="true">All <span class="total-count">168</span></button><button class="browse-tab" data-view="new" role="tab" aria-selected="false">New <span id="newCount">0</span></button><button class="browse-tab" data-view="saved" role="tab" aria-selected="false">Saved <span class="saved-count">0</span></button><div class="browse-spacer"></div><button class="density-button active" id="gridView" aria-label="Grid view" aria-pressed="true"><span data-icon="grid"></span></button><button class="density-button" id="listView" aria-label="List view" aria-pressed="false"><span data-icon="list"></span></button></div>
 <div class="filter-bar"><label class="filter-search"><span data-icon="search"></span><input id="filterSearch" placeholder="Search components..." aria-label="Search the collection"><button id="clearSearch" hidden aria-label="Clear search">×</button></label><label class="select-wrap"><select id="categoryFilter" aria-label="Filter by category"><option value="all">All categories</option></select></label><label class="select-wrap style-select"><select id="styleFilter" aria-label="Filter by style"><option value="all">All styles</option><option value="animated">Animated</option><option value="interactive">Interactive</option><option value="minimal">Minimal</option><option value="3d">3D</option></select></label><label class="sort-wrap"><span>Sort</span><select id="sortFilter" aria-label="Sort components"><option value="featured">Featured</option><option value="az">Name A–Z</option><option value="newest">Newest</option></select></label></div>
-<div class="results-line"><span id="resultCount" aria-live="polite">150 components</span><button id="resetFilters" hidden>Clear filters ×</button></div>
+<div class="results-line"><span id="resultCount" aria-live="polite">168 components</span><button id="resetFilters" hidden>Clear filters ×</button></div>
 <div id="collectionsPanel" class="collections-panel" hidden></div>
 <div id="componentGrid" class="component-grid"></div>
 <div id="emptyState" class="empty-state" hidden><span data-icon="search"></span><h3 id="emptyTitle">No components found</h3><p id="emptyDescription">Try another search or category.</p><button class="button-primary" id="emptyReset">Reset filters</button></div>
 <button class="load-more" id="loadMore" hidden>Load more <span id="loadRemaining"></span></button>
 <div class="library-end" id="libraryEnd">HTML, CSS, and JavaScript. No dependencies.</div>
 </section>
-<footer class="site-footer"><span>NOIR</span><span>150 components</span><button id="footerDocs">Documentation</button></footer>
+<footer class="site-footer"><span>NOIR</span><span><span class="total-count">168</span> components</span><button id="footerDocs">Documentation</button></footer>
 </main>
 </div>
 <dialog id="componentDialog" class="component-dialog" aria-labelledby="detailTitle">
@@ -53,7 +53,7 @@
 <div class="detail-tabs"><button class="active" data-detail-tab="preview">Preview</button><button data-detail-tab="code">Code</button><div class="browse-spacer"></div><button class="icon-button" id="replayDemo" aria-label="Replay animation"><span data-icon="replay"></span></button></div>
 <div class="playground-layout"><div class="preview-pane" id="previewPane"><div class="preview-viewport" id="previewViewport"></div><div class="preview-bottom"><div class="device-buttons"><button class="active" id="desktopPreview" aria-label="Desktop preview"><span data-icon="monitor"></span></button><button id="mobilePreview" aria-label="Mobile preview"><span data-icon="phone"></span></button></div><span id="viewportLabel">Responsive canvas</span><button id="pauseDemo"><span data-icon="pause"></span><span>Pause animations</span></button></div></div>
 <div class="code-pane" id="codePane" hidden><div class="code-toolbar"><div class="code-languages"><button class="active" data-code="html">HTML</button><button data-code="css">CSS</button><button data-code="js">JavaScript</button><button data-code="full">Full example</button></div><button id="copyCode"><span data-icon="copy"></span> Copy</button></div><pre><code id="codeContent"></code></pre></div>
-<aside class="customize-pane"><h3>Options</h3><label class="control-label" for="speedControl">Animation speed <span id="speedValue">1×</span></label><input type="range" id="speedControl" min="0.25" max="2" step="0.25" value="1"><div class="range-labels"><span>0.25×</span><span>2×</span></div><div class="control-label">Canvas</div><div class="canvas-options"><button data-canvas="#0a0a0a" class="selected">Dark</button><button data-canvas="#f5f5f5">Light</button><button data-canvas="grid">Grid</button></div><div class="detail-tags" id="detailTags"></div><p class="export-note">Standalone HTML, CSS, and JavaScript.</p><button class="button-primary download-button" id="downloadDemo">Download <span data-icon="download"></span></button></aside></div>
+<aside class="customize-pane"><h3>Options</h3><label class="control-label" for="speedControl">Animation speed <span id="speedValue">1×</span></label><input type="range" id="speedControl" min="0.25" max="2" step="0.25" value="1"><div class="range-labels"><span>0.25×</span><span>2×</span></div><div class="control-label">Canvas</div><div class="canvas-options"><button data-canvas="#0a0a0a" class="selected">Dark</button><button data-canvas="#f5f5f5">Light</button><button data-canvas="grid">Grid</button></div><div class="detail-tags" id="detailTags"></div><div class="detail-source" id="detailSource" hidden></div><p class="export-note">Standalone HTML, CSS, and JavaScript.</p><button class="button-primary download-button" id="downloadDemo">Download <span data-icon="download"></span></button></aside></div>
 <div class="detail-footer"><span>No dependencies</span><button id="nextComponent">Next component <span data-icon="arrow-right"></span></button></div>
 </dialog>
 <dialog id="searchDialog" class="search-dialog" aria-label="Search components"><div class="command-input"><span data-icon="search"></span><input id="commandSearch" placeholder="Search components..." aria-label="Search all components"><button id="closeSearch">esc</button></div><div class="command-label" id="commandLabel">Components</div><div id="commandResults" class="command-results"></div><div class="command-footer"><span>↑ ↓ Navigate</span><span>↵ Open</span><span>esc Close</span></div></dialog>

@@ -1,6 +1,6 @@
 # NOIR
 
-A minimal black, white, and gray UI library with 150 distinct live components across 12 categories. Built with browser-native HTML, CSS and JavaScript, without a framework or build step.
+A minimal black, white, and gray UI library with 168 distinct live components across 15 categories. Built with browser-native HTML, CSS and JavaScript, without a framework or build step.
 
 ## Run locally
 
@@ -14,7 +14,7 @@ Open http://localhost:3000. Node.js 20 or later is required; no dependency insta
 
 ## Explore
 
-- Browse 12 categories, search names and descriptions, filter styles, or open curated collections.
+- Browse 15 categories, search names and descriptions, filter styles, or open curated collections.
 - Bookmark components. Bookmarks are stored in localStorage in the current browser.
 - Open any component for an interactive playground, mobile canvas and CSS/Web Animation speed controls.
 - Copy HTML, CSS, JavaScript, or a full standalone example. Download any component as a standalone HTML file.
@@ -24,11 +24,11 @@ Open http://localhost:3000. Node.js 20 or later is required; no dependency insta
 
 `dist/index.html`, `dist/style.css`, and `dist/app.js` define the library. The catalog modules export standalone component objects containing markup, styles, and scripts. Iframe isolation prevents component styles from affecting the library.
 
-The main site hosts 150 examples. Full-page template content, product metrics, people, and testimonials inside previews are illustrative. Components have no external dependencies. The library uses system fonts.
+The main site hosts 168 examples. Full-page template content, product metrics, people, and testimonials inside previews are illustrative. Components have no external dependencies. The library uses system fonts.
 
 ## Design
 
-The library and all 150 demos use a neutral grayscale palette, system typography, thin borders, and restrained controls. Previous colored accent preferences are cleared automatically. Demo source colors are grayscale, so copied code and downloads match their previews.
+The library and all 168 demos use a neutral grayscale palette, system typography, thin borders, and restrained controls. Previous colored accent preferences are cleared automatically. Demo source colors are grayscale, so copied code and downloads match their previews.
 
 ## Interaction details
 
@@ -37,3 +37,9 @@ Motion speed and pause apply to CSS and Web Animations. Timer-driven JavaScript 
 ## Hosting
 
 The Sites deployment serves the `dist` directory using `.openai/hosting.json`. No credentials are included in source.
+
+## Reference studies
+
+The latest 18 components add six discovery patterns, six interactive SVG objects, and six playable diagrams. They are original NOIR implementations inspired by the user-provided references. Source links appear in their detail panels and full HTML exports. See [SOURCES.md](SOURCES.md) for provenance and implementation boundaries.
+
+Find them under **Discovery patterns**, **Interactive figures**, and **Playable diagrams**, or open the **From your references** collection. Search also matches Designeer, Colorfigures, or Tinycharts.
