@@ -49,22 +49,16 @@ test('category and year filters combine, empty state resets, and story navigatio
   await expect(page.locator('[data-badge-year="2026"]')).toHaveAttribute('aria-pressed','false');
 });
 
-test('zoom controls, wheel, keyboard and dragging change the board without opening a story',async({page})=>{
+test('the board stays fixed while wheel, keyboard and empty-cork dragging preserve badge inspection',async({page})=>{
   await page.setViewportSize({width:1440,height:1100});await page.goto('/');
+  await expect(page.locator('.badge-zoom-tools,[data-zoom],#badgeTouchMode')).toHaveCount(0);
   const stage=page.locator('.badge-stage'),world=page.locator('.badge-world');
-  await page.locator('[data-zoom="in"]').click();await expect(page.locator('#badgeZoom')).toHaveText('120%');
+  await expect(world).toHaveAttribute('style',/scale\(/);const before=await world.getAttribute('style');
   const r=await stage.boundingBox();await page.mouse.move(r.x+r.width*.7,r.y+80);await page.mouse.wheel(0,-100);
-  await expect.poll(async()=>Number((await page.locator('#badgeZoom').textContent()).replace('%',''))).toBeGreaterThan(120);
-  const before=await world.getAttribute('style');
-  await page.mouse.move(r.x+r.width*.7,r.y+75);await page.mouse.down();await page.mouse.move(r.x+r.width*.7-110,r.y+110,{steps:12});await page.mouse.up();
-  await expect(world).not.toHaveAttribute('style',before);await expect(page.locator('.badge-story')).toBeHidden();
-  // Dragging from a card must also suppress its synthetic click.
-  const card=await face(page,'google-io').boundingBox();
-  await page.mouse.move(card.x+15,card.y+20);await page.mouse.down();await page.mouse.move(card.x-65,card.y+20,{steps:10});await page.mouse.up();
-  await expect(page.locator('.badge-story')).toBeHidden();
-  await stage.focus();await page.keyboard.press('0');await expect(page.locator('#badgeZoom')).toHaveText('100%');
-  await page.keyboard.press('+');await expect(page.locator('#badgeZoom')).toHaveText('120%');
-  await page.keyboard.press('-');await expect(page.locator('#badgeZoom')).toHaveText('100%');
+  await page.mouse.down();await page.mouse.move(r.x+r.width*.7-100,r.y+100,{steps:10});await page.mouse.up();
+  await stage.focus();await page.keyboard.press('+');await page.keyboard.press('ArrowLeft');
+  await expect(world).toHaveAttribute('style',before);
+  await face(page,'react').click();await expect(page.locator('#badgeStoryTitle')).toHaveText('React Advanced');
 });
 
 for(const width of [320,768])test(`responsive board, filters and library navigation work at ${width}px`,async({page})=>{
@@ -75,7 +69,7 @@ for(const width of [320,768])test(`responsive board, filters and library navigat
   await page.locator('[data-badge-year="2025"]').click();
   await expect(shown(page)).toHaveCount(2);
   if(width<600)await page.locator('.badge-filters summary').click();
-  // Keyboard focus pans offscreen cards into view and Enter opens the same details.
+  // Keyboard focus and Enter open badge details without moving the board.
   await page.locator('[data-badge="openai"]').focus();await page.keyboard.press('Enter');
   await expect(page.locator('#badgeStoryTitle')).toHaveText('OpenAI DevDay');
   expect(await page.locator('.badge-story').evaluate(el=>el.scrollWidth<=el.clientWidth+1)).toBeTruthy();
@@ -83,29 +77,6 @@ for(const width of [320,768])test(`responsive board, filters and library navigat
   await page.locator('#navLibrary').click();await expect(page.locator('#library')).toBeVisible();
   await page.locator('#navBadges').click();await expect(page.locator('#badgeCollection')).toBeVisible();
   expect(await page.evaluate(()=>document.documentElement.scrollWidth)).toBe(width);
-});
-
-test('touch drag and two-finger pinch work without opening an accidental story',async({browser})=>{
-  const context=await browser.newContext({viewport:{width:390,height:844},hasTouch:true,isMobile:true});
-  const page=await context.newPage();await page.goto('/');
-  await page.locator('#badgeTouchMode').tap();
-  const stage=page.locator('.badge-stage');await stage.scrollIntoViewIfNeeded();const r=await stage.boundingBox();
-  const cdp=await context.newCDPSession(page);
-  const send=(type,points)=>cdp.send('Input.dispatchTouchEvent',{type,touchPoints:points.map(([x,y,id])=>({x,y,id}))});
-  const x=r.x+r.width*.7,y=r.y+r.height*.45;
-  await send('touchStart',[[x,y,1]]);await send('touchMove',[[x-80,y+20,1]]);await send('touchEnd',[]);
-  await expect(page.locator('.badge-story')).toBeHidden();
-  const zoom=await page.locator('#badgeZoom').textContent();
-  await send('touchStart',[[x-30,y,1],[x+30,y,2]]);
-  await send('touchMove',[[x-65,y,1],[x+65,y,2]]);await send('touchEnd',[]);
-  await expect(page.locator('#badgeZoom')).not.toHaveText(zoom);
-  await expect(page.locator('.badge-story')).toBeHidden();
-  await page.waitForTimeout(450);await page.locator('.badge-filters summary').tap();
-  await page.locator('[data-badge-category="Workshops"]').tap();await expect(shown(page)).toHaveCount(3);
-  await page.locator('[data-badge-year="2024"]').tap();
-  await page.locator('.badge-filters summary').tap();
-  await face(page,'react').tap();await expect(page.locator('#badgeStoryTitle')).toHaveText('React Advanced');
-  await context.close();
 });
 
 test('warm collection survives theme changes and respects reduced motion',async({page})=>{

@@ -59,7 +59,7 @@ export function initBadgeCollection() {
     </header>
     <div class="badge-board-heading"><div><span class="badge-live-dot"></span> THE MEMORY BOARD <span class="badge-board-divider">/</span> <span id="badgeCount" role="status">${badges.length} stories & counting</span></div><button class="badge-discover" id="badgeDiscover">${icon('spark')} Discover a Memory ${icon('arrow')}</button></div>
     <div class="badge-frame"><div class="badge-wood-sign" aria-hidden="true"><span>Badges</span><em>Every badge tells a story.</em><i></i><b></b></div>
-      <div class="badge-stage" tabindex="0" role="region" aria-label="Interactive badge corkboard. Use arrow keys to pan, plus and minus to zoom, and 0 to fit the board." aria-describedby="badgeInstructions">
+      <div class="badge-stage" tabindex="0" role="region" aria-label="Badge collection. Drag a badge or its lanyard; press Enter on a badge to read its story." aria-describedby="badgeInstructions">
         <div class="badge-world" style="width:${boardSize.width}px;height:${boardSize.height}px">
           <div class="badge-travel-doodle" aria-hidden="true"><svg viewBox="0 0 230 90"><path class="badge-flight-path" d="M8 58C50 4 109 100 157 51S132 5 147 40 198 58 210 21"/><path d="m197 13 12 6 12-5 4 4-10 8 3 13-4 3-7-11-11 2-2-3 10-6-9-8z"/></svg></div>
           <div class="badge-postcard" aria-hidden="true"><span class="badge-tape"></span><img src="./badges/lisbon.svg" alt=""><span>Lisbon, you were lovely. ♡</span><small>NOVEMBER ’23</small></div>
@@ -72,47 +72,27 @@ export function initBadgeCollection() {
         </div>
         <details class="badge-filters" open><summary>${icon('filter')} <span>The collection</span><span class="badge-filter-chevron">⌄</span></summary><div class="badge-filter-content"><span class="badge-filter-label">A LITTLE BIT OF EVERYTHING</span><div class="badge-category-filters" role="group" aria-label="Filter badges by category">${categories.map((c,i)=>`<button data-badge-category="${c}" aria-pressed="${i===0}" class="${i===0?'is-active':''}"><span>${c==='All'?'◈':c==='Technology'?'⌘':c==='Conferences'?'▤':c==='Hackathons'?'↯':c==='Workshops'?'∗':'♡'}</span>${c}<small>${c==='All'?badges.length:badges.filter(b=>b.category===c).length}</small></button>`).join('')}</div><div class="badge-year-heading"><span>BY YEAR</span><button id="badgeYearReset" hidden>Clear</button></div><div class="badge-year-filters" role="group" aria-label="Filter badges by year">${years.map(y=>`<button data-badge-year="${y}" aria-pressed="false">${y}</button>`).join('')}</div></div></details>
         <div class="badge-empty" hidden><span>Nothing pinned here. Yet.</span><p>Try a different year or category.</p><button>Show every memory ${icon('arrow')}</button></div>
-        <div class="badge-board-tools"><span class="badge-board-tooltip">MAKE YOURSELF AT HOME</span><div class="badge-zoom-tools" role="group" aria-label="Board zoom"><button data-zoom="out" aria-label="Zoom out">−</button><output id="badgeZoom" aria-live="polite">100%</output><button data-zoom="in" aria-label="Zoom in">+</button><span></span><button data-zoom="reset" aria-label="Fit board">${icon('expand')}</button></div></div>
       </div>
     </div>
-    <div class="badge-board-footer"><p id="badgeInstructions"><span class="badge-mouse-icon" aria-hidden="true"></span> Scroll to zoom or drag to explore the board.<span class="badge-touch-instruction"> Drag a badge to feel its weight. Enable Explore board to pan and pinch.</span></p><button class="badge-touch-mode" id="badgeTouchMode" aria-pressed="false">Explore board</button><span class="badge-desktop-instruction">Drag a badge. Feel the memory. ${icon('arrow')}</span></div>
+    <div class="badge-board-footer"><p id="badgeInstructions"><span class="badge-mouse-icon" aria-hidden="true"></span> Grab a badge or lanyard. Release to let it settle.<span class="badge-touch-instruction"> Tap a badge to read its story.</span></p><span class="badge-desktop-instruction">Drag a badge. Feel the memory. ${icon('arrow')}</span></div>
     <details class="badge-timeline"><summary><span>THE JOURNEY SO FAR</span><span>${Math.min(...years)} — ${Math.max(...years)} ${icon('arrow')}</span></summary><div class="badge-timeline-content"><p>Different places. A little more perspective, every year.</p><ol>${[...years].sort().map(year=>`<li><button data-timeline-year="${year}" aria-pressed="false"><span>${year}</span><small>${badges.filter(b=>b.year===year).length} memories</small></button></li>`).join('')}</ol><button id="badgeJourneyStart">Start with the first hello ${icon('arrow')}</button></div></details>
     <div class="badge-afterword"><span>More than a name tag.</span><p>Every event leaves a memory.<br>This is my journey, one badge at a time.</p><span class="badge-sample-note">An illustrative collection.<br>Real stories coming soon.</span></div>
     <dialog class="badge-story" aria-labelledby="badgeStoryTitle"><div class="badge-story-color"><span class="badge-story-number"></span><div class="badge-story-preview"></div><span class="badge-story-keepsake">A LITTLE KEEPSAKE.<br>A LASTING MEMORY.</span></div><div class="badge-story-content"><button class="badge-story-close" aria-label="Close badge story">${icon('close')}</button><span class="badge-story-eyebrow">FROM THE MEMORY BOARD</span><h2 id="badgeStoryTitle"></h2><div class="badge-story-organization"></div><div class="badge-story-location"></div><div class="badge-story-meta"></div><p class="badge-story-short"></p><button class="badge-read-more" aria-expanded="false" aria-controls="badgeFullStory">Read more about this story ${icon('arrow')}</button><div id="badgeFullStory" hidden><p></p><blockquote></blockquote></div><div class="badge-story-photos"></div><div class="badge-story-bottom"><span></span><div><button data-story-nav="prev" aria-label="Previous badge story">←</button><button data-story-nav="next" aria-label="Next badge story">→</button></div></div></div></dialog>`;
 
   const $=s=>root.querySelector(s), $$=s=>[...root.querySelectorAll(s)];
   const stage=$('.badge-stage'), world=$('.badge-world'), story=$('.badge-story');
-  const state={category:'All',year:null,selected:null,zoom:1,fit:1,x:0,y:0,touchExplore:false};
-  const physics=createBadgePhysics({root,stage,world,badges,getScale:()=>state.fit*state.zoom,isAvailable:()=>!root.hidden&&!story.open});
+  const state={category:'All',year:null,selected:null,fit:1,x:0,y:0};
+  const physics=createBadgePhysics({root,stage,world,badges,getScale:()=>state.fit,isAvailable:()=>!root.hidden&&!story.open});
   let initialized=false, lastOpener=null, blockClickUntil=0;
   const chronological=items=>[...items].sort((a,b)=>a.dateISO.localeCompare(b.dateISO)||a.eventName.localeCompare(b.eventName));
   const visibleBadges=()=>chronological(badges.filter(b=>(state.category==='All'||b.category===state.category)&&(!state.year||b.year===state.year)));
-  const badgeCenter=b=>({x:b.position.x+80,y:b.position.y+(b.position.strap+b.dimensions.height/2)*.68});
   const clamp=(n,min,max)=>Math.min(max,Math.max(min,n));
-  function transform() {
-    const scale=state.fit*state.zoom;
-    const margin=40;
-    state.x=clamp(state.x,Math.min(margin,stage.clientWidth-boardSize.width*scale-margin),Math.max(stage.clientWidth-boardSize.width*scale-margin,margin));
-    state.y=clamp(state.y,Math.min(margin,stage.clientHeight-boardSize.height*scale-margin),Math.max(stage.clientHeight-boardSize.height*scale-margin,margin));
-    world.style.transform=`translate(${state.x}px,${state.y}px) scale(${scale})`;
-    $('#badgeZoom').value=`${Math.round(state.zoom*100)}%`;
-    $('[data-zoom="out"]').disabled=state.zoom<=.75;
-    $('[data-zoom="in"]').disabled=state.zoom>=Math.max(2.75,1/state.fit);
-  }
   function fitBoard() {
     if(!stage.clientWidth)return;
     state.fit=Math.min(stage.clientWidth/boardSize.width,stage.clientHeight/boardSize.height);
-    state.zoom=window.innerWidth<600?Math.max(1.65,.45/state.fit):1;
-    state.x=(stage.clientWidth-boardSize.width*state.fit*state.zoom)/2;
-    state.y=(stage.clientHeight-boardSize.height*state.fit*state.zoom)/2;
-    transform();
-  }
-  function zoomAt(next,px=stage.clientWidth/2,py=stage.clientHeight/2) {
-    const old=state.fit*state.zoom;
-    state.zoom=clamp(next,.75,Math.max(2.75,1/state.fit));
-    const scale=state.fit*state.zoom;
-    state.x=px-(px-state.x)*scale/old; state.y=py-(py-state.y)*scale/old;
-    transform();
+    state.x=(stage.clientWidth-boardSize.width*state.fit)/2;
+    state.y=(stage.clientHeight-boardSize.height*state.fit)/2;
+    world.style.transform=`translate(${state.x}px,${state.y}px) scale(${state.fit})`;
   }
   function applyFilters() {
     physics.reset();
@@ -125,13 +105,7 @@ export function initBadgeCollection() {
     $('#badgeYearReset').hidden=!state.year;
     $('#badgeCount').textContent=state.category==='All'&&!state.year?`${items.length} stories & counting`:`${items.length} of ${badges.length} stories`;
     $('.badge-empty').hidden=items.length!==0;
-    // Bring matching memories into view even when the visitor has panned away.
-    if(items.length && (state.category!=='All'||state.year)) {
-      const scale=state.fit*state.zoom;
-      const x=items.reduce((sum,b)=>sum+badgeCenter(b).x,0)/items.length;
-      const y=items.reduce((sum,b)=>sum+badgeCenter(b).y,0)/items.length;
-      state.x=stage.clientWidth/2-x*scale; state.y=stage.clientHeight/2-y*scale;transform();
-    } else fitBoard();
+
   }
   function closeStory() {story.close();}
   function openStory(id,opener) {
@@ -139,10 +113,6 @@ export function initBadgeCollection() {
     physics.reset();
     if(!story.open)lastOpener=opener||root.querySelector(`[data-badge="${CSS.escape(id)}"]`);
     root.classList.add('has-badge-spotlight');
-    const center=badgeCenter(b),scale=state.fit*state.zoom;
-    const face=root.querySelector(`[data-badge="${CSS.escape(id)}"] .badge-face`);
-    const rect=face.getBoundingClientRect(),board=stage.getBoundingClientRect();
-    if(rect.left<board.left+15||rect.right>board.right-15||rect.top<board.top+15||rect.bottom>board.bottom-15){state.x=stage.clientWidth/2-center.x*scale;state.y=stage.clientHeight/2-center.y*scale;transform();}
     state.selected=id;
     $$('[data-badge]').forEach(el=>{el.classList.toggle('is-selected',el.dataset.badge===id);el.setAttribute('aria-pressed',String(el.dataset.badge===id));});
     $('.badge-story-color').style.background=b.lanyardColor;
@@ -171,12 +141,11 @@ export function initBadgeCollection() {
     story.scrollTop=0;
   }
   root.addEventListener('click',e=>{
-    const category=e.target.closest('[data-badge-category]'),year=e.target.closest('[data-badge-year]'),badge=e.target.closest('[data-badge]'),zoom=e.target.closest('[data-zoom]'),nav=e.target.closest('[data-story-nav]'),timeline=e.target.closest('[data-timeline-year]');
+    const category=e.target.closest('[data-badge-category]'),year=e.target.closest('[data-badge-year]'),badge=e.target.closest('[data-badge]'),nav=e.target.closest('[data-story-nav]'),timeline=e.target.closest('[data-timeline-year]');
     if(timeline){state.category='All';state.year=Number(timeline.dataset.timelineYear);applyFilters();}
     if(category){state.category=category.dataset.badgeCategory;applyFilters();}
     if(year){const value=Number(year.dataset.badgeYear);state.year=state.year===value?null:value;applyFilters();}
     if(badge)openStory(badge.dataset.badge,badge);
-    if(zoom){if(zoom.dataset.zoom==='reset')fitBoard();else zoomAt(state.zoom*(zoom.dataset.zoom==='in'?1.2:1/1.2));}
     if(nav){const items=visibleBadges(),i=items.findIndex(b=>b.id===state.selected);openStory(items[(i+(nav.dataset.storyNav==='next'?1:-1)+items.length)%items.length]?.id);}
   });
   $('#badgeYearReset').onclick=()=>{state.year=null;applyFilters();};
@@ -186,77 +155,39 @@ export function initBadgeCollection() {
   story.addEventListener('click',e=>{if(e.target===story){const r=story.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)closeStory();}});
   $('.badge-read-more').onclick=()=>{const expanded=$('.badge-read-more').getAttribute('aria-expanded')!=='true';$('.badge-read-more').setAttribute('aria-expanded',String(expanded));$('#badgeFullStory').hidden=!expanded;$('.badge-read-more').innerHTML=`${expanded?'A little less':'Read more about this story'} ${icon('arrow')}`;if(innerWidth>600)story.style.top=`${Math.max(78,Math.min(parseFloat(story.style.top)||78,innerHeight-story.offsetHeight-20))}px`;};
 
-  const pointers=new Map();let gesture=null;
-  const controls='.badge-filters,.badge-board-tools,.badge-empty';
-  function point(e){const r=stage.getBoundingClientRect();return {x:e.clientX-r.left,y:e.clientY-r.top};}
+  const pointers=new Set();let gesture=null;
   function releaseBadge(cancelled=false){gesture?.drag?.release(cancelled);}
-  function startPinch(){
-    releaseBadge(true);
-    const [a,b]=[...pointers.values()],mid={x:(a.x+b.x)/2,y:(a.y+b.y)/2};
-    const scale=state.fit*state.zoom;
-    gesture={kind:'pinch',distance:Math.hypot(b.x-a.x,b.y-a.y),zoom:state.zoom,anchor:{x:(mid.x-state.x)/scale,y:(mid.y-state.y)/scale}};
-    pointers.forEach((_,id)=>stage.setPointerCapture(id));
-    blockClickUntil=performance.now()+400;
-  }
   stage.addEventListener('pointerdown',e=>{
-    if(e.target.closest(controls)||e.button>0)return;
+    if(e.button>0)return;
     const badge=e.target.closest('[data-badge]');
-    // A one-finger swipe on empty cork scrolls the page unless exploration is enabled.
-    if(e.pointerType==='touch'&&!state.touchExplore&&!badge&&pointers.size===0)return;
-    if(pointers.size===0)blockClickUntil=0;
-    pointers.set(e.pointerId,point(e));
-    if(pointers.size===2)startPinch();
-    else if(pointers.size===1)gesture={kind:badge?'badge':'pan',id:badge?.dataset.badge,start:point(e),x:state.x,y:state.y,moved:false};
+    if(!badge&&!pointers.size)return;
+    if(!pointers.size)blockClickUntil=0;
+    pointers.add(e.pointerId);
+    if(pointers.size>1){
+      releaseBadge(true);gesture={blocked:true};blockClickUntil=performance.now()+400;
+    }else gesture={id:badge.dataset.badge,start:{x:e.clientX,y:e.clientY},moved:false};
   });
   stage.addEventListener('pointermove',e=>{
     if(!pointers.has(e.pointerId)){if(!pointers.size)physics.proximity(e);return;}
-    pointers.set(e.pointerId,point(e));
-    if(gesture?.kind==='pinch'&&pointers.size===2){
-      e.preventDefault();const [a,b]=[...pointers.values()];
-      const distance=Math.hypot(b.x-a.x,b.y-a.y);
-      state.zoom=clamp(gesture.zoom*distance/Math.max(1,gesture.distance),.75,Math.max(2.75,1/state.fit));
-      const scale=state.fit*state.zoom;
-      state.x=(a.x+b.x)/2-gesture.anchor.x*scale;state.y=(a.y+b.y)/2-gesture.anchor.y*scale;
-      transform();blockClickUntil=performance.now()+400;
-    }else if(gesture?.kind==='badge'||gesture?.kind==='pan'){
-      const p=point(e),dx=p.x-gesture.start.x,dy=p.y-gesture.start.y;
-      if(Math.hypot(dx,dy)>7||gesture.moved){
-        e.preventDefault();
-        if(!gesture.moved){
-          gesture.moved=true;stage.setPointerCapture(e.pointerId);
-          if(gesture.kind==='badge')gesture.drag=physics.dragStart(gesture.id);
-          else stage.classList.add('is-dragging');
-        }
-        if(gesture.kind==='badge')gesture.drag?.move(dx,dy);
-        else{state.x=gesture.x+dx;state.y=gesture.y+dy;transform();}
-        blockClickUntil=performance.now()+400;
-      }
+    if(!gesture||gesture.blocked)return;
+    const dx=e.clientX-gesture.start.x,dy=e.clientY-gesture.start.y;
+    if(Math.hypot(dx,dy)>7||gesture.moved){
+      e.preventDefault();
+      if(!gesture.moved){gesture.moved=true;stage.setPointerCapture(e.pointerId);gesture.drag=physics.dragStart(gesture.id);}
+      gesture.drag?.move(dx,dy);blockClickUntil=performance.now()+400;
     }
   });
   function endPointer(e){
     if(!pointers.has(e.pointerId))return;
-    const pinching=gesture?.kind==='pinch';
-    if(gesture?.moved||pinching)blockClickUntil=performance.now()+400;
-    if(!pinching)releaseBadge(e.type==='pointercancel'||e.type==='lostpointercapture');
-    pointers.delete(e.pointerId);
+    if(gesture?.moved||gesture?.blocked)blockClickUntil=performance.now()+400;
+    releaseBadge(e.type!=='pointerup');pointers.delete(e.pointerId);
     if(stage.hasPointerCapture(e.pointerId))stage.releasePointerCapture(e.pointerId);
-    if(pointers.size===0){gesture=null;stage.classList.remove('is-dragging');}
-    else if(pinching){
-      // The remaining finger belongs to the pinch, never a fresh badge drag or tap.
-      gesture={kind:'pinch-ended',start:[...pointers.values()][0],moved:true};
-    }
+    gesture=pointers.size?{blocked:true}:null;
   }
   stage.addEventListener('pointerup',endPointer);stage.addEventListener('pointercancel',endPointer);
   stage.addEventListener('lostpointercapture',endPointer);
   stage.addEventListener('pointerleave',()=>physics.clearProximity());
-  stage.addEventListener('click',e=>{if(e.detail!==0&&performance.now()<blockClickUntil&&!e.target.closest(controls)){e.preventDefault();e.stopPropagation();}},true);
-  stage.addEventListener('wheel',e=>{if(e.target.closest('.badge-filters')||e.pointerType==='touch')return;e.preventDefault();const p=point(e);zoomAt(state.zoom*Math.exp(-e.deltaY*.0015),p.x,p.y);},{passive:false});
-  $('#badgeTouchMode').onclick=()=>{
-    state.touchExplore=!state.touchExplore;
-    stage.classList.toggle('is-touch-exploring',state.touchExplore);
-    $('#badgeTouchMode').setAttribute('aria-pressed',String(state.touchExplore));
-    $('#badgeTouchMode').textContent=state.touchExplore?'Done exploring':'Explore board';
-  };
+  stage.addEventListener('click',e=>{if(e.detail!==0&&performance.now()<blockClickUntil&&e.target.closest('[data-badge]')){e.preventDefault();e.stopPropagation();}},true);
   $('#badgeDiscover').onclick=()=>{
     const choices=visibleBadges().filter(b=>b.id!==state.selected),items=choices.length?choices:visibleBadges();
     if(items.length)openStory(items[Math.floor(Math.random()*items.length)].id,$('#badgeDiscover'));
@@ -276,22 +207,6 @@ export function initBadgeCollection() {
   window.addEventListener('blur',cancelGesture);
   document.addEventListener('visibilitychange',()=>{if(document.hidden)cancelGesture();});
   new IntersectionObserver(entries=>{if(!entries[0].isIntersecting)cancelGesture();}).observe(stage);
-  stage.addEventListener('keydown',e=>{
-    if(e.target!==stage)return;
-    if(['+','=','-','0','ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(e.key))e.preventDefault();
-    if(e.key==='+'||e.key==='=')zoomAt(state.zoom*1.2);
-    if(e.key==='-')zoomAt(state.zoom/1.2);
-    if(e.key==='0')fitBoard();
-    if(e.key==='ArrowLeft')state.x+=50;if(e.key==='ArrowRight')state.x-=50;
-    if(e.key==='ArrowUp')state.y+=50;if(e.key==='ArrowDown')state.y-=50;
-    transform();
-  });
-  stage.addEventListener('focusin',e=>{
-    const b=e.target.closest('[data-badge]');if(!b||!b.matches(':focus-visible'))return;
-    const item=badges.find(item=>item.id===b.dataset.badge),scale=state.fit*state.zoom;
-    const r=b.querySelector(".badge-face").getBoundingClientRect(),s=stage.getBoundingClientRect();
-    if(r.left<s.left+12||r.right>s.right-12||r.top<s.top||r.bottom>s.bottom-55){state.x=stage.clientWidth/2-badgeCenter(item).x*scale;state.y=stage.clientHeight/2-badgeCenter(item).y*scale;transform();}
-  });
   new ResizeObserver(()=>{if(!root.hidden){cancelGesture();fitBoard();}}).observe(stage);
   if(innerWidth<600)$('.badge-filters').open=false;
 

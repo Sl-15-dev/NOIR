@@ -89,41 +89,29 @@ test('a finger drags just the badge; cancellation springs it back and a fresh ta
   }finally{await context.close();}
 });
 
-test('empty-cork swipes scroll the page by default, while Explore board enables panning and pinch',async({browser})=>{
+test('empty-cork swipes scroll the page and never move the fixed board',async({browser})=>{
   const {context,page,send}=await touchPage(browser);
   try{
     const stage=page.locator('.badge-stage');await stage.scrollIntoViewIfNeeded();
-    await expect(page.locator('#badgeTouchMode')).toHaveAttribute('aria-pressed','false');
-    expect(await stage.evaluate(el=>getComputedStyle(el).touchAction)).toBe('pan-y');
-    let r=await stage.boundingBox();const before=await page.evaluate(()=>scrollY),world=await page.locator('.badge-world').getAttribute('style');
+    const r=await stage.boundingBox(),before=await page.evaluate(()=>scrollY),world=await page.locator('.badge-world').getAttribute('style');
     const x=r.x+r.width*.87,y=r.y+113;
     await send('touchStart',[[x,y]]);for(let n=1;n<=8;n++)await send('touchMove',[[x,y-n*10]]);await send('touchEnd',[]);
     await expect.poll(()=>page.evaluate(()=>scrollY)).toBeGreaterThan(before);
     await expect(page.locator('.badge-world')).toHaveAttribute('style',world);
-    await page.locator('#badgeTouchMode').tap();await stage.scrollIntoViewIfNeeded();
-    expect(await stage.evaluate(el=>getComputedStyle(el).touchAction)).toBe('none');
-    r=await stage.boundingBox();const px=r.x+r.width*.7,py=r.y+115;
-    const initial=await page.locator('.badge-world').getAttribute('style');
-    await send('touchStart',[[px,py]]);await send('touchMove',[[px-55,py+20]]);await send('touchEnd',[]);
-    await expect(page.locator('.badge-world')).not.toHaveAttribute('style',initial);
-    const zoom=await page.locator('#badgeZoom').textContent();
-    await send('touchStart',[[px-30,py,1],[px+30,py,2]]);await send('touchMove',[[px-65,py,1],[px+65,py,2]]);await send('touchEnd',[]);
-    await expect(page.locator('#badgeZoom')).not.toHaveText(zoom);await expect(page.locator('.badge-story')).toBeHidden();
-    await page.locator('#badgeTouchMode').tap();await expect(page.locator('#badgeTouchMode')).toHaveAttribute('aria-pressed','false');
   }finally{await context.close();}
 });
 
-test('a second touch switches a badge drag to pinch without leaving it stuck or opening a story',async({browser})=>{
+test('a second touch cancels a badge drag without zooming, leaving it stuck, or opening a story',async({browser})=>{
   const {context,page,send}=await touchPage(browser);
   try{
-    await page.locator('#badgeTouchMode').tap();await face(page,'react').scrollIntoViewIfNeeded();
+    await face(page,'react').scrollIntoViewIfNeeded();
     const r=await face(page,'react').boundingBox(),x=r.x+r.width/2,y=r.y+r.height/2;
     await send('touchStart',[[x,y,1]]);await send('touchMove',[[x+20,y-25,1]]);
     await expect(page.locator('[data-badge="react"]')).toHaveClass(/is-grabbed/);
     await send('touchStart',[[x+20,y-25,1],[x+70,y-25,2]]);
-    const zoom=await page.locator('#badgeZoom').textContent();
+    const fixed=await page.locator('.badge-world').getAttribute('style');
     await send('touchMove',[[x-10,y-25,1],[x+105,y-25,2]]);
-    await expect(page.locator('#badgeZoom')).not.toHaveText(zoom);
+    await expect(page.locator('.badge-world')).toHaveAttribute('style',fixed);
     await send('touchEnd',[[x-10,y-25,1]]);await send('touchMove',[[x,y-20,1]]);await send('touchEnd',[]);
     await expect(page.locator('.is-grabbed')).toHaveCount(0);await expect(page.locator('.badge-story')).toBeHidden();
     await expect(page.locator('.badge-world')).not.toHaveAttribute('style',/NaN/);
@@ -150,13 +138,16 @@ test('missing custom badge art and missing event photos have readable fallbacks'
   await expect(page.locator('.badge-story-photos figcaption')).toHaveText('A good day');
 });
 
-test('small touch screens start with readable, finger-sized badges',async({browser})=>{
+test('small touch screens fit the complete collection in the fixed board',async({browser})=>{
   const context=await browser.newContext({viewport:{width:320,height:740},hasTouch:true,isMobile:true});
   try{
     const page=await context.newPage();await page.goto('/');
     await expect(page.locator('.badge-world')).toHaveAttribute('style',/scale\(/);
     const sizes=await page.locator('[data-badge] .badge-face').evaluateAll(items=>items.map(el=>el.getBoundingClientRect().width));
-    expect(Math.min(...sizes)).toBeGreaterThanOrEqual(44);
+    expect(Math.min(...sizes)).toBeGreaterThan(0);
+    const board=await page.locator('.badge-stage').boundingBox(),world=await page.locator('.badge-world').boundingBox();
+    expect(world.width).toBeLessThanOrEqual(board.width+1);
+    expect(world.height).toBeLessThanOrEqual(board.height+1);
     expect(await page.evaluate(()=>document.documentElement.scrollWidth)).toBe(320);
     await page.locator('#badgeDiscover').tap();await expect(page.locator('.badge-story')).toBeVisible();
   }finally{await context.close();}
