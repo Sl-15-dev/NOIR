@@ -16,16 +16,16 @@ body:has(#badgeCollection:not([hidden])) .badge-preview-toolbar{display:flex;ali
 #badgeCollection .badge-heading-row{gap:15px}
 #badgeCollection .badge-heading-stamp{display:none}
 #badgeCollection .badge-board-heading{margin-bottom:16px}
-/* Restore the original hook line and keepsakes inside a smaller square frame. */
+/* Restore the original hook line and keepsakes inside a shorter, compact frame. */
 #badgeCollection .badge-board-heading{margin-bottom:46px}
 #badgeCollection .badge-frame{max-width:640px;margin-inline:auto;padding:10px}
 #badgeCollection .badge-frame:after{inset:5px}
-#badgeCollection .badge-stage{min-height:0;max-height:none;height:auto;aspect-ratio:1}
+#badgeCollection .badge-stage{min-height:0;max-height:none;height:auto;aspect-ratio:1228 / 800}
 #badgeCollection .badge-wood-sign{width:240px;height:84px;top:-28px}
 #badgeCollection .badge-wood-sign>span{font-size:38px;margin-top:-4px}
 #badgeCollection .badge-wood-sign em{font-size:11px;margin-top:7px}
 #badgeCollection .badge-wood-sign i,#badgeCollection .badge-wood-sign b{top:51px}
-#badgeCollection .badge-filters{width:190px;max-width:44%;left:14px;top:88px}
+#badgeCollection .badge-filters{width:170px;max-width:44%;left:14px;top:18px}
 #badgeCollection .badge-category-filters{display:grid;grid-template-columns:1fr 1fr;gap:3px}
 #badgeCollection .badge-category-filters button{font-size:8px;padding:5px;min-height:26px;gap:4px}
 #badgeCollection .badge-category-filters button small{display:none}
@@ -57,10 +57,10 @@ body:has(#badgeCollection:not([hidden])) .site-footer{max-width:692px;margin-inl
   body:has(#badgeCollection:not([hidden])) .badge-preview-toolbar{padding-inline:20px;font-size:7px;gap:8px;margin-top:18px}
   #badgeCollection .badge-heading h1{font-size:34px;line-height:1.1}
   #badgeCollection .badge-heading p{font-size:11px}
-  #badgeCollection .badge-wood-sign{width:160px;height:64px;top:-23px}
-  #badgeCollection .badge-wood-sign>span{font-size:29px}
+  #badgeCollection .badge-wood-sign{width:150px;height:54px;top:-30px}
+  #badgeCollection .badge-wood-sign>span{font-size:25px}
   #badgeCollection .badge-wood-sign em{font-size:8px;margin-top:5px}
-  #badgeCollection .badge-wood-sign i,#badgeCollection .badge-wood-sign b{top:38px;width:4px;height:4px}
+  #badgeCollection .badge-wood-sign i,#badgeCollection .badge-wood-sign b{top:32px;width:4px;height:4px}
   #badgeCollection .badge-filters{top:14px;left:10px;width:150px;max-width:70%;transform:none}
   #badgeCollection .badge-filters summary{padding:12px 10px;min-height:38px;font-size:8px}
   #badgeCollection .badge-frame:has(.badge-filters[open]){z-index:1}

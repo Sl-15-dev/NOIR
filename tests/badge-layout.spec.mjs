@@ -1,6 +1,6 @@
 import {test,expect} from '@playwright/test';
 
-for(const width of [1440,1024,768,640,390,320])test(`portfolio geometry and compact square board at ${width}px`,async({page})=>{
+for(const width of [1440,1024,768,640,390,320])test(`portfolio geometry and compact landscape board at ${width}px`,async({page})=>{
   await page.setViewportSize({width,height:900});await page.goto('/');
   const frame=Math.min(740,width-(width>=768?40:24)),padding=width>=640?24:20,content=frame-padding*2;
   await expect(page.locator('#previewFrameWidth')).toHaveText(String(frame));
@@ -13,7 +13,8 @@ for(const width of [1440,1024,768,640,390,320])test(`portfolio geometry and comp
   expect(geometry.timeline.width).toBeCloseTo(content,0);expect(geometry.nav.width).toBe(width);expect(geometry.nav.x).toBe(0);
   expect(geometry.filters.x).toBeGreaterThanOrEqual(geometry.stage.x);
   expect(geometry.wood.width).toBeLessThanOrEqual(640);
-  expect(geometry.wood.height).toBeCloseTo(geometry.wood.width,0);
+  expect(geometry.stage.width/geometry.stage.height).toBeCloseTo(1228/800,2);
+  expect(geometry.wood.height).toBeLessThan(geometry.wood.width);
   expect(geometry.overflow).toBe(width);
   const hooks=await page.locator('[data-badge]').evaluateAll(items=>items.map(el=>parseFloat(el.style.top)));
   expect(Math.max(...hooks)-Math.min(...hooks)).toBeLessThanOrEqual(6);
