@@ -66,7 +66,6 @@ export function initBadgeCollection() {
     <div class="badge-frame"><div class="badge-wood-sign" aria-hidden="true"><span>Badges</span><em>Every badge tells a story.</em><i></i><b></b></div>
       <div class="badge-stage" tabindex="0" role="region" aria-label="Badge collection. Drag a badge or its lanyard; press Enter on a badge to read its story." aria-describedby="badgeInstructions">
         <div class="badge-world" style="width:${boardSize.width}px;height:${boardSize.height}px">
-          <div class="badge-travel-doodle" aria-hidden="true"><svg viewBox="0 0 230 90"><path class="badge-flight-path" d="M8 58C50 4 109 100 157 51S132 5 147 40 198 58 210 21"/><path d="m197 13 12 6 12-5 4 4-10 8 3 13-4 3-7-11-11 2-2-3 10-6-9-8z"/></svg></div>
           <div class="badge-postcard" aria-hidden="true"><span class="badge-tape"></span><img src="./badges/lisbon.svg" alt=""><span>Lisbon, you were lovely. ♡</span><small>NOVEMBER ’23</small></div>
           <div class="badge-ticket" aria-hidden="true"><span>→ LHR</span><small>BOARDING PASS</small><b>ONE WAY TO<br>SOMETHING NEW.</b><i>||| |||||| || ||| ||||||</i></div>
           <div class="badge-note" aria-hidden="true"><span class="badge-pin"></span><span>the best part?<br>the people.</span><svg viewBox="0 0 100 36"><path d="M8 18q39 18 73-4m-9-4 10 3-5 10"/></svg><small>always say hello ↗</small></div>

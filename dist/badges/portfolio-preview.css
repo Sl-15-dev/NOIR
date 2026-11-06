@@ -25,7 +25,7 @@ body:has(#badgeCollection:not([hidden])) .badge-preview-toolbar{display:flex;ali
 #badgeCollection .badge-wood-sign>span{font-size:38px;margin-top:-4px}
 #badgeCollection .badge-wood-sign em{font-size:11px;margin-top:7px}
 #badgeCollection .badge-wood-sign i,#badgeCollection .badge-wood-sign b{top:51px}
-#badgeCollection .badge-filters{width:170px;max-width:44%;left:14px;top:18px}
+#badgeCollection .badge-filters{width:170px;max-width:44%;left:auto;right:14px;top:18px}
 #badgeCollection .badge-category-filters{display:grid;grid-template-columns:1fr 1fr;gap:3px}
 #badgeCollection .badge-category-filters button{font-size:8px;padding:5px;min-height:26px;gap:4px}
 #badgeCollection .badge-category-filters button small{display:none}
@@ -61,7 +61,7 @@ body:has(#badgeCollection:not([hidden])) .site-footer{max-width:692px;margin-inl
   #badgeCollection .badge-wood-sign>span{font-size:25px}
   #badgeCollection .badge-wood-sign em{font-size:8px;margin-top:5px}
   #badgeCollection .badge-wood-sign i,#badgeCollection .badge-wood-sign b{top:32px;width:4px;height:4px}
-  #badgeCollection .badge-filters{top:14px;left:10px;width:150px;max-width:70%;transform:none}
+  #badgeCollection .badge-filters{top:14px;left:auto;right:10px;width:150px;max-width:70%;transform:none}
   #badgeCollection .badge-filters summary{padding:12px 10px;min-height:38px;font-size:8px}
   #badgeCollection .badge-frame:has(.badge-filters[open]){z-index:1}
   #badgeCollection .badge-stage:has(.badge-filters[open]){overflow:visible}
