@@ -64,6 +64,7 @@ test('the board stays fixed while wheel, keyboard and empty-cork dragging preser
 for(const width of [320,768])test(`responsive board, filters and library navigation work at ${width}px`,async({page})=>{
   await page.setViewportSize({width,height:900});await page.goto('/');
   expect(await page.evaluate(()=>document.documentElement.scrollWidth)).toBe(width);
+  if(width<640)await page.locator('.badge-filters summary').click();
   await page.locator('[data-badge-category="Technology"]').click();
   await page.locator('[data-badge-year="2025"]').click();
   await expect(shown(page)).toHaveCount(2);
@@ -95,9 +96,8 @@ test('adding a data record grows the board and renders custom artwork and option
   });
   await page.goto('/');await expect(shown(page)).toHaveCount(15);
   await expect(page.locator('#badgeCount')).toHaveText('15 stories & counting');
-  await expect(page.locator('.badge-stage')).toHaveAttribute('data-columns','4');
-  const boardHeight=await page.locator('.badge-world').evaluate(el=>el.offsetHeight);
-  expect(boardHeight).toBeGreaterThan(340);
+  const worldWidth=await page.locator('.badge-world').evaluate(el=>el.offsetWidth);
+  expect(worldWidth).toBeGreaterThan(1200);
   await page.locator('[data-badge="new-memory"]').focus();await page.keyboard.press('Enter');
   await expect(page.locator('#badgeStoryTitle')).toHaveText('A new memory');
   const photo=page.getByAltText('Illustrated Lisbon streets');await expect(photo).toBeVisible();

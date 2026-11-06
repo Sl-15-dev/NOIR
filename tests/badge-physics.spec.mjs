@@ -77,7 +77,8 @@ async function touchPage(browser){
 test('a finger drags just the badge; cancellation springs it back and a fresh tap opens its details',async({browser})=>{
   const {context,page,send}=await touchPage(browser);
   try{
-    await page.locator('[data-badge-category="Workshops"]').tap();await page.locator('[data-badge-year="2024"]').tap();
+    await page.locator('.badge-filters summary').tap();
+    await page.locator('[data-badge-category="Workshops"]').tap();await page.locator('[data-badge-year="2024"]').tap();await page.locator('.badge-filters summary').tap();
     await face(page,'react').scrollIntoViewIfNeeded();const r=await face(page,'react').boundingBox(),x=r.x+r.width/2,y=r.y+r.height/2;
     const world=await page.locator('.badge-world').getAttribute('style'),scroll=await page.evaluate(()=>scrollY);
     await send('touchStart',[[x,y]]);await send('touchMove',[[x+55,y-45]]);

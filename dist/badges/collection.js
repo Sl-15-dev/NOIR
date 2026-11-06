@@ -1,4 +1,3 @@
-import {collectionLayout} from './layout.js';
 import {createBadgePhysics} from './physics.js';
 import {badges as collectionData, categories, years, boardSize} from './data.js';
 const badges=collectionData.map(b=>({...b,position:{...b.position,scale:.68}}));
@@ -63,8 +62,8 @@ export function initBadgeCollection() {
       <p>Places I’ve been. People I’ve met. Things that stayed with me.<br class="badge-mobile-break"> A little piece of my journey, pinned in one place.</p><div class="badge-statistics" aria-label="Collection statistics"><span><strong>${badges.length}</strong> badges</span><i></i><span><strong>${new Set(badges.map(b=>`${b.eventName}|${b.year}|${b.location}`)).size}</strong> events</span><i></i><span><strong>${years.length}</strong> years of memories</span></div>
     </header>
     <div class="badge-board-heading"><div><span class="badge-live-dot"></span> THE MEMORY BOARD <span class="badge-board-divider">/</span> <span id="badgeCount" role="status">${badges.length} stories & counting</span></div><button class="badge-discover" id="badgeDiscover">${icon('spark')} Discover a Memory ${icon('arrow')}</button></div>
-        <details class="badge-filters" open><summary>${icon('filter')} <span>The collection</span><span class="badge-filter-chevron">⌄</span></summary><div class="badge-filter-content"><span class="badge-filter-label">A LITTLE BIT OF EVERYTHING</span><div class="badge-category-filters" role="group" aria-label="Filter badges by category">${categories.map((c,i)=>`<button data-badge-category="${c}" aria-pressed="${i===0}" class="${i===0?'is-active':''}"><span>${c==='All'?'◈':c==='Technology'?'⌘':c==='Conferences'?'▤':c==='Hackathons'?'↯':c==='Workshops'?'∗':'♡'}</span>${c}<small>${c==='All'?badges.length:badges.filter(b=>b.category===c).length}</small></button>`).join('')}</div><div class="badge-year-heading"><span>BY YEAR</span><button id="badgeYearReset" hidden>Clear</button></div><div class="badge-year-filters" role="group" aria-label="Filter badges by year">${years.map(y=>`<button data-badge-year="${y}" aria-pressed="false">${y}</button>`).join('')}</div></div></details>
-    <div class="badge-frame"><div class="badge-wood-sign" aria-hidden="true"><span>Badges</span><i></i><b></b></div>
+
+    <div class="badge-frame"><div class="badge-wood-sign" aria-hidden="true"><span>Badges</span><em>Every badge tells a story.</em><i></i><b></b></div>
       <div class="badge-stage" tabindex="0" role="region" aria-label="Badge collection. Drag a badge or its lanyard; press Enter on a badge to read its story." aria-describedby="badgeInstructions">
         <div class="badge-world" style="width:${boardSize.width}px;height:${boardSize.height}px">
           <div class="badge-travel-doodle" aria-hidden="true"><svg viewBox="0 0 230 90"><path class="badge-flight-path" d="M8 58C50 4 109 100 157 51S132 5 147 40 198 58 210 21"/><path d="m197 13 12 6 12-5 4 4-10 8 3 13-4 3-7-11-11 2-2-3 10-6-9-8z"/></svg></div>
@@ -77,6 +76,7 @@ export function initBadgeCollection() {
           <span class="badge-corner-note" aria-hidden="true">Conferences. Workshops. People. Memories.</span>
         </div>
 
+        <details class="badge-filters" open><summary>${icon('filter')} <span>The collection</span><span class="badge-filter-chevron">⌄</span></summary><div class="badge-filter-content"><span class="badge-filter-label">A LITTLE BIT OF EVERYTHING</span><div class="badge-category-filters" role="group" aria-label="Filter badges by category">${categories.map((c,i)=>`<button data-badge-category="${c}" aria-pressed="${i===0}" class="${i===0?'is-active':''}"><span>${c==='All'?'◈':c==='Technology'?'⌘':c==='Conferences'?'▤':c==='Hackathons'?'↯':c==='Workshops'?'∗':'♡'}</span>${c}<small>${c==='All'?badges.length:badges.filter(b=>b.category===c).length}</small></button>`).join('')}</div><div class="badge-year-heading"><span>BY YEAR</span><button id="badgeYearReset" hidden>Clear</button></div><div class="badge-year-filters" role="group" aria-label="Filter badges by year">${years.map(y=>`<button data-badge-year="${y}" aria-pressed="false">${y}</button>`).join('')}</div></div></details>
         <div class="badge-empty" hidden><span>Nothing pinned here. Yet.</span><p>Try a different year or category.</p><button>Show every memory ${icon('arrow')}</button></div>
       </div>
     </div>
@@ -94,30 +94,17 @@ export function initBadgeCollection() {
   const visibleBadges=()=>chronological(badges.filter(b=>(state.category==='All'||b.category===state.category)&&(!state.year||b.year===state.year)));
   const clamp=(n,min,max)=>Math.min(max,Math.max(min,n));
   let layoutKey='';
-  function fitBoard(force=false) {
-    const width=stage.clientWidth;
+  function fitBoard() {
+    const width=stage.clientWidth,height=stage.clientHeight;
     if(!width)return;
-    const items=badges.filter(b=>(state.category==='All'||b.category===state.category)&&(!state.year||b.year===state.year));
-    const key=`${width}/${items.map(b=>b.id).join(',')}`;
-    if(!force&&key===layoutKey)return;
-    cancelGesture();
-    layoutKey=key;
-    const layout=collectionLayout(items,width);
-    state.fit=1;state.x=state.y=0;
-    stage.style.height=`${layout.height}px`;
-    world.style.width=`${width}px`;world.style.height=`${layout.height}px`;
-    world.style.transform='translate(0px,0px) scale(1)';
-    stage.dataset.columns=layout.columns;
-    for(const badge of items){
-      badge.position=layout.positions.get(badge.id);
-      const el=root.querySelector(`[data-badge="${CSS.escape(badge.id)}"]`),p=badge.position;
-      el.style.left=`${p.x}px`;el.style.top=`${p.y}px`;
-      el.style.setProperty('--angle',`${p.angle}deg`);el.style.setProperty('--object-scale',p.scale);
-      el.style.setProperty('--strap-length',`${p.strap}px`);
-      el.querySelector('.badge-lanyard').setAttribute('viewBox',`0 0 160 ${p.strap}`);
-    }
-    physics.reset();
-    // Width readouts belong to the NOIR harness, outside the component.
+    const key=`${width}/${height}`;
+    if(key===layoutKey)return;
+    cancelGesture();layoutKey=key;
+    state.fit=Math.min(width/boardSize.width,height/boardSize.height);
+    state.x=(width-boardSize.width*state.fit)/2;
+    state.y=(height-boardSize.height*state.fit)/2;
+    world.style.width=`${boardSize.width}px`;world.style.height=`${boardSize.height}px`;
+    world.style.transform=`translate(${state.x}px,${state.y}px) scale(${state.fit})`;
     document.querySelector('#previewFrameWidth').value=Math.round(root.clientWidth);
     document.querySelector('#previewContentWidth').value=Math.round($('.content-container').clientWidth-parseFloat(getComputedStyle($('.content-container')).paddingLeft)*2);
   }
@@ -240,7 +227,7 @@ export function initBadgeCollection() {
   document.addEventListener('visibilitychange',()=>{if(document.hidden)cancelGesture();});
   new IntersectionObserver(entries=>{if(!entries[0].isIntersecting)cancelGesture();}).observe(stage);
   new ResizeObserver(()=>{if(!root.hidden)fitBoard();}).observe(stage);
-  $('.badge-filters').open=true;
+  $('.badge-filters').open=innerWidth>=640;
 
   function showBadges(updateHash=true){
     root.hidden=false;document.querySelector('.hero').hidden=true;document.querySelector('#library').hidden=true;
