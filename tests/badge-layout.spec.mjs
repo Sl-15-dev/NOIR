@@ -7,10 +7,10 @@ for(const width of [1440,1024,768,640,390,320])test(`portfolio geometry and comp
   await expect(page.locator('#previewContentWidth')).toHaveText(String(content));
   const geometry=await page.evaluate(()=>{
     const box=selector=>document.querySelector(selector).getBoundingClientRect().toJSON();
-    return {frame:box('#badgeCollection'),timeline:box('.badge-timeline'),nav:box('.topbar'),stage:box('.badge-stage'),filters:box('.badge-filters'),wood:box('.badge-frame'),cards:[...document.querySelectorAll('[data-badge] .badge-face')].map(el=>el.getBoundingClientRect().toJSON()),overflow:document.documentElement.scrollWidth};
+    return {frame:box('#badgeCollection'),inner:box('.content-container'),nav:box('.topbar'),stage:box('.badge-stage'),filters:box('.badge-filters'),wood:box('.badge-frame'),cards:[...document.querySelectorAll('[data-badge] .badge-face')].map(el=>el.getBoundingClientRect().toJSON()),overflow:document.documentElement.scrollWidth};
   });
   expect(geometry.frame.width).toBeCloseTo(frame,0);expect(geometry.frame.x).toBeCloseTo((width-frame)/2,0);
-  expect(geometry.timeline.width).toBeCloseTo(content,0);expect(geometry.nav.width).toBe(width);expect(geometry.nav.x).toBe(0);
+  expect(geometry.inner.width-padding*2).toBeCloseTo(content,0);expect(geometry.nav.width).toBe(width);expect(geometry.nav.x).toBe(0);
   expect(geometry.filters.x).toBeGreaterThanOrEqual(geometry.stage.x);
   expect(geometry.wood.width).toBeLessThanOrEqual(640);
   expect(geometry.stage.width/geometry.stage.height).toBeCloseTo(1228/800,2);

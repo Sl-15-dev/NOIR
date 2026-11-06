@@ -94,6 +94,7 @@ test('a finger drags just the badge; cancellation springs it back and a fresh ta
 test('empty-cork swipes scroll the page and never move the fixed board',async({browser})=>{
   const {context,page,send}=await touchPage(browser);
   try{
+    await page.addStyleTag({content:'body{padding-bottom:900px}'});
     const stage=page.locator('.badge-stage');await stage.scrollIntoViewIfNeeded();
     const r=await stage.boundingBox(),before=await page.evaluate(()=>scrollY),world=await page.locator('.badge-world').getAttribute('style');
     const x=r.x+r.width*.99,y=Math.max(90,r.y+30);
@@ -120,16 +121,15 @@ test('a second touch cancels a badge drag without zooming, leaving it stuck, or 
   }finally{await context.close();}
 });
 
-test('discovery, dynamic statistics, and the chronological journey reveal the appropriate memories',async({page})=>{
-  await setup(page);await expect(page.locator('.badge-statistics')).toContainText('14 badges');await expect(page.locator('.badge-statistics')).toContainText('14 events');await expect(page.locator('.badge-statistics')).toContainText('4 years');
-  await page.locator('[data-badge-category="Hackathons"]').click();await page.locator('[data-badge-year="2025"]').click();
-  await page.locator('#badgeDiscover').click();await expect(page.locator('#badgeStoryTitle')).toHaveText('Local Hack Day');
-  await page.keyboard.press('Escape');await expect(page.locator('#badgeDiscover')).toBeFocused();
-  await page.locator('.badge-timeline summary').click();await page.locator('[data-timeline-year="2023"]').click();
-  await expect(page.locator('[data-badge]:not(.is-filtered)')).toHaveCount(2);
-  await page.locator('#badgeJourneyStart').click();await expect(page.locator('#badgeStoryTitle')).toHaveText('DevConf');
+test('the memory index contains live counts and the surrounding promotional sections are removed',async({page})=>{
+  await setup(page);
+  await expect(page.locator('.badge-filters .badge-statistics')).toContainText('14 badges');
+  await expect(page.locator('.badge-filters .badge-statistics')).toContainText('14 events');
+  await expect(page.locator('.badge-filters .badge-statistics')).toContainText('4 years of memories');
+  await expect(page.locator('.badge-heading,.badge-board-heading,#badgeDiscover,.badge-timeline,.badge-afterword')).toHaveCount(0);
+  await face(page,'devconf').click();await expect(page.locator('#badgeStoryTitle')).toHaveText('DevConf');
   await page.locator('[data-story-nav="next"]').click();await expect(page.locator('#badgeStoryTitle')).toHaveText('Web Summit');
-  await page.keyboard.press('Escape');await expect(page.locator('#badgeJourneyStart')).toBeFocused();
+  await page.keyboard.press('Escape');await expect(page.locator('[data-badge="devconf"]')).toBeFocused();
 });
 
 test('missing custom badge art and missing event photos have readable fallbacks',async({page})=>{
@@ -151,6 +151,6 @@ test('small touch screens fit the complete collection in the fixed board',async(
     expect(world.width).toBeLessThanOrEqual(board.width+1);
     expect(world.height).toBeLessThanOrEqual(board.height+1);
     expect(await page.evaluate(()=>document.documentElement.scrollWidth)).toBe(320);
-    await page.locator('#badgeDiscover').tap();await expect(page.locator('.badge-story')).toBeVisible();
+    await face(page,'openai').tap();await expect(page.locator('.badge-story')).toBeVisible();
   }finally{await context.close();}
 });
