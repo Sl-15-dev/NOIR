@@ -16,7 +16,7 @@ for(const width of [320,960])for(const theme of ['dark','light'])test(`all ${all
 });
 test('library theme, removed categories, search, preview, saved state and export work',async({page})=>{
   const errors=[];page.on('pageerror',e=>errors.push(e.message));
-  await page.goto('/');await expect(page.locator('.component-card')).toHaveCount(18);
+  await page.goto('/#components');await expect(page.locator('.component-card')).toHaveCount(18);
   await expect(page.locator('#categoryFilter option')).toHaveCount(11);
   await page.locator('#themeToggle').click();
   const theme=await page.locator('html').getAttribute('data-theme');
@@ -35,7 +35,7 @@ test('library theme, removed categories, search, preview, saved state and export
   expect(errors).toEqual([]);
 });
 test('narrow library layout and navigation remain usable',async({page})=>{
-  await page.setViewportSize({width:320,height:720});await page.goto('/');
+  await page.setViewportSize({width:320,height:720});await page.goto('/#components');
   await page.locator('#mobileMenu').click();await page.locator('[data-category="layouts"]').click();
   await expect(page.locator('#libraryTitle')).toHaveText('Layouts & grids');
   expect(await page.evaluate(()=>document.documentElement.scrollWidth)).toBe(320);

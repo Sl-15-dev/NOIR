@@ -12,6 +12,23 @@ npm run dev
 
 The server defaults to port 3000. Set `PORT` or use `npm run dev -- --port 8080`. No installation is needed to run the application. ES modules require HTTP; opening index.html directly will not load the catalog.
 
+## Badge collection
+
+The home view is **Badges — Every Badge Tells a Story**, an interactive, full-color corkboard within the existing NOIR shell. Use **Components** (or `/#components`) to return to the component library; `/#badges` opens the board directly.
+
+The collection lives in `dist/badges/`:
+
+- `data.js` holds the sample event records, categories, years, colors, roles, stories, and board positions. Replace these illustrative records with your own; category counts, years, navigation, and filters derive from the data.
+- `collection.js` renders the board and story popups, combining category/year filtering with pointer dragging, wheel/pinch zoom, and keyboard controls.
+- `collection.css` defines the warm scene, wooden frame, textured fabric, badge designs, responsive layout, and reduced-motion behavior. The surrounding NOIR navigation retains its existing theme.
+- `cork.svg` and `lisbon.svg` are local texture and travel illustration assets; no external images or services are required.
+
+To add a memory, copy a record in `data.js` and give it a unique `id`. Supply the event name, organization, category, numeric year, date, location, participation role, lanyard color, paper/ink colors, short description, full story, and takeaway. Choose an existing `design`, or provide a local `badgeImage` URL for custom artwork. Add optional photos as `{src, alt, caption}` objects in `photos`; they appear in the story popup. Photo `alt` text should describe the actual image. The shared hook-line layout sets positions and strap lengths at the end of the file, and the board automatically grows with the collection. Provide an optional `position: {x, y, angle, strap}` to place a particular memory by hand. An optional `lanyardPattern: 'mosaic'` adds a multicolor fabric print.
+
+Board controls: drag to explore, scroll or pinch to zoom, or use the on-board zoom buttons. With the board focused, arrow keys pan, `+` / `-` zoom, and `0` fits the view. Tab focuses memories and Enter opens their stories; Escape closes a story and restores focus. Filtering excludes hidden memories from keyboard navigation. The mobile filter panel starts collapsed.
+
+`npm run test:browser -- tests/badges.spec.mjs` covers every badge, expanded stories, combined/empty filters, mouse and keyboard navigation, drag-versus-click behavior, real touch/pinch input, reduced motion, and narrow layouts.
+
 ## Explore
 
 - Browse, search, filter, and save components in this browser.
