@@ -16,6 +16,8 @@ The server defaults to port 3000. Set `PORT` or use `npm run dev -- --port 8080`
 
 The home view is **Badges — Every Badge Tells a Story**, an interactive, full-color corkboard in a portfolio-width test harness. The badge view has a full-width NOIR navigation bar; the existing component library keeps its original sidebar and layout. Use **Components** (or `/#components`) to return to the component library; `/#badges` opens the board directly.
 
+For step-by-step instructions and a copyable new-badge example, see the **[Badge customization guide](docs/BADGE_CUSTOMIZATION.md)**. It covers colors, fabric, badge artwork, event photos, shapes, positions, and adding records.
+
 The collection lives in `dist/badges/`:
 
 - `data.js` holds the sample event records, categories, years, colors, roles, stories, and board positions. Replace these illustrative records with your own; category counts, years, navigation, and filters derive from the data.
