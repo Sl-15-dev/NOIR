@@ -3,8 +3,9 @@ import {test,expect} from '@playwright/test';
 const pendant=(page,id)=>page.locator(`[data-badge="${id}"] .badge-pendant`);
 const face=(page,id)=>page.locator(`[data-badge="${id}"] .badge-face`);
 const translation=locator=>locator.evaluate(el=>{const m=new DOMMatrixReadOnly(getComputedStyle(el).transform);return {x:m.e,y:m.f};});
-async function setup(page){await page.setViewportSize({width:1440,height:1150});await page.goto('/');await expect(page.locator('.badge-world')).toHaveAttribute('style',/scale\(/);}
+async function setup(page){await page.setViewportSize({width:1440,height:1150});await page.goto('/');await expect(page.locator('.badge-world')).toHaveAttribute('style',/scale\(/);await face(page,'react').scrollIntoViewIfNeeded();}
 async function grab(page,id,dx=75,dy=-55){
+  await face(page,id).scrollIntoViewIfNeeded();
   const r=await face(page,id).boundingBox(),x=r.x+r.width*.4,y=r.y+r.height*.4;
   await page.mouse.move(x,y);await page.mouse.down();await page.mouse.move(x+dx,y+dy,{steps:10});
 }
@@ -76,7 +77,7 @@ async function touchPage(browser){
 test('a finger drags just the badge; cancellation springs it back and a fresh tap opens its details',async({browser})=>{
   const {context,page,send}=await touchPage(browser);
   try{
-    await page.locator('.badge-filters summary').tap();await page.locator('[data-badge-category="Workshops"]').tap();await page.locator('[data-badge-year="2024"]').tap();await page.locator('.badge-filters summary').tap();
+    await page.locator('[data-badge-category="Workshops"]').tap();await page.locator('[data-badge-year="2024"]').tap();
     await face(page,'react').scrollIntoViewIfNeeded();const r=await face(page,'react').boundingBox(),x=r.x+r.width/2,y=r.y+r.height/2;
     const world=await page.locator('.badge-world').getAttribute('style'),scroll=await page.evaluate(()=>scrollY);
     await send('touchStart',[[x,y]]);await send('touchMove',[[x+55,y-45]]);
@@ -94,7 +95,7 @@ test('empty-cork swipes scroll the page and never move the fixed board',async({b
   try{
     const stage=page.locator('.badge-stage');await stage.scrollIntoViewIfNeeded();
     const r=await stage.boundingBox(),before=await page.evaluate(()=>scrollY),world=await page.locator('.badge-world').getAttribute('style');
-    const x=r.x+r.width*.87,y=r.y+113;
+    const x=r.x+r.width*.99,y=Math.max(90,r.y+30);
     await send('touchStart',[[x,y]]);for(let n=1;n<=8;n++)await send('touchMove',[[x,y-n*10]]);await send('touchEnd',[]);
     await expect.poll(()=>page.evaluate(()=>scrollY)).toBeGreaterThan(before);
     await expect(page.locator('.badge-world')).toHaveAttribute('style',world);

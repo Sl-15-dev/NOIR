@@ -71,7 +71,7 @@ export function createBadgePhysics({root,stage,world,badges,getScale,isAvailable
     const body=bodies.get(id);if(!body)return null;
     body.held=true;body.vx=body.vy=0;
     body.element.classList.add('is-grabbed');
-    const scale=getScale()*.68;
+    const scale=getScale()*body.badge.position.scale;
     const rect=body.element.querySelector('.badge-face').getBoundingClientRect(),board=stage.getBoundingClientRect();
     const left=rect.left-body.x*scale,top=rect.top-body.y*scale;
     // Leave room for rotation and the sleeve's shadow. Keep rest within the bounds.
@@ -86,7 +86,7 @@ export function createBadgePhysics({root,stage,world,badges,getScale,isAvailable
     return {
       move(dx,dy){
         const angle=body.badge.position.angle*Math.PI/180;
-        const scale=getScale()*.68;
+        const scale=getScale()*body.badge.position.scale;
         const x=origin.x+(dx*Math.cos(angle)+dy*Math.sin(angle))/scale;
         const y=origin.y+(-dx*Math.sin(angle)+dy*Math.cos(angle))/scale;
         const now=performance.now(),dt=Math.max((now-lastTime)/1000,.008);
@@ -116,7 +116,7 @@ export function createBadgePhysics({root,stage,world,badges,getScale,isAvailable
     for(const body of bodies.values()){
       if(body.held||body.element.inert)continue;
       const {position}=body.badge,hookX=position.x+80;
-      const bottom=position.y+(position.strap+100)*.68;
+      const bottom=position.y+(position.strap+100)*position.scale;
       // A narrow wake around each ribbon; moving past one doesn't animate the whole collection.
       const distance=Math.hypot(px-hookX,py-clamp(py,position.y,bottom));
       const radius=48/Math.max(scale,.55);

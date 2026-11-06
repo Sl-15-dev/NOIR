@@ -1,5 +1,7 @@
+import {collectionLayout} from './layout.js';
 import {createBadgePhysics} from './physics.js';
-import {badges, categories, years, boardSize} from './data.js';
+import {badges as collectionData, categories, years, boardSize} from './data.js';
+const badges=collectionData.map(b=>({...b,position:{...b.position,scale:.68}}));
 
 const escape = value => String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const icon = (name) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${({spark:'<path d="m12 3 2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5Z"/>',arrow:'<path d="M5 12h14m-5-5 5 5-5 5"/>',pin:'<path d="m9 3 6 0-1 7 4 4H6l4-4zm3 11v7"/>',globe:'<circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18"/>',close:'<path d="m6 6 12 12M6 18 18 6"/>',expand:'<path d="M8 3H3v5m13-5h5v5M3 16v5h5m8 0h5v-5"/>',filter:'<path d="M4 7h16M7 12h10m-7 5h4"/>',location:'<path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z"/><circle cx="12" cy="10" r="2"/>'})[name] || ''}</svg>`;
@@ -51,14 +53,18 @@ export function showLibraryView() {
 export function initBadgeCollection() {
   const root = document.querySelector('#badgeCollection');
   document.querySelector('#sideBadges .side-count').textContent=String(badges.length).padStart(2,'0');
-  root.innerHTML = `
+  root.classList.add('content-box-frame');
+  root.insertAdjacentHTML('beforebegin','<aside class="badge-preview-toolbar" aria-label="Portfolio layout preview"><span>NOIR <i>/</i> Portfolio preview</span><span>Frame <output id="previewFrameWidth">740</output>px <i>·</i> Content <output id="previewContentWidth">692</output>px</span></aside>');
+  document.querySelector('.topbar').insertAdjacentHTML('afterbegin','<a class="badge-preview-brand" href="#badges" aria-label="NOIR portfolio preview">N<span>OIR</span></a>');
+  root.innerHTML = `<div class="content-container">
     <header class="badge-heading">
       <div class="badge-eyebrow"><span></span> A PERSONAL COLLECTION <span class="badge-edition">EST. 2023 — ONGOING</span></div>
       <div class="badge-heading-row"><h1 id="badgesTitle">Every badge <em>tells a story.</em></h1><span class="badge-heading-stamp">COLLECT MOMENTS.<br>KEEP THE MEMORIES. ${icon('globe')}</span></div>
       <p>Places I’ve been. People I’ve met. Things that stayed with me.<br class="badge-mobile-break"> A little piece of my journey, pinned in one place.</p><div class="badge-statistics" aria-label="Collection statistics"><span><strong>${badges.length}</strong> badges</span><i></i><span><strong>${new Set(badges.map(b=>`${b.eventName}|${b.year}|${b.location}`)).size}</strong> events</span><i></i><span><strong>${years.length}</strong> years of memories</span></div>
     </header>
     <div class="badge-board-heading"><div><span class="badge-live-dot"></span> THE MEMORY BOARD <span class="badge-board-divider">/</span> <span id="badgeCount" role="status">${badges.length} stories & counting</span></div><button class="badge-discover" id="badgeDiscover">${icon('spark')} Discover a Memory ${icon('arrow')}</button></div>
-    <div class="badge-frame"><div class="badge-wood-sign" aria-hidden="true"><span>Badges</span><em>Every badge tells a story.</em><i></i><b></b></div>
+        <details class="badge-filters" open><summary>${icon('filter')} <span>The collection</span><span class="badge-filter-chevron">⌄</span></summary><div class="badge-filter-content"><span class="badge-filter-label">A LITTLE BIT OF EVERYTHING</span><div class="badge-category-filters" role="group" aria-label="Filter badges by category">${categories.map((c,i)=>`<button data-badge-category="${c}" aria-pressed="${i===0}" class="${i===0?'is-active':''}"><span>${c==='All'?'◈':c==='Technology'?'⌘':c==='Conferences'?'▤':c==='Hackathons'?'↯':c==='Workshops'?'∗':'♡'}</span>${c}<small>${c==='All'?badges.length:badges.filter(b=>b.category===c).length}</small></button>`).join('')}</div><div class="badge-year-heading"><span>BY YEAR</span><button id="badgeYearReset" hidden>Clear</button></div><div class="badge-year-filters" role="group" aria-label="Filter badges by year">${years.map(y=>`<button data-badge-year="${y}" aria-pressed="false">${y}</button>`).join('')}</div></div></details>
+    <div class="badge-frame"><div class="badge-wood-sign" aria-hidden="true"><span>Badges</span><i></i><b></b></div>
       <div class="badge-stage" tabindex="0" role="region" aria-label="Badge collection. Drag a badge or its lanyard; press Enter on a badge to read its story." aria-describedby="badgeInstructions">
         <div class="badge-world" style="width:${boardSize.width}px;height:${boardSize.height}px">
           <div class="badge-travel-doodle" aria-hidden="true"><svg viewBox="0 0 230 90"><path class="badge-flight-path" d="M8 58C50 4 109 100 157 51S132 5 147 40 198 58 210 21"/><path d="m197 13 12 6 12-5 4 4-10 8 3 13-4 3-7-11-11 2-2-3 10-6-9-8z"/></svg></div>
@@ -70,14 +76,14 @@ export function initBadgeCollection() {
             <span class="badge-hook"></span><span class="badge-swing"><svg class="badge-lanyard" viewBox="0 0 160 ${b.position.strap}" preserveAspectRatio="none" aria-hidden="true"><defs><path data-strap-left id="strap-left-${b.id}" d="M78 6Q27 48 76 ${b.position.strap-9}"/><path data-strap-right id="strap-right-${b.id}" d="M82 6Q133 48 84 ${b.position.strap-9}"/><pattern id="fabric-${b.id}" width="3" height="3" patternUnits="userSpaceOnUse"><path d="M0 0h3v1H0z" style="fill:white" opacity=".12"/><path d="M0 1h1v2H0z" style="fill:black" opacity=".15"/></pattern><pattern id="mosaic-${b.id}" width="35" height="100" patternUnits="userSpaceOnUse"><rect width="35" height="100" fill="${b.lanyardColor}"/><path d="m0 0 35 20L0 45z" style="fill:#edb855"/><path d="m35 25-35 25 35 25z" style="fill:#6fa373"/><path d="m0 60 35 25-35 15z" style="fill:#d46c77"/></pattern></defs><path class="badge-ribbon-shadow" d="M78 6Q27 48 76 ${b.position.strap-9}M82 6Q133 48 84 ${b.position.strap-9}"/><path class="badge-ribbon" style="${b.lanyardPattern==='mosaic'?`stroke:url(#mosaic-${b.id})`:''}" d="M78 6Q27 48 76 ${b.position.strap-9}M82 6Q133 48 84 ${b.position.strap-9}"/><path class="badge-ribbon-weave" stroke="url(#fabric-${b.id})" d="M78 6Q27 48 76 ${b.position.strap-9}M82 6Q133 48 84 ${b.position.strap-9}"/><path class="badge-ribbon-seam" d="M78 6Q27 48 76 ${b.position.strap-9}M82 6Q133 48 84 ${b.position.strap-9}"/><text><textPath href="#strap-left-${b.id}" startOffset="15%">${Array(4).fill(escape(b.organization.toUpperCase())).join(" · ")}</textPath></text><text><textPath href="#strap-right-${b.id}" startOffset="18%">${Array(4).fill(`${b.year} · ${escape(b.role.toUpperCase())}`).join(" · ")}</textPath></text></svg><span class="badge-pendant"><span class="badge-clasp"></span>${badgeFace(b)}</span></span></button>`).join('')}</div>
           <span class="badge-corner-note" aria-hidden="true">Conferences. Workshops. People. Memories.</span>
         </div>
-        <details class="badge-filters" open><summary>${icon('filter')} <span>The collection</span><span class="badge-filter-chevron">⌄</span></summary><div class="badge-filter-content"><span class="badge-filter-label">A LITTLE BIT OF EVERYTHING</span><div class="badge-category-filters" role="group" aria-label="Filter badges by category">${categories.map((c,i)=>`<button data-badge-category="${c}" aria-pressed="${i===0}" class="${i===0?'is-active':''}"><span>${c==='All'?'◈':c==='Technology'?'⌘':c==='Conferences'?'▤':c==='Hackathons'?'↯':c==='Workshops'?'∗':'♡'}</span>${c}<small>${c==='All'?badges.length:badges.filter(b=>b.category===c).length}</small></button>`).join('')}</div><div class="badge-year-heading"><span>BY YEAR</span><button id="badgeYearReset" hidden>Clear</button></div><div class="badge-year-filters" role="group" aria-label="Filter badges by year">${years.map(y=>`<button data-badge-year="${y}" aria-pressed="false">${y}</button>`).join('')}</div></div></details>
+
         <div class="badge-empty" hidden><span>Nothing pinned here. Yet.</span><p>Try a different year or category.</p><button>Show every memory ${icon('arrow')}</button></div>
       </div>
     </div>
     <div class="badge-board-footer"><p id="badgeInstructions"><span class="badge-mouse-icon" aria-hidden="true"></span> Grab a badge or lanyard. Release to let it settle.<span class="badge-touch-instruction"> Tap a badge to read its story.</span></p><span class="badge-desktop-instruction">Drag a badge. Feel the memory. ${icon('arrow')}</span></div>
     <details class="badge-timeline"><summary><span>THE JOURNEY SO FAR</span><span>${Math.min(...years)} — ${Math.max(...years)} ${icon('arrow')}</span></summary><div class="badge-timeline-content"><p>Different places. A little more perspective, every year.</p><ol>${[...years].sort().map(year=>`<li><button data-timeline-year="${year}" aria-pressed="false"><span>${year}</span><small>${badges.filter(b=>b.year===year).length} memories</small></button></li>`).join('')}</ol><button id="badgeJourneyStart">Start with the first hello ${icon('arrow')}</button></div></details>
     <div class="badge-afterword"><span>More than a name tag.</span><p>Every event leaves a memory.<br>This is my journey, one badge at a time.</p><span class="badge-sample-note">An illustrative collection.<br>Real stories coming soon.</span></div>
-    <dialog class="badge-story" aria-labelledby="badgeStoryTitle"><div class="badge-story-color"><span class="badge-story-number"></span><div class="badge-story-preview"></div><span class="badge-story-keepsake">A LITTLE KEEPSAKE.<br>A LASTING MEMORY.</span></div><div class="badge-story-content"><button class="badge-story-close" aria-label="Close badge story">${icon('close')}</button><span class="badge-story-eyebrow">FROM THE MEMORY BOARD</span><h2 id="badgeStoryTitle"></h2><div class="badge-story-organization"></div><div class="badge-story-location"></div><div class="badge-story-meta"></div><p class="badge-story-short"></p><button class="badge-read-more" aria-expanded="false" aria-controls="badgeFullStory">Read more about this story ${icon('arrow')}</button><div id="badgeFullStory" hidden><p></p><blockquote></blockquote></div><div class="badge-story-photos"></div><div class="badge-story-bottom"><span></span><div><button data-story-nav="prev" aria-label="Previous badge story">←</button><button data-story-nav="next" aria-label="Next badge story">→</button></div></div></div></dialog>`;
+    <dialog class="badge-story" aria-labelledby="badgeStoryTitle"><div class="badge-story-color"><span class="badge-story-number"></span><div class="badge-story-preview"></div><span class="badge-story-keepsake">A LITTLE KEEPSAKE.<br>A LASTING MEMORY.</span></div><div class="badge-story-content"><button class="badge-story-close" aria-label="Close badge story">${icon('close')}</button><span class="badge-story-eyebrow">FROM THE MEMORY BOARD</span><h2 id="badgeStoryTitle"></h2><div class="badge-story-organization"></div><div class="badge-inspection-art" aria-hidden="true"></div><div class="badge-story-location"></div><div class="badge-story-meta"></div><p class="badge-story-short"></p><button class="badge-read-more" aria-expanded="false" aria-controls="badgeFullStory">Read more about this story ${icon('arrow')}</button><div id="badgeFullStory" hidden><p></p><blockquote></blockquote></div><div class="badge-story-photos"></div><div class="badge-story-bottom"><span></span><div><button data-story-nav="prev" aria-label="Previous badge story">←</button><button data-story-nav="next" aria-label="Next badge story">→</button></div></div></div></dialog></div>`;
 
   const $=s=>root.querySelector(s), $$=s=>[...root.querySelectorAll(s)];
   const stage=$('.badge-stage'), world=$('.badge-world'), story=$('.badge-story');
@@ -87,12 +93,33 @@ export function initBadgeCollection() {
   const chronological=items=>[...items].sort((a,b)=>a.dateISO.localeCompare(b.dateISO)||a.eventName.localeCompare(b.eventName));
   const visibleBadges=()=>chronological(badges.filter(b=>(state.category==='All'||b.category===state.category)&&(!state.year||b.year===state.year)));
   const clamp=(n,min,max)=>Math.min(max,Math.max(min,n));
-  function fitBoard() {
-    if(!stage.clientWidth)return;
-    state.fit=Math.min(stage.clientWidth/boardSize.width,stage.clientHeight/boardSize.height);
-    state.x=(stage.clientWidth-boardSize.width*state.fit)/2;
-    state.y=(stage.clientHeight-boardSize.height*state.fit)/2;
-    world.style.transform=`translate(${state.x}px,${state.y}px) scale(${state.fit})`;
+  let layoutKey='';
+  function fitBoard(force=false) {
+    const width=stage.clientWidth;
+    if(!width)return;
+    const items=badges.filter(b=>(state.category==='All'||b.category===state.category)&&(!state.year||b.year===state.year));
+    const key=`${width}/${items.map(b=>b.id).join(',')}`;
+    if(!force&&key===layoutKey)return;
+    cancelGesture();
+    layoutKey=key;
+    const layout=collectionLayout(items,width);
+    state.fit=1;state.x=state.y=0;
+    stage.style.height=`${layout.height}px`;
+    world.style.width=`${width}px`;world.style.height=`${layout.height}px`;
+    world.style.transform='translate(0px,0px) scale(1)';
+    stage.dataset.columns=layout.columns;
+    for(const badge of items){
+      badge.position=layout.positions.get(badge.id);
+      const el=root.querySelector(`[data-badge="${CSS.escape(badge.id)}"]`),p=badge.position;
+      el.style.left=`${p.x}px`;el.style.top=`${p.y}px`;
+      el.style.setProperty('--angle',`${p.angle}deg`);el.style.setProperty('--object-scale',p.scale);
+      el.style.setProperty('--strap-length',`${p.strap}px`);
+      el.querySelector('.badge-lanyard').setAttribute('viewBox',`0 0 160 ${p.strap}`);
+    }
+    physics.reset();
+    // Width readouts belong to the NOIR harness, outside the component.
+    document.querySelector('#previewFrameWidth').value=Math.round(root.clientWidth);
+    document.querySelector('#previewContentWidth').value=Math.round($('.content-container').clientWidth-parseFloat(getComputedStyle($('.content-container')).paddingLeft)*2);
   }
   function applyFilters() {
     physics.reset();
@@ -105,6 +132,7 @@ export function initBadgeCollection() {
     $('#badgeYearReset').hidden=!state.year;
     $('#badgeCount').textContent=state.category==='All'&&!state.year?`${items.length} stories & counting`:`${items.length} of ${badges.length} stories`;
     $('.badge-empty').hidden=items.length!==0;
+    fitBoard(true);
 
   }
   function closeStory() {story.close();}
@@ -117,6 +145,7 @@ export function initBadgeCollection() {
     $$('[data-badge]').forEach(el=>{el.classList.toggle('is-selected',el.dataset.badge===id);el.setAttribute('aria-pressed',String(el.dataset.badge===id));});
     $('.badge-story-color').style.background=b.lanyardColor;
     $('.badge-story-preview').innerHTML=badgeFace(b,true);
+    $('.badge-inspection-art').innerHTML=badgeFace(b,true);
     $('.badge-story-number').textContent=`MEMORY No. ${String(badges.indexOf(b)+1).padStart(2,'0')} / ${b.year}`;
     $('#badgeStoryTitle').textContent=b.eventName;
     $('.badge-story-organization').textContent=b.organization;
@@ -130,8 +159,11 @@ export function initBadgeCollection() {
     $('.badge-read-more').innerHTML=`Read more about this story ${icon('arrow')}`;
     $('.badge-story-photos').innerHTML=(b.photos||[]).map(photo=>`<figure><img class="badge-event-photo" src="${escape(photo.src)}" alt="${escape(photo.alt)}" loading="lazy">${photo.caption?`<figcaption>${escape(photo.caption)}</figcaption>`:''}</figure>`).join('');
     $('.badge-story-bottom > span').textContent=`${b.category} / ${b.year}`;
+    const chosen=root.querySelector(`[data-badge="${CSS.escape(id)}"] .badge-face`);
+    const chosenRect=chosen.getBoundingClientRect();
+    if(chosenRect.top<80||chosenRect.bottom>innerHeight-20)chosen.scrollIntoView({block:'center',behavior:'instant'});
     if(!story.open)story.showModal();
-    if(innerWidth>600){
+    if(innerWidth>=768){
       const anchor=root.querySelector(`[data-badge="${CSS.escape(b.id)}"] .badge-face`).getBoundingClientRect();
       const width=story.offsetWidth,height=story.offsetHeight;
       const nextX=anchor.right+14+width<innerWidth-20?anchor.right+14:anchor.left-width-14;
@@ -153,7 +185,7 @@ export function initBadgeCollection() {
   $('.badge-story-close').onclick=closeStory;
   story.addEventListener('close',()=>{root.classList.remove('has-badge-spotlight');const target=lastOpener?.inert?stage:lastOpener;target?.focus({preventScroll:true});});
   story.addEventListener('click',e=>{if(e.target===story){const r=story.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)closeStory();}});
-  $('.badge-read-more').onclick=()=>{const expanded=$('.badge-read-more').getAttribute('aria-expanded')!=='true';$('.badge-read-more').setAttribute('aria-expanded',String(expanded));$('#badgeFullStory').hidden=!expanded;$('.badge-read-more').innerHTML=`${expanded?'A little less':'Read more about this story'} ${icon('arrow')}`;if(innerWidth>600)story.style.top=`${Math.max(78,Math.min(parseFloat(story.style.top)||78,innerHeight-story.offsetHeight-20))}px`;};
+  $('.badge-read-more').onclick=()=>{const expanded=$('.badge-read-more').getAttribute('aria-expanded')!=='true';$('.badge-read-more').setAttribute('aria-expanded',String(expanded));$('#badgeFullStory').hidden=!expanded;$('.badge-read-more').innerHTML=`${expanded?'A little less':'Read more about this story'} ${icon('arrow')}`;if(innerWidth>=768)story.style.top=`${Math.max(78,Math.min(parseFloat(story.style.top)||78,innerHeight-story.offsetHeight-20))}px`;};
 
   const pointers=new Set();let gesture=null;
   function releaseBadge(cancelled=false){gesture?.drag?.release(cancelled);}
@@ -207,8 +239,8 @@ export function initBadgeCollection() {
   window.addEventListener('blur',cancelGesture);
   document.addEventListener('visibilitychange',()=>{if(document.hidden)cancelGesture();});
   new IntersectionObserver(entries=>{if(!entries[0].isIntersecting)cancelGesture();}).observe(stage);
-  new ResizeObserver(()=>{if(!root.hidden){cancelGesture();fitBoard();}}).observe(stage);
-  if(innerWidth<600)$('.badge-filters').open=false;
+  new ResizeObserver(()=>{if(!root.hidden)fitBoard();}).observe(stage);
+  $('.badge-filters').open=true;
 
   function showBadges(updateHash=true){
     root.hidden=false;document.querySelector('.hero').hidden=true;document.querySelector('#library').hidden=true;
