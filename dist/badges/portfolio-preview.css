@@ -74,3 +74,42 @@ body:has(#badgeCollection:not([hidden])) .site-footer{max-width:692px;margin-inl
 #badgeCollection.content-box-frame,body:has(#badgeCollection:not([hidden])) .badge-preview-toolbar{width:calc(100% - 40px)}
 
 @media(max-width:767px){#badgeCollection.content-box-frame,body:has(#badgeCollection:not([hidden])) .badge-preview-toolbar{width:calc(100% - 24px)}}
+
+/* A pinned archival index card, rather than a floating application panel. */
+#badgeCollection .badge-filters {
+  --index-paper:#ddd2b9;
+  --index-ink:#444339;
+  --index-muted:#766e5b;
+  --index-rule:rgb(68 67 57 / .16);
+  background:repeating-linear-gradient(0deg,transparent 0 3px,rgb(74 59 36 / .018) 3px 4px),linear-gradient(110deg,rgb(255 255 255 / .16),transparent 65%),var(--index-paper);
+  color:var(--index-ink);
+  border:1px solid rgb(255 249 223 / .28);
+  border-radius:2px 3px 1px 2px;
+  box-shadow:2px 5px 7px rgb(25 18 10 / .28),inset 0 0 0 3px rgb(255 249 223 / .11);
+  transform:rotate(-1.5deg);
+  backdrop-filter:none;
+  overflow:visible;
+}
+[data-theme="light"] #badgeCollection .badge-filters{--index-paper:#f0e7d3;--index-ink:#444238;--index-muted:#7a705d}
+#badgeCollection .badge-filters:before{content:'';display:block;position:absolute;left:calc(50% - 4px);top:5px;width:8px;height:8px;z-index:1;border-radius:50%;background:radial-gradient(circle at 30% 25%,#ece3cd 0,#b0a792 32%,#68685e 67%,#43463e 100%);box-shadow:1px 2px 2px rgb(31 26 18 / .4);pointer-events:none}
+#badgeCollection .badge-filters:after{content:'';position:absolute;right:-1px;bottom:-1px;width:13px;height:13px;background:linear-gradient(135deg,#aa9d80 0,#c3b798 48%,#e7dcc3 50%);clip-path:polygon(100% 0,100% 100%,0 100%);pointer-events:none;opacity:.7}
+#badgeCollection .badge-filters summary{color:var(--index-ink);border-bottom:1px solid var(--index-rule);padding:19px 10px 11px;gap:7px;letter-spacing:0;text-transform:none;min-height:47px}
+#badgeCollection .badge-filters summary>span:nth-child(2){font:italic 15px/1.2 Georgia,serif;letter-spacing:-.4px}
+#badgeCollection .badge-index-number{font:7px/1 'Badge Sans',sans-serif;letter-spacing:.4px;writing-mode:vertical-rl;border-left:1px solid var(--index-rule);padding-left:4px;opacity:.75}
+#badgeCollection .badge-filter-chevron{font-size:11px;color:var(--index-muted)}
+#badgeCollection .badge-filter-label{font-size:6px;letter-spacing:.9px;color:var(--index-muted);margin:0 0 9px;padding:0}
+#badgeCollection .badge-filter-content{padding:10px 9px 12px}
+#badgeCollection .badge-category-filters{gap:3px}
+#badgeCollection .badge-category-filters button{color:var(--index-ink);border-radius:1px;background:transparent;border:1px solid transparent;padding:5px 3px;gap:4px;text-align:left;min-height:25px}
+#badgeCollection .badge-category-filters button>span{color:var(--index-muted);font-size:11px;width:11px}
+#badgeCollection .badge-category-filters button:hover{background:rgb(68 67 57 / .06)}
+#badgeCollection .badge-category-filters button.is-active{color:var(--index-ink);background:rgb(68 67 57 / .08);border-color:var(--index-rule)}
+#badgeCollection .badge-category-filters button.is-active>span{color:var(--index-ink)}
+#badgeCollection .badge-year-heading{border-top:1px dashed var(--index-rule);color:var(--index-muted);margin-top:9px;padding-top:10px;font-size:6px;letter-spacing:1.2px}
+#badgeCollection .badge-year-heading button{color:var(--index-ink);font-size:7px;border-bottom:1px solid var(--index-rule)}
+#badgeCollection .badge-year-filters{gap:4px}
+#badgeCollection .badge-year-filters button{color:var(--index-muted);border:1px solid var(--index-rule);border-radius:1px;background:transparent;min-height:25px;font-size:8px}
+#badgeCollection .badge-year-filters button:hover{background:rgb(68 67 57 / .06)}
+#badgeCollection .badge-year-filters button[aria-pressed=true]{color:var(--index-paper);background:var(--index-ink);border-color:var(--index-ink)}
+#badgeCollection .badge-filters :focus-visible{outline-color:var(--index-ink)}
+@media(max-width:639px){#badgeCollection .badge-filters summary{padding:16px 8px 10px;gap:6px;min-height:44px}#badgeCollection .badge-filters summary>span:nth-child(2){font-size:14px}#badgeCollection .badge-category-filters button{min-height:30px}#badgeCollection .badge-year-filters button{min-height:30px}}
