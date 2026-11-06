@@ -63,9 +63,6 @@ body:has(#badgeCollection:not([hidden])) .site-footer{max-width:692px;margin-inl
   #badgeCollection .badge-wood-sign i,#badgeCollection .badge-wood-sign b{top:32px;width:4px;height:4px}
   #badgeCollection .badge-filters{top:14px;left:auto;right:10px;width:150px;max-width:70%;transform:none}
   #badgeCollection .badge-filters summary{padding:12px 10px;min-height:38px;font-size:8px}
-  #badgeCollection .badge-frame:has(.badge-filters[open]){z-index:1}
-  #badgeCollection .badge-stage:has(.badge-filters[open]){overflow:visible}
-  #badgeCollection .badge-stage:has(.badge-filters[open]) .badge-world{clip-path:inset(0)}
   #badgeCollection .badge-afterword{flex-wrap:wrap;gap:12px}
   body:has(#badgeCollection:not([hidden])) .site-footer{width:calc(100% - 64px);font-size:9px;gap:10px}
 }
@@ -127,3 +124,27 @@ body:has(#badgeCollection:not([hidden])) .site-footer{max-width:692px;margin-inl
 #badgeCollection .badge-year-heading{margin-top:7px}
 .badge-filter-status{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
 @media(max-width:639px){#badgeCollection .content-container{padding-top:44px}#badgeCollection .badge-category-filters button{min-height:30px}#badgeCollection .badge-filters .badge-statistics{font-size:6px;column-gap:4px}}
+
+/* Keep the paper index compact, including its expanded state on small boards. */
+#badgeCollection .badge-filters{width:150px;right:12px;top:12px;max-height:calc(var(--badge-board-height,400px) - 24px);overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;scrollbar-color:#a69b80 transparent;overscroll-behavior:contain;scroll-padding-block:65px 6px}
+#badgeCollection .badge-filters summary{padding:16px 8px 8px;column-gap:5px;row-gap:3px}
+#badgeCollection .badge-filters summary>span:nth-child(2){font-size:13px}
+#badgeCollection .badge-filters .badge-statistics{font-size:6.5px;column-gap:5px}
+#badgeCollection .badge-filter-content{padding:5px 7px 9px}
+#badgeCollection .badge-category-filters{gap:2px}
+#badgeCollection .badge-category-filters button{font-size:7px;padding:4px 2px;gap:3px;min-height:22px}
+#badgeCollection .badge-category-filters button>span{font-size:9px;width:9px}
+#badgeCollection .badge-year-heading{padding-top:7px;margin-top:6px}
+#badgeCollection .badge-year-filters button{font-size:7px;min-height:22px;padding:4px 2px}
+@media(max-width:639px){
+  #badgeCollection .badge-stage{overflow:hidden}
+  #badgeCollection .badge-filters{width:132px;max-width:calc(100% - 16px);right:8px;top:8px;max-height:calc(var(--badge-board-height,160px) - 16px);transform:none;touch-action:pan-y}
+  #badgeCollection .badge-filters summary{position:sticky;top:0;z-index:2;background:var(--index-paper);padding:14px 7px 7px;column-gap:4px}
+  #badgeCollection .badge-filters:before{z-index:3;width:6px;height:6px;top:4px}
+  #badgeCollection .badge-filters summary>span:nth-child(2){font-size:12px;white-space:nowrap}
+  #badgeCollection .badge-filters .badge-statistics{font-size:6px;column-gap:3px}
+  #badgeCollection .badge-category-filters button{min-height:28px;font-size:7px}
+  #badgeCollection .badge-category-filters button>span{display:none}
+  #badgeCollection .badge-year-filters{display:grid;grid-template-columns:1fr 1fr;gap:3px}
+  #badgeCollection .badge-year-filters button{min-height:28px;font-size:8px}
+}

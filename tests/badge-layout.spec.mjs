@@ -42,3 +42,17 @@ for(const width of [390,1440])test(`story inspection uses ${width<768?'a bottom 
   if(width<768)await expect.poll(async()=>{const r=await page.locator('.badge-story').boundingBox();return Math.abs(r.y+r.height-900);}).toBeLessThan(.5);
   await page.keyboard.press('Escape');await expect(page.locator('[data-badge="openai"]')).toBeFocused();
 });
+
+for(const width of [320,390,480])test(`expanded memory index stays inside the cork at ${width}px and all controls remain reachable`,async({page})=>{
+  await page.setViewportSize({width,height:800});await page.goto('/');
+  await page.locator('.badge-filters summary').click();
+  const stage=await page.locator('.badge-stage').boundingBox(),index=await page.locator('.badge-filters').boundingBox();
+  expect(index.width).toBeLessThanOrEqual(133);
+  expect(index.x).toBeGreaterThanOrEqual(stage.x);expect(index.y).toBeGreaterThanOrEqual(stage.y);
+  expect(index.x+index.width).toBeLessThanOrEqual(stage.x+stage.width);
+  expect(index.y+index.height).toBeLessThanOrEqual(stage.y+stage.height);
+  await page.locator('[data-badge-category="Technology"]').click();
+  await page.locator('[data-badge-year="2025"]').click();
+  await expect(page.locator('[data-badge]:not(.is-filtered)')).toHaveCount(2);
+  await page.locator('.badge-filters summary').click();await expect(page.locator('.badge-filters')).not.toHaveAttribute('open','');
+});

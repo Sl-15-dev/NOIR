@@ -91,6 +91,7 @@ export function initBadgeCollection() {
     const key=`${width}/${height}`;
     if(key===layoutKey)return;
     cancelGesture();layoutKey=key;
+    stage.style.setProperty('--badge-board-height',`${height}px`);
     state.fit=Math.min(width/boardSize.width,height/boardSize.height);
     state.x=(width-boardSize.width*state.fit)/2;
     state.y=(height-boardSize.height*state.fit)/2;
