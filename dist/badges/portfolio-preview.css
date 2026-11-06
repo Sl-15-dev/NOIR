@@ -148,3 +148,15 @@ body:has(#badgeCollection:not([hidden])) .site-footer{max-width:692px;margin-inl
   #badgeCollection .badge-year-filters{display:grid;grid-template-columns:1fr 1fr;gap:3px}
   #badgeCollection .badge-year-filters button{min-height:28px;font-size:8px}
 }
+
+/* Fold down to a small pinned tab; totals remain in the expanded collection. */
+#badgeCollection .badge-filters:not([open]){width:112px;overflow:hidden}
+#badgeCollection .badge-filters:not([open]) summary{grid-template-columns:1fr 10px;padding:14px 8px 7px;min-height:38px;column-gap:6px;row-gap:0;border-bottom:0}
+#badgeCollection .badge-filters:not([open]) .badge-index-number,#badgeCollection .badge-filters:not([open]) .badge-statistics{display:none}
+#badgeCollection .badge-filters:not([open]) summary>span:nth-child(2){font-size:13px;white-space:nowrap}
+#badgeCollection .badge-filters:not([open]):after{width:8px;height:8px}
+@media(max-width:639px){
+  #badgeCollection .badge-filters:not([open]){width:100px}
+  #badgeCollection .badge-filters:not([open]) summary{padding:13px 7px 7px;min-height:36px}
+  #badgeCollection .badge-filters:not([open]) summary>span:nth-child(2){font-size:12px}
+}
