@@ -1,7 +1,8 @@
+import {createBadgePhysics} from './physics.js';
 import {badges, categories, years, boardSize} from './data.js';
 
 const escape = value => String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const icon = (name) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${({arrow:'<path d="M5 12h14m-5-5 5 5-5 5"/>',pin:'<path d="m9 3 6 0-1 7 4 4H6l4-4zm3 11v7"/>',globe:'<circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18"/>',close:'<path d="m6 6 12 12M6 18 18 6"/>',expand:'<path d="M8 3H3v5m13-5h5v5M3 16v5h5m8 0h5v-5"/>',filter:'<path d="M4 7h16M7 12h10m-7 5h4"/>',location:'<path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z"/><circle cx="12" cy="10" r="2"/>'})[name] || ''}</svg>`;
+const icon = (name) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${({spark:'<path d="m12 3 2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5Z"/>',arrow:'<path d="M5 12h14m-5-5 5 5-5 5"/>',pin:'<path d="m9 3 6 0-1 7 4 4H6l4-4zm3 11v7"/>',globe:'<circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18"/>',close:'<path d="m6 6 12 12M6 18 18 6"/>',expand:'<path d="M8 3H3v5m13-5h5v5M3 16v5h5m8 0h5v-5"/>',filter:'<path d="M4 7h16M7 12h10m-7 5h4"/>',location:'<path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z"/><circle cx="12" cy="10" r="2"/>'})[name] || ''}</svg>`;
 
 
 function badgeArtwork(b) {
@@ -23,15 +24,15 @@ function badgeArtwork(b) {
 }
 
 function badgeFace(b, miniature=false) {
-  return `<span class="badge-face badge-design-${escape(b.design)}" style="--badge-paper:${escape(b.paper)};--badge-ink:${escape(b.ink)}">
-    ${b.badgeImage ? `<img class="badge-custom-image" src="${escape(b.badgeImage)}" alt="${escape(b.eventName)} badge design">` : `
+  return `<span class="badge-face badge-design-${escape(b.design)} badge-shape-${escape(b.shape)}" style="--badge-width:${b.dimensions.width}px;--badge-height:${b.dimensions.height}px;--badge-paper:${escape(b.paper)};--badge-ink:${escape(b.ink)}">
+    ${b.badgeImage ? `<img class="badge-custom-image" src="${escape(b.badgeImage)}" alt="${escape(b.eventName)} badge design">` : ''}
     <span class="badge-slot"></span><span class="badge-issuer">${escape(b.organization)} <span>${String(b.year).slice(2)}</span></span>
     <span class="badge-art" aria-hidden="true">${badgeArtwork(b)}</span>
     <span class="badge-event">${escape(b.label)}</span>
     <span class="badge-event-sub">${b.design==='openai'?'SAN FRANCISCO':b.design==='config'?'MAKE WHAT’S NEXT':b.design==='ethglobal'?'LONDON / 2024':b.design==='react'?'ADVANCED / LONDON':b.design==='merge'?'DESIGN MEETS CODE':escape(b.location.split(',')[0].toUpperCase())}</span>
     <span class="badge-person">${b.design==='config'?'Hello, curious human.':'THE COLLECTOR'}</span>
     <span class="badge-role">${escape(b.role)} <span>${icon("arrow")}</span></span>
-    ${miniature?'':'<span class="badge-barcode" aria-hidden="true"></span>'}`}
+    ${miniature?'':'<span class="badge-barcode" aria-hidden="true"></span>'}
   </span>`;
 }
 
@@ -54,9 +55,9 @@ export function initBadgeCollection() {
     <header class="badge-heading">
       <div class="badge-eyebrow"><span></span> A PERSONAL COLLECTION <span class="badge-edition">EST. 2023 — ONGOING</span></div>
       <div class="badge-heading-row"><h1 id="badgesTitle">Every badge <em>tells a story.</em></h1><span class="badge-heading-stamp">COLLECT MOMENTS.<br>KEEP THE MEMORIES. ${icon('globe')}</span></div>
-      <p>Places I’ve been. People I’ve met. Things that stayed with me.<br class="badge-mobile-break"> A little piece of my journey, pinned in one place.</p>
+      <p>Places I’ve been. People I’ve met. Things that stayed with me.<br class="badge-mobile-break"> A little piece of my journey, pinned in one place.</p><div class="badge-statistics" aria-label="Collection statistics"><span><strong>${badges.length}</strong> badges</span><i></i><span><strong>${new Set(badges.map(b=>`${b.eventName}|${b.year}|${b.location}`)).size}</strong> events</span><i></i><span><strong>${years.length}</strong> years of memories</span></div>
     </header>
-    <div class="badge-board-heading"><div><span class="badge-live-dot"></span> THE MEMORY BOARD <span class="badge-board-divider">/</span> <span id="badgeCount" role="status">${badges.length} stories & counting</span></div><span class="badge-board-hint">A few keepsakes. A lot of good stories.</span></div>
+    <div class="badge-board-heading"><div><span class="badge-live-dot"></span> THE MEMORY BOARD <span class="badge-board-divider">/</span> <span id="badgeCount" role="status">${badges.length} stories & counting</span></div><button class="badge-discover" id="badgeDiscover">${icon('spark')} Discover a Memory ${icon('arrow')}</button></div>
     <div class="badge-frame"><div class="badge-wood-sign" aria-hidden="true"><span>Badges</span><em>Every badge tells a story.</em><i></i><b></b></div>
       <div class="badge-stage" tabindex="0" role="region" aria-label="Interactive badge corkboard. Use arrow keys to pan, plus and minus to zoom, and 0 to fit the board." aria-describedby="badgeInstructions">
         <div class="badge-world" style="width:${boardSize.width}px;height:${boardSize.height}px">
@@ -66,7 +67,7 @@ export function initBadgeCollection() {
           <div class="badge-note" aria-hidden="true"><span class="badge-pin"></span><span>the best part?<br>the people.</span><svg viewBox="0 0 100 36"><path d="M8 18q39 18 73-4m-9-4 10 3-5 10"/></svg><small>always say hello ↗</small></div>
           <span class="badge-star badge-star-one" aria-hidden="true">✳</span><span class="badge-star badge-star-two" aria-hidden="true">✧</span>
           <div class="badge-hangings">${badges.map(b=>`<button class="badge-hanging" data-badge="${escape(b.id)}" aria-label="Read the story of ${escape(b.eventName)}, ${b.year}, ${escape(b.role)}" aria-pressed="false" style="left:${b.position.x}px;top:${b.position.y}px;--angle:${b.position.angle}deg;--strap-length:${b.position.strap}px;--lanyard:${b.lanyardColor}">
-            <span class="badge-hook"></span><span class="badge-swing"><svg class="badge-lanyard" viewBox="0 0 160 ${b.position.strap}" preserveAspectRatio="none" aria-hidden="true"><defs><pattern id="fabric-${b.id}" width="3" height="3" patternUnits="userSpaceOnUse"><path d="M0 0h3v1H0z" fill="white" opacity=".12"/><path d="M0 1h1v2H0z" fill="black" opacity=".15"/></pattern><pattern id="mosaic-${b.id}" width="35" height="100" patternUnits="userSpaceOnUse"><rect width="35" height="100" fill="${b.lanyardColor}"/><path d="m0 0 35 20L0 45z" fill="#edb855"/><path d="m35 25-35 25 35 25z" fill="#6fa373"/><path d="m0 60 35 25-35 15z" fill="#d46c77"/></pattern></defs><path class="badge-ribbon-shadow" d="M78 6Q27 48 76 ${b.position.strap-9}M82 6Q133 48 84 ${b.position.strap-9}"/><path class="badge-ribbon" style="${b.lanyardPattern==='mosaic'?`stroke:url(#mosaic-${b.id})`:''}" d="M78 6Q27 48 76 ${b.position.strap-9}M82 6Q133 48 84 ${b.position.strap-9}"/><path class="badge-ribbon-weave" stroke="url(#fabric-${b.id})" d="M78 6Q27 48 76 ${b.position.strap-9}M82 6Q133 48 84 ${b.position.strap-9}"/><path class="badge-ribbon-seam" d="M78 6Q27 48 76 ${b.position.strap-9}M82 6Q133 48 84 ${b.position.strap-9}"/><text transform="translate(60 100) rotate(87)">${Array(4).fill(escape(b.organization.toUpperCase())).join(" · ")}</text><text transform="translate(104 95) rotate(93)">${Array(4).fill(`${b.year} · ${escape(b.role.toUpperCase())}`).join(" · ")}</text></svg><span class="badge-clasp"></span>${badgeFace(b)}</span></button>`).join('')}</div>
+            <span class="badge-hook"></span><span class="badge-swing"><svg class="badge-lanyard" viewBox="0 0 160 ${b.position.strap}" preserveAspectRatio="none" aria-hidden="true"><defs><path data-strap-left id="strap-left-${b.id}" d="M78 6Q27 48 76 ${b.position.strap-9}"/><path data-strap-right id="strap-right-${b.id}" d="M82 6Q133 48 84 ${b.position.strap-9}"/><pattern id="fabric-${b.id}" width="3" height="3" patternUnits="userSpaceOnUse"><path d="M0 0h3v1H0z" style="fill:white" opacity=".12"/><path d="M0 1h1v2H0z" style="fill:black" opacity=".15"/></pattern><pattern id="mosaic-${b.id}" width="35" height="100" patternUnits="userSpaceOnUse"><rect width="35" height="100" fill="${b.lanyardColor}"/><path d="m0 0 35 20L0 45z" style="fill:#edb855"/><path d="m35 25-35 25 35 25z" style="fill:#6fa373"/><path d="m0 60 35 25-35 15z" style="fill:#d46c77"/></pattern></defs><path class="badge-ribbon-shadow" d="M78 6Q27 48 76 ${b.position.strap-9}M82 6Q133 48 84 ${b.position.strap-9}"/><path class="badge-ribbon" style="${b.lanyardPattern==='mosaic'?`stroke:url(#mosaic-${b.id})`:''}" d="M78 6Q27 48 76 ${b.position.strap-9}M82 6Q133 48 84 ${b.position.strap-9}"/><path class="badge-ribbon-weave" stroke="url(#fabric-${b.id})" d="M78 6Q27 48 76 ${b.position.strap-9}M82 6Q133 48 84 ${b.position.strap-9}"/><path class="badge-ribbon-seam" d="M78 6Q27 48 76 ${b.position.strap-9}M82 6Q133 48 84 ${b.position.strap-9}"/><text><textPath href="#strap-left-${b.id}" startOffset="15%">${Array(4).fill(escape(b.organization.toUpperCase())).join(" · ")}</textPath></text><text><textPath href="#strap-right-${b.id}" startOffset="18%">${Array(4).fill(`${b.year} · ${escape(b.role.toUpperCase())}`).join(" · ")}</textPath></text></svg><span class="badge-pendant"><span class="badge-clasp"></span>${badgeFace(b)}</span></span></button>`).join('')}</div>
           <span class="badge-corner-note" aria-hidden="true">Conferences. Workshops. People. Memories.</span>
         </div>
         <details class="badge-filters" open><summary>${icon('filter')} <span>The collection</span><span class="badge-filter-chevron">⌄</span></summary><div class="badge-filter-content"><span class="badge-filter-label">A LITTLE BIT OF EVERYTHING</span><div class="badge-category-filters" role="group" aria-label="Filter badges by category">${categories.map((c,i)=>`<button data-badge-category="${c}" aria-pressed="${i===0}" class="${i===0?'is-active':''}"><span>${c==='All'?'◈':c==='Technology'?'⌘':c==='Conferences'?'▤':c==='Hackathons'?'↯':c==='Workshops'?'∗':'♡'}</span>${c}<small>${c==='All'?badges.length:badges.filter(b=>b.category===c).length}</small></button>`).join('')}</div><div class="badge-year-heading"><span>BY YEAR</span><button id="badgeYearReset" hidden>Clear</button></div><div class="badge-year-filters" role="group" aria-label="Filter badges by year">${years.map(y=>`<button data-badge-year="${y}" aria-pressed="false">${y}</button>`).join('')}</div></div></details>
@@ -74,15 +75,19 @@ export function initBadgeCollection() {
         <div class="badge-board-tools"><span class="badge-board-tooltip">MAKE YOURSELF AT HOME</span><div class="badge-zoom-tools" role="group" aria-label="Board zoom"><button data-zoom="out" aria-label="Zoom out">−</button><output id="badgeZoom" aria-live="polite">100%</output><button data-zoom="in" aria-label="Zoom in">+</button><span></span><button data-zoom="reset" aria-label="Fit board">${icon('expand')}</button></div></div>
       </div>
     </div>
-    <div class="badge-board-footer"><p id="badgeInstructions"><span class="badge-mouse-icon" aria-hidden="true"></span> Scroll to zoom or drag to explore the board.<span class="badge-touch-instruction"> Pinch to zoom on touch.</span></p><span>Pick a badge. Stay for the story. ${icon('arrow')}</span></div>
+    <div class="badge-board-footer"><p id="badgeInstructions"><span class="badge-mouse-icon" aria-hidden="true"></span> Scroll to zoom or drag to explore the board.<span class="badge-touch-instruction"> Drag a badge to feel its weight. Enable Explore board to pan and pinch.</span></p><button class="badge-touch-mode" id="badgeTouchMode" aria-pressed="false">Explore board</button><span class="badge-desktop-instruction">Drag a badge. Feel the memory. ${icon('arrow')}</span></div>
+    <details class="badge-timeline"><summary><span>THE JOURNEY SO FAR</span><span>${Math.min(...years)} — ${Math.max(...years)} ${icon('arrow')}</span></summary><div class="badge-timeline-content"><p>Different places. A little more perspective, every year.</p><ol>${[...years].sort().map(year=>`<li><button data-timeline-year="${year}" aria-pressed="false"><span>${year}</span><small>${badges.filter(b=>b.year===year).length} memories</small></button></li>`).join('')}</ol><button id="badgeJourneyStart">Start with the first hello ${icon('arrow')}</button></div></details>
     <div class="badge-afterword"><span>More than a name tag.</span><p>Every event leaves a memory.<br>This is my journey, one badge at a time.</p><span class="badge-sample-note">An illustrative collection.<br>Real stories coming soon.</span></div>
-    <dialog class="badge-story" aria-labelledby="badgeStoryTitle"><div class="badge-story-color"><span class="badge-story-number"></span><div class="badge-story-preview"></div><span class="badge-story-keepsake">A LITTLE KEEPSAKE.<br>A LASTING MEMORY.</span></div><div class="badge-story-content"><button class="badge-story-close" aria-label="Close badge story">${icon('close')}</button><span class="badge-story-eyebrow">FROM THE MEMORY BOARD</span><h2 id="badgeStoryTitle"></h2><div class="badge-story-location"></div><div class="badge-story-meta"></div><p class="badge-story-short"></p><button class="badge-read-more" aria-expanded="false" aria-controls="badgeFullStory">Read more about this story ${icon('arrow')}</button><div id="badgeFullStory" hidden><p></p><blockquote></blockquote></div><div class="badge-story-photos"></div><div class="badge-story-bottom"><span></span><div><button data-story-nav="prev" aria-label="Previous badge story">←</button><button data-story-nav="next" aria-label="Next badge story">→</button></div></div></div></dialog>`;
+    <dialog class="badge-story" aria-labelledby="badgeStoryTitle"><div class="badge-story-color"><span class="badge-story-number"></span><div class="badge-story-preview"></div><span class="badge-story-keepsake">A LITTLE KEEPSAKE.<br>A LASTING MEMORY.</span></div><div class="badge-story-content"><button class="badge-story-close" aria-label="Close badge story">${icon('close')}</button><span class="badge-story-eyebrow">FROM THE MEMORY BOARD</span><h2 id="badgeStoryTitle"></h2><div class="badge-story-organization"></div><div class="badge-story-location"></div><div class="badge-story-meta"></div><p class="badge-story-short"></p><button class="badge-read-more" aria-expanded="false" aria-controls="badgeFullStory">Read more about this story ${icon('arrow')}</button><div id="badgeFullStory" hidden><p></p><blockquote></blockquote></div><div class="badge-story-photos"></div><div class="badge-story-bottom"><span></span><div><button data-story-nav="prev" aria-label="Previous badge story">←</button><button data-story-nav="next" aria-label="Next badge story">→</button></div></div></div></dialog>`;
 
   const $=s=>root.querySelector(s), $$=s=>[...root.querySelectorAll(s)];
   const stage=$('.badge-stage'), world=$('.badge-world'), story=$('.badge-story');
-  const state={category:'All',year:null,selected:null,zoom:1,fit:1,x:0,y:0};
+  const state={category:'All',year:null,selected:null,zoom:1,fit:1,x:0,y:0,touchExplore:false};
+  const physics=createBadgePhysics({root,stage,world,badges,getScale:()=>state.fit*state.zoom,isAvailable:()=>!root.hidden&&!story.open});
   let initialized=false, lastOpener=null, blockClickUntil=0;
-  const visibleBadges=()=>badges.filter(b=>(state.category==='All'||b.category===state.category)&&(!state.year||b.year===state.year));
+  const chronological=items=>[...items].sort((a,b)=>a.dateISO.localeCompare(b.dateISO)||a.eventName.localeCompare(b.eventName));
+  const visibleBadges=()=>chronological(badges.filter(b=>(state.category==='All'||b.category===state.category)&&(!state.year||b.year===state.year)));
+  const badgeCenter=b=>({x:b.position.x+80,y:b.position.y+(b.position.strap+b.dimensions.height/2)*.68});
   const clamp=(n,min,max)=>Math.min(max,Math.max(min,n));
   function transform() {
     const scale=state.fit*state.zoom;
@@ -97,7 +102,7 @@ export function initBadgeCollection() {
   function fitBoard() {
     if(!stage.clientWidth)return;
     state.fit=Math.min(stage.clientWidth/boardSize.width,stage.clientHeight/boardSize.height);
-    state.zoom=window.innerWidth<600?1.65:1;
+    state.zoom=window.innerWidth<600?Math.max(1.65,.45/state.fit):1;
     state.x=(stage.clientWidth-boardSize.width*state.fit*state.zoom)/2;
     state.y=(stage.clientHeight-boardSize.height*state.fit*state.zoom)/2;
     transform();
@@ -110,31 +115,41 @@ export function initBadgeCollection() {
     transform();
   }
   function applyFilters() {
+    physics.reset();
     const items=visibleBadges();
     $$('[data-badge]').forEach(b=>{const match=items.some(item=>item.id===b.dataset.badge);b.classList.toggle('is-filtered',!match);b.inert=!match;b.setAttribute('aria-hidden',String(!match));});
     $$('[data-badge-category]').forEach(b=>{const active=b.dataset.badgeCategory===state.category;b.classList.toggle('is-active',active);b.setAttribute('aria-pressed',String(active));});
     $$('[data-badge-year]').forEach(b=>b.setAttribute('aria-pressed',String(Number(b.dataset.badgeYear)===state.year)));
+    $$('[data-timeline-year]').forEach(b=>b.setAttribute('aria-pressed',String(Number(b.dataset.timelineYear)===state.year)));
+    $('#badgeDiscover').disabled=items.length===0;
     $('#badgeYearReset').hidden=!state.year;
     $('#badgeCount').textContent=state.category==='All'&&!state.year?`${items.length} stories & counting`:`${items.length} of ${badges.length} stories`;
     $('.badge-empty').hidden=items.length!==0;
     // Bring matching memories into view even when the visitor has panned away.
     if(items.length && (state.category!=='All'||state.year)) {
       const scale=state.fit*state.zoom;
-      const x=items.reduce((sum,b)=>sum+b.position.x+80,0)/items.length;
-      const y=items.reduce((sum,b)=>sum+b.position.y+(b.position.strap+105)*.68,0)/items.length;
+      const x=items.reduce((sum,b)=>sum+badgeCenter(b).x,0)/items.length;
+      const y=items.reduce((sum,b)=>sum+badgeCenter(b).y,0)/items.length;
       state.x=stage.clientWidth/2-x*scale; state.y=stage.clientHeight/2-y*scale;transform();
     } else fitBoard();
   }
   function closeStory() {story.close();}
   function openStory(id,opener) {
     const b=badges.find(b=>b.id===id);if(!b)return;
-    if(opener)lastOpener=opener;
+    physics.reset();
+    if(!story.open)lastOpener=opener||root.querySelector(`[data-badge="${CSS.escape(id)}"]`);
+    root.classList.add('has-badge-spotlight');
+    const center=badgeCenter(b),scale=state.fit*state.zoom;
+    const face=root.querySelector(`[data-badge="${CSS.escape(id)}"] .badge-face`);
+    const rect=face.getBoundingClientRect(),board=stage.getBoundingClientRect();
+    if(rect.left<board.left+15||rect.right>board.right-15||rect.top<board.top+15||rect.bottom>board.bottom-15){state.x=stage.clientWidth/2-center.x*scale;state.y=stage.clientHeight/2-center.y*scale;transform();}
     state.selected=id;
     $$('[data-badge]').forEach(el=>{el.classList.toggle('is-selected',el.dataset.badge===id);el.setAttribute('aria-pressed',String(el.dataset.badge===id));});
     $('.badge-story-color').style.background=b.lanyardColor;
     $('.badge-story-preview').innerHTML=badgeFace(b,true);
     $('.badge-story-number').textContent=`MEMORY No. ${String(badges.indexOf(b)+1).padStart(2,'0')} / ${b.year}`;
     $('#badgeStoryTitle').textContent=b.eventName;
+    $('.badge-story-organization').textContent=b.organization;
     $('.badge-story-location').innerHTML=`${icon('location')} ${escape(b.location)}`;
     $('.badge-story-meta').innerHTML=`<span>${escape(b.date)}</span><span>${escape(b.role)}</span>`;
     $('.badge-story-short').textContent=b.shortDescription;
@@ -143,11 +158,11 @@ export function initBadgeCollection() {
     $('#badgeFullStory').hidden=true;
     $('.badge-read-more').setAttribute('aria-expanded','false');
     $('.badge-read-more').innerHTML=`Read more about this story ${icon('arrow')}`;
-    $('.badge-story-photos').innerHTML=(b.photos||[]).map(photo=>`<figure><img src="${escape(photo.src)}" alt="${escape(photo.alt)}" loading="lazy">${photo.caption?`<figcaption>${escape(photo.caption)}</figcaption>`:''}</figure>`).join('');
+    $('.badge-story-photos').innerHTML=(b.photos||[]).map(photo=>`<figure><img class="badge-event-photo" src="${escape(photo.src)}" alt="${escape(photo.alt)}" loading="lazy">${photo.caption?`<figcaption>${escape(photo.caption)}</figcaption>`:''}</figure>`).join('');
     $('.badge-story-bottom > span').textContent=`${b.category} / ${b.year}`;
     if(!story.open)story.showModal();
     if(innerWidth>600){
-      const anchor=root.querySelector(`[data-badge="${b.id}"]`).getBoundingClientRect();
+      const anchor=root.querySelector(`[data-badge="${CSS.escape(b.id)}"] .badge-face`).getBoundingClientRect();
       const width=story.offsetWidth,height=story.offsetHeight;
       const nextX=anchor.right+14+width<innerWidth-20?anchor.right+14:anchor.left-width-14;
       story.style.left=`${clamp(nextX,20,innerWidth-width-20)}px`;
@@ -156,7 +171,8 @@ export function initBadgeCollection() {
     story.scrollTop=0;
   }
   root.addEventListener('click',e=>{
-    const category=e.target.closest('[data-badge-category]'),year=e.target.closest('[data-badge-year]'),badge=e.target.closest('[data-badge]'),zoom=e.target.closest('[data-zoom]'),nav=e.target.closest('[data-story-nav]');
+    const category=e.target.closest('[data-badge-category]'),year=e.target.closest('[data-badge-year]'),badge=e.target.closest('[data-badge]'),zoom=e.target.closest('[data-zoom]'),nav=e.target.closest('[data-story-nav]'),timeline=e.target.closest('[data-timeline-year]');
+    if(timeline){state.category='All';state.year=Number(timeline.dataset.timelineYear);applyFilters();}
     if(category){state.category=category.dataset.badgeCategory;applyFilters();}
     if(year){const value=Number(year.dataset.badgeYear);state.year=state.year===value?null:value;applyFilters();}
     if(badge)openStory(badge.dataset.badge,badge);
@@ -166,40 +182,100 @@ export function initBadgeCollection() {
   $('#badgeYearReset').onclick=()=>{state.year=null;applyFilters();};
   $('.badge-empty button').onclick=()=>{state.category='All';state.year=null;applyFilters();};
   $('.badge-story-close').onclick=closeStory;
-  story.addEventListener('close',()=>{const target=lastOpener?.inert?stage:lastOpener;target?.focus({preventScroll:true});});
+  story.addEventListener('close',()=>{root.classList.remove('has-badge-spotlight');const target=lastOpener?.inert?stage:lastOpener;target?.focus({preventScroll:true});});
   story.addEventListener('click',e=>{if(e.target===story){const r=story.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)closeStory();}});
   $('.badge-read-more').onclick=()=>{const expanded=$('.badge-read-more').getAttribute('aria-expanded')!=='true';$('.badge-read-more').setAttribute('aria-expanded',String(expanded));$('#badgeFullStory').hidden=!expanded;$('.badge-read-more').innerHTML=`${expanded?'A little less':'Read more about this story'} ${icon('arrow')}`;if(innerWidth>600)story.style.top=`${Math.max(78,Math.min(parseFloat(story.style.top)||78,innerHeight-story.offsetHeight-20))}px`;};
 
   const pointers=new Map();let gesture=null;
+  const controls='.badge-filters,.badge-board-tools,.badge-empty';
   function point(e){const r=stage.getBoundingClientRect();return {x:e.clientX-r.left,y:e.clientY-r.top};}
-  function startPinch(){const [a,b]=[...pointers.values()];gesture={kind:'pinch',distance:Math.hypot(b.x-a.x,b.y-a.y),zoom:state.zoom};}
+  function releaseBadge(cancelled=false){gesture?.drag?.release(cancelled);}
+  function startPinch(){
+    releaseBadge(true);
+    const [a,b]=[...pointers.values()],mid={x:(a.x+b.x)/2,y:(a.y+b.y)/2};
+    const scale=state.fit*state.zoom;
+    gesture={kind:'pinch',distance:Math.hypot(b.x-a.x,b.y-a.y),zoom:state.zoom,anchor:{x:(mid.x-state.x)/scale,y:(mid.y-state.y)/scale}};
+    pointers.forEach((_,id)=>stage.setPointerCapture(id));
+    blockClickUntil=performance.now()+400;
+  }
   stage.addEventListener('pointerdown',e=>{
-    if(e.target.closest('.badge-filters,.badge-board-tools,.badge-empty')||e.button>0)return;
+    if(e.target.closest(controls)||e.button>0)return;
+    const badge=e.target.closest('[data-badge]');
+    // A one-finger swipe on empty cork scrolls the page unless exploration is enabled.
+    if(e.pointerType==='touch'&&!state.touchExplore&&!badge&&pointers.size===0)return;
+    if(pointers.size===0)blockClickUntil=0;
     pointers.set(e.pointerId,point(e));
-    if(pointers.size===2){startPinch();blockClickUntil=performance.now()+400;}
-    else gesture={kind:'pan',start:point(e),x:state.x,y:state.y,moved:false};
+    if(pointers.size===2)startPinch();
+    else if(pointers.size===1)gesture={kind:badge?'badge':'pan',id:badge?.dataset.badge,start:point(e),x:state.x,y:state.y,moved:false};
   });
   stage.addEventListener('pointermove',e=>{
-    if(!pointers.has(e.pointerId))return;
+    if(!pointers.has(e.pointerId)){if(!pointers.size)physics.proximity(e);return;}
     pointers.set(e.pointerId,point(e));
     if(gesture?.kind==='pinch'&&pointers.size===2){
-      e.preventDefault();const [a,b]=[...pointers.values()];const distance=Math.hypot(b.x-a.x,b.y-a.y);
-      zoomAt(gesture.zoom*distance/Math.max(1,gesture.distance),(a.x+b.x)/2,(a.y+b.y)/2);blockClickUntil=performance.now()+400;
-    }else if(gesture?.kind==='pan'){
+      e.preventDefault();const [a,b]=[...pointers.values()];
+      const distance=Math.hypot(b.x-a.x,b.y-a.y);
+      state.zoom=clamp(gesture.zoom*distance/Math.max(1,gesture.distance),.75,Math.max(2.75,1/state.fit));
+      const scale=state.fit*state.zoom;
+      state.x=(a.x+b.x)/2-gesture.anchor.x*scale;state.y=(a.y+b.y)/2-gesture.anchor.y*scale;
+      transform();blockClickUntil=performance.now()+400;
+    }else if(gesture?.kind==='badge'||gesture?.kind==='pan'){
       const p=point(e),dx=p.x-gesture.start.x,dy=p.y-gesture.start.y;
-      if(Math.hypot(dx,dy)>7||gesture.moved){gesture.moved=true;stage.setPointerCapture(e.pointerId);stage.classList.add('is-dragging');state.x=gesture.x+dx;state.y=gesture.y+dy;transform();blockClickUntil=performance.now()+400;}
+      if(Math.hypot(dx,dy)>7||gesture.moved){
+        e.preventDefault();
+        if(!gesture.moved){
+          gesture.moved=true;stage.setPointerCapture(e.pointerId);
+          if(gesture.kind==='badge')gesture.drag=physics.dragStart(gesture.id);
+          else stage.classList.add('is-dragging');
+        }
+        if(gesture.kind==='badge')gesture.drag?.move(dx,dy);
+        else{state.x=gesture.x+dx;state.y=gesture.y+dy;transform();}
+        blockClickUntil=performance.now()+400;
+      }
     }
   });
   function endPointer(e){
+    if(!pointers.has(e.pointerId))return;
+    const pinching=gesture?.kind==='pinch';
+    if(gesture?.moved||pinching)blockClickUntil=performance.now()+400;
+    if(!pinching)releaseBadge(e.type==='pointercancel'||e.type==='lostpointercapture');
     pointers.delete(e.pointerId);
     if(stage.hasPointerCapture(e.pointerId))stage.releasePointerCapture(e.pointerId);
     if(pointers.size===0){gesture=null;stage.classList.remove('is-dragging');}
-    else if(pointers.size===1){const p=[...pointers.values()][0];gesture={kind:'pan',start:p,x:state.x,y:state.y,moved:true};}
+    else if(pinching){
+      // The remaining finger belongs to the pinch, never a fresh badge drag or tap.
+      gesture={kind:'pinch-ended',start:[...pointers.values()][0],moved:true};
+    }
   }
   stage.addEventListener('pointerup',endPointer);stage.addEventListener('pointercancel',endPointer);
-  stage.addEventListener('lostpointercapture',e=>{if(pointers.has(e.pointerId))endPointer(e);});
-  stage.addEventListener('click',e=>{if(performance.now()<blockClickUntil&&!e.target.closest('.badge-filters,.badge-board-tools')){e.preventDefault();e.stopPropagation();}},true);
-  stage.addEventListener('wheel',e=>{if(e.target.closest('.badge-filters'))return;e.preventDefault();const p=point(e);zoomAt(state.zoom*Math.exp(-e.deltaY*.0015),p.x,p.y);},{passive:false});
+  stage.addEventListener('lostpointercapture',endPointer);
+  stage.addEventListener('pointerleave',()=>physics.clearProximity());
+  stage.addEventListener('click',e=>{if(e.detail!==0&&performance.now()<blockClickUntil&&!e.target.closest(controls)){e.preventDefault();e.stopPropagation();}},true);
+  stage.addEventListener('wheel',e=>{if(e.target.closest('.badge-filters')||e.pointerType==='touch')return;e.preventDefault();const p=point(e);zoomAt(state.zoom*Math.exp(-e.deltaY*.0015),p.x,p.y);},{passive:false});
+  $('#badgeTouchMode').onclick=()=>{
+    state.touchExplore=!state.touchExplore;
+    stage.classList.toggle('is-touch-exploring',state.touchExplore);
+    $('#badgeTouchMode').setAttribute('aria-pressed',String(state.touchExplore));
+    $('#badgeTouchMode').textContent=state.touchExplore?'Done exploring':'Explore board';
+  };
+  $('#badgeDiscover').onclick=()=>{
+    const choices=visibleBadges().filter(b=>b.id!==state.selected),items=choices.length?choices:visibleBadges();
+    if(items.length)openStory(items[Math.floor(Math.random()*items.length)].id,$('#badgeDiscover'));
+  };
+  $('#badgeJourneyStart').onclick=()=>{
+    state.category='All';state.year=null;applyFilters();openStory(chronological(badges)[0].id,$('#badgeJourneyStart'));
+  };
+  root.addEventListener('error',e=>{
+    if(e.target.matches('.badge-custom-image')){e.target.hidden=true;e.target.parentElement.classList.add('has-image-fallback');}
+    if(e.target.matches('.badge-event-photo')){
+      e.target.hidden=true;const fallback=document.createElement('p');fallback.className='badge-photo-missing';
+      fallback.textContent=`Photo unavailable: ${e.target.alt||'event memory'}`;e.target.after(fallback);
+    }
+  },true);
+  // Leaving the view, switching tabs, or losing the pointer must never leave an object held.
+  function cancelGesture(){releaseBadge(true);gesture=null;pointers.clear();stage.classList.remove('is-dragging');physics.reset();}
+  window.addEventListener('blur',cancelGesture);
+  document.addEventListener('visibilitychange',()=>{if(document.hidden)cancelGesture();});
+  new IntersectionObserver(entries=>{if(!entries[0].isIntersecting)cancelGesture();}).observe(stage);
   stage.addEventListener('keydown',e=>{
     if(e.target!==stage)return;
     if(['+','=','-','0','ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(e.key))e.preventDefault();
@@ -214,9 +290,9 @@ export function initBadgeCollection() {
     const b=e.target.closest('[data-badge]');if(!b||!b.matches(':focus-visible'))return;
     const item=badges.find(item=>item.id===b.dataset.badge),scale=state.fit*state.zoom;
     const r=b.querySelector(".badge-face").getBoundingClientRect(),s=stage.getBoundingClientRect();
-    if(r.left<s.left+12||r.right>s.right-12||r.top<s.top||r.bottom>s.bottom-55){state.x=stage.clientWidth/2-(item.position.x+80)*scale;state.y=stage.clientHeight/2-(item.position.y+(item.position.strap+105)*.68)*scale;transform();}
+    if(r.left<s.left+12||r.right>s.right-12||r.top<s.top||r.bottom>s.bottom-55){state.x=stage.clientWidth/2-badgeCenter(item).x*scale;state.y=stage.clientHeight/2-badgeCenter(item).y*scale;transform();}
   });
-  new ResizeObserver(()=>{if(!root.hidden)fitBoard();}).observe(stage);
+  new ResizeObserver(()=>{if(!root.hidden){cancelGesture();fitBoard();}}).observe(stage);
   if(innerWidth<600)$('.badge-filters').open=false;
 
   function showBadges(updateHash=true){

@@ -222,3 +222,51 @@ body:has(#badgeCollection:not([hidden])) .site-footer button,body:has(#badgeColl
 .badge-face{transform:rotate(calc(var(--angle,0deg) * 3))}.badge-role svg{width:11px;height:11px;transform:rotate(-45deg);display:block}
 .badge-stage{width:100%}
 @media(prefers-reduced-motion:reduce){.badge-collection *{animation:none!important;transition:none!important}.badge-hanging:hover .badge-swing{transform:none}}
+
+/* Physical objects: the metal pin is fixed; fabric bends toward the pendant. */
+.badge-pendant{position:relative;display:flex;flex-direction:column;align-items:center;width:160px;transform-origin:80px 0;pointer-events:none;translate:0 0;transition:translate .18s ease,filter .18s ease;filter:drop-shadow(3px 5px 3px #2d180e45)}
+.badge-swing,.badge-hanging:hover .badge-swing{transform:none!important;transition:filter .2s ease}
+.badge-hanging:not(.is-grabbed):hover .badge-pendant{translate:0 -3px;filter:drop-shadow(5px 10px 5px #2813096b)}
+.badge-hanging.is-grabbed{z-index:7;cursor:grabbing}
+.badge-hanging.is-moving .badge-pendant{will-change:transform}
+.badge-hanging.is-grabbed .badge-pendant{translate:0 0;filter:drop-shadow(8px 14px 8px #28130980)}
+.badge-hanging.is-grabbed .badge-face:after{background:linear-gradient(115deg,#ffffff54,transparent 34%,#fff1 65%,#ffffff35)}
+.badge-face{width:var(--badge-width,160px);height:var(--badge-height,198px);cursor:grab;transform-origin:50% 4px;transition:scale .2s ease,box-shadow .2s ease}
+.badge-hanging.is-grabbed .badge-face,.badge-hanging.is-grabbed .badge-lanyard path{cursor:grabbing}
+.badge-hanging .badge-face,.badge-hanging .badge-lanyard{touch-action:none}
+.badge-shape-sleeve{border:3px solid #e2dcca90;border-radius:6px;box-shadow:inset 0 0 0 1px #fff4,0 1px 3px #0006}
+.badge-shape-rounded{border-radius:13px 13px 8px 8px}
+.badge-shape-clipped{clip-path:polygon(8% 0,92% 0,100% 7%,100% 100%,0 100%,0 7%);border-radius:2px}
+.badge-shape-landscape{border-radius:3px}.badge-shape-landscape .badge-art{height:45px;margin-top:3px}.badge-shape-landscape .badge-art svg{width:42px;height:42px}.badge-shape-landscape .badge-event{font-size:23px;letter-spacing:-1px}
+.badge-slot{left:calc(50% - 16px)}
+.badge-lanyard text{font-size:8px;letter-spacing:1.2px;dominant-baseline:central;fill:#f9f0da;opacity:.85}
+.badge-hanging:focus-visible{outline:0}.badge-hanging:focus-visible .badge-face{outline:3px dashed #fff6d9;outline-offset:4px}
+.badge-hanging.is-selected .badge-face{scale:1.09;outline:3px solid #bfeced;outline-offset:3px}
+.has-badge-spotlight .badge-hanging:not(.is-selected){filter:brightness(.64) saturate(.7)}
+.has-badge-spotlight .badge-world:before{content:'';position:absolute;inset:0;background:#1b120e18;pointer-events:none}
+.badge-statistics{display:flex;align-items:center;gap:12px;margin-top:19px;color:#917b64;font-size:10px;letter-spacing:.15px}
+.badge-statistics strong{font-weight:500;color:#75563b}.badge-statistics i{width:2px;height:2px;border-radius:50%;background:#bba68c}
+.badge-discover{display:flex;align-items:center;gap:8px;color:#856144;border:1px solid #bba18270;border-radius:20px;padding:8px 12px;font-size:10px;letter-spacing:0;background:#f5e7d547;white-space:nowrap}
+.badge-discover>svg{height:12px;width:12px}.badge-discover>svg:last-child{margin-left:4px}.badge-discover:hover{background:#dfc8a967;border-color:#a78b68}
+.badge-discover:focus-visible{outline-color:#856144}.badge-discover:disabled{opacity:.45}
+.badge-touch-mode{display:none;flex-shrink:0;font-size:9px;padding:9px 11px;border:1px solid #b49b7c88;border-radius:18px;color:#76583b;min-height:36px}
+.badge-touch-mode[aria-pressed=true]{background:#3c4b40;color:#eee7d4;border-color:#3c4b40}
+.badge-story-organization{font-size:10px;line-height:1.6;color:#dfcfaa;margin:-3px 0 11px}
+.badge-photo-missing{padding:22px 15px;border:1px dashed #93a6a359;border-radius:5px;color:#b9c9c2;font-size:11px;line-height:1.7;margin:0;background:#ffffff05}
+.badge-timeline{border-top:1px solid #cbb79c99;margin-top:11px;color:#896e53}
+.badge-timeline summary{display:flex;align-items:center;justify-content:space-between;gap:15px;cursor:pointer;list-style:none;padding:20px 2px;font-size:8px;letter-spacing:1.4px}
+.badge-timeline summary::-webkit-details-marker{display:none}.badge-timeline summary>span:last-child{display:flex;align-items:center;gap:13px;font-size:9px;letter-spacing:.7px}.badge-timeline summary svg{width:13px;height:13px;rotate:45deg;transition:rotate .2s}.badge-timeline[open] summary svg{rotate:-45deg}
+.badge-timeline-content{padding:0 2px 23px;display:flex;flex-wrap:wrap;align-items:center;gap:17px}
+.badge-timeline-content>p{font:italic 16px Georgia,serif;margin:0 0 5px;width:100%;color:#907455}
+.badge-timeline ol{display:flex;flex:1;list-style:none;padding:0;margin:13px 0;gap:0;min-width:220px}
+.badge-timeline li{flex:1;border-top:1px solid #baa17f66;position:relative;padding-top:13px}
+.badge-timeline li:before{content:'';position:absolute;top:-3px;left:10px;width:5px;height:5px;background:#c7aa83;border-radius:50%;box-shadow:0 0 0 4px #ead9c1}
+.badge-timeline button[data-timeline-year]{display:flex;flex-direction:column;gap:7px;text-align:left;color:#967956;padding:8px 10px;border-radius:5px;min-height:52px}.badge-timeline button[data-timeline-year]>span{font:22px Georgia,serif;letter-spacing:-.4px}.badge-timeline button[data-timeline-year] small{font-size:8px;letter-spacing:.4px}
+.badge-timeline button[data-timeline-year]:hover,.badge-timeline button[data-timeline-year][aria-pressed=true]{background:#dac7a858;color:#64492e}
+#badgeJourneyStart{display:flex;align-items:center;gap:12px;font-size:10px;color:#755b3b;border-bottom:1px solid #a78f6e;padding:7px 0;white-space:nowrap}#badgeJourneyStart svg{width:13px;height:13px}
+.badge-timeline button:focus-visible,.badge-timeline summary:focus-visible,.badge-touch-mode:focus-visible{outline-color:#856144}
+.badge-afterword{margin-top:0}
+@media(pointer:coarse){.badge-stage{touch-action:pan-y}.badge-stage.is-touch-exploring{touch-action:none}.badge-touch-mode{display:inline-flex;align-items:center}.badge-desktop-instruction{display:none}.badge-board-footer p{max-width:420px}}
+@media(max-width:600px){.badge-statistics{font-size:9px;gap:10px;margin-top:17px}.badge-discover{font-size:8px;padding:7px 9px;gap:5px}.badge-discover>svg{width:10px;height:10px}.badge-discover>svg:last-child{display:none}.badge-board-heading{gap:8px;letter-spacing:.5px}.badge-board-heading>div{flex-wrap:wrap;gap:5px}.badge-touch-mode{display:inline-flex;align-items:center}.badge-board-footer{align-items:center;gap:13px}.badge-board-footer p{max-width:210px}.badge-desktop-instruction{display:none!important}.badge-touch-instruction{margin-top:4px}.badge-timeline summary{font-size:7px;letter-spacing:1px}.badge-timeline-content{gap:7px}.badge-timeline-content>p{font-size:15px}.badge-timeline ol{flex-basis:100%}.badge-timeline button[data-timeline-year]>span{font-size:21px}.badge-timeline button[data-timeline-year] small{font-size:7px}}
+@media(prefers-reduced-motion:reduce){.badge-hanging:not(.is-grabbed):hover .badge-pendant{translate:0 0}.badge-hanging.is-selected .badge-face{scale:1.03}}
+.badge-hanging.is-grabbed .badge-pendant{will-change:transform}

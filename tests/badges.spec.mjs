@@ -18,12 +18,15 @@ test('the collection opens each memory, expands the story, and restores keyboard
     await expect(page.locator('.badge-story-location')).toContainText(badge.location);
     await expect(page.locator('.badge-story-meta')).toContainText(badge.date);
     await expect(page.locator('.badge-story-meta')).toContainText(badge.role);
+    await expect(page.locator('.badge-story-organization')).toHaveText(badge.organization);
+    await expect(page.locator('#badgeCollection')).toHaveClass(/has-badge-spotlight/);
     await expect(page.locator(`[data-badge="${badge.id}"]`)).toHaveAttribute('aria-pressed','true');
     await page.locator('.badge-read-more').click();
     await expect(page.locator('#badgeFullStory')).toContainText(badge.fullStory);
     await expect(page.locator('.badge-read-more')).toHaveAttribute('aria-expanded','true');
     await page.keyboard.press('Escape');
     await expect(page.locator('.badge-story')).toBeHidden();
+    await expect(page.locator('#badgeCollection')).not.toHaveClass(/has-badge-spotlight/);
     await expect(page.locator(`[data-badge="${badge.id}"]`)).toBeFocused();
   }
   expect(errors).toEqual([]);
@@ -85,6 +88,7 @@ for(const width of [320,768])test(`responsive board, filters and library navigat
 test('touch drag and two-finger pinch work without opening an accidental story',async({browser})=>{
   const context=await browser.newContext({viewport:{width:390,height:844},hasTouch:true,isMobile:true});
   const page=await context.newPage();await page.goto('/');
+  await page.locator('#badgeTouchMode').tap();
   const stage=page.locator('.badge-stage');await stage.scrollIntoViewIfNeeded();const r=await stage.boundingBox();
   const cdp=await context.newCDPSession(page);
   const send=(type,points)=>cdp.send('Input.dispatchTouchEvent',{type,touchPoints:points.map(([x,y,id])=>({x,y,id}))});
