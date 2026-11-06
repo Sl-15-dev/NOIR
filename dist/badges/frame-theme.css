@@ -1,0 +1,126 @@
+/* Portfolio palette, scoped to the collection so the library keeps its own theme. */
+.badge-collection {
+  --background:#0a0a0b;
+  --background-secondary:#101012;
+  --surface:#151518;
+  --surface-elevated:#1c1c20;
+  --foreground:#f1efe8;
+  --foreground-secondary:#c1bdb4;
+  --foreground-muted:#89867f;
+  --decorative:#666a70;
+  --lunar:#cbc5b8;
+  --lunar-warm:#d8cfbd;
+  --moonlight:#98a3b7;
+  --border:rgb(216 207 189 / .08);
+  --border-strong:rgb(216 207 189 / .18);
+  --selection:#e5dfd2;
+  --focus:#e5dfd2;
+  --text:var(--foreground);
+  --muted:var(--foreground-muted);
+  --accent:var(--lunar);
+  --frame-base:#252526;
+  --frame-edge:#393939;
+  --frame-light:#454442;
+  --frame-grain:rgb(216 207 189 / .035);
+  --frame-shadow:rgb(0 0 0 / .55);
+  --cork-tint:#686056;
+  --plaque-face:#2a2928;
+  --plaque-edge:#45423c;
+  color:var(--foreground);
+  background:radial-gradient(ellipse at 50% 40%,rgb(152 163 183 / .045),transparent 65%),var(--background);
+}
+[data-theme="light"] .badge-collection {
+  --background:#f6f4ef;
+  --background-secondary:#ede9e0;
+  --surface:#ffffff;
+  --surface-elevated:#f0ece3;
+  --foreground:#141413;
+  --foreground-secondary:#4a4843;
+  --foreground-muted:#76736b;
+  --decorative:#8b877e;
+  --lunar:#6e6c66;
+  --lunar-warm:#575550;
+  --moonlight:#76736b;
+  --border:rgb(20 20 19 / .10);
+  --border-strong:rgb(20 20 19 / .24);
+  --selection:#141413;
+  --focus:#141413;
+  --frame-base:#d6cec0;
+  --frame-edge:#bcb3a3;
+  --frame-light:#eae4d9;
+  --frame-grain:rgb(87 85 80 / .045);
+  --frame-shadow:rgb(61 52 38 / .15);
+  --cork-tint:#d0bea3;
+  --plaque-face:#e5ded1;
+  --plaque-edge:#c8bead;
+}
+.badge-collection ::selection {background:var(--selection);color:var(--background)}
+.badge-heading h1{color:var(--foreground)}
+.badge-heading h1 em{color:var(--lunar)}
+.badge-heading p{color:var(--foreground-secondary)}
+.badge-heading-stamp,.badge-eyebrow,.badge-edition,.badge-board-heading,#badgeCount,.badge-board-footer,.badge-sample-note{color:var(--foreground-muted)}
+.badge-eyebrow>span:first-child,.badge-live-dot{background:var(--moonlight);box-shadow:0 0 0 3px rgb(152 163 183 / .07)}
+.badge-board-divider{color:var(--decorative)}
+.badge-frame {
+  border:1px solid var(--frame-edge);
+  border-radius:7px;
+  background:
+    linear-gradient(135deg,transparent calc(50% - .5px),var(--frame-edge) 50%,transparent calc(50% + .5px)) top left / 25px 25px no-repeat,
+    linear-gradient(225deg,transparent calc(50% - .5px),var(--frame-edge) 50%,transparent calc(50% + .5px)) top right / 25px 25px no-repeat,
+    linear-gradient(45deg,transparent calc(50% - .5px),var(--frame-edge) 50%,transparent calc(50% + .5px)) bottom left / 25px 25px no-repeat,
+    linear-gradient(315deg,transparent calc(50% - .5px),var(--frame-edge) 50%,transparent calc(50% + .5px)) bottom right / 25px 25px no-repeat,
+    repeating-linear-gradient(2deg,transparent 0 3px,var(--frame-grain) 4px,transparent 5px 9px),
+    linear-gradient(115deg,var(--frame-light),var(--frame-base) 18%,var(--frame-base) 75%,var(--frame-edge));
+  box-shadow:0 25px 65px -20px var(--frame-shadow),0 6px 14px -7px var(--frame-shadow),0 0 0 5px var(--background-secondary),inset 0 1px 0 rgb(255 255 255 / .12),inset 0 -1px 2px rgb(0 0 0 / .18);
+}
+.badge-frame:before{inset:4px;border:1px solid var(--border-strong);border-radius:3px;box-shadow:inset 0 1px 0 rgb(255 255 255 / .035)}
+.badge-frame:after{border-color:var(--frame-edge);box-shadow:0 0 0 1px rgb(0 0 0 / .16),inset 0 1px 2px rgb(255 255 255 / .08)}
+.badge-stage{background-color:var(--cork-tint);box-shadow:inset 0 5px 14px rgb(0 0 0 / .4),inset 0 0 50px rgb(0 0 0 / .14)}
+.badge-stage:after{background:linear-gradient(130deg,rgb(216 207 189 / .09),transparent 45%,rgb(10 10 11 / .12));box-shadow:inset 0 0 8px rgb(0 0 0 / .3)}
+.badge-wood-sign {
+  background:repeating-linear-gradient(2deg,transparent 0 4px,var(--frame-grain) 5px,transparent 6px 9px),linear-gradient(120deg,var(--frame-edge),var(--plaque-face) 30%,var(--plaque-face) 75%,var(--frame-base));
+  color:var(--foreground);
+  border:1px solid var(--plaque-edge);
+  box-shadow:0 8px 12px rgb(0 0 0 / .22),inset 0 1px 0 rgb(255 255 255 / .10),inset 0 -3px 3px rgb(0 0 0 / .10);
+}
+.badge-wood-sign>span{text-shadow:none;color:var(--foreground)}
+.badge-wood-sign em{color:var(--foreground-secondary)}
+.badge-wood-sign em:after{border-color:var(--decorative)}
+.badge-wood-sign i,.badge-wood-sign b{background:radial-gradient(circle at 30% 25%,#d8cfbd,#89867f 40%,#48494a 80%);border-color:#666a70;box-shadow:0 1px 2px rgb(0 0 0 / .4),0 0 0 1px rgb(216 207 189 / .08)}
+.badge-statistics{color:var(--foreground-muted)}
+.badge-statistics strong{color:var(--foreground-secondary)}
+.badge-statistics i{background:var(--decorative)}
+.badge-discover{background:var(--surface);border-color:var(--border-strong);color:var(--lunar)}
+.badge-discover:hover{background:var(--surface-elevated);border-color:var(--decorative);color:var(--foreground)}
+.badge-afterword,.badge-timeline{border-color:var(--border);color:var(--foreground-muted)}
+.badge-afterword>span:first-child{color:var(--foreground-secondary)}
+.badge-timeline-content>p,.badge-timeline button[data-timeline-year]{color:var(--foreground-secondary)}
+.badge-timeline li{border-color:var(--border-strong)}
+.badge-timeline li:before{background:var(--moonlight);box-shadow:0 0 0 4px var(--background)}
+.badge-timeline button[data-timeline-year]:hover,.badge-timeline button[data-timeline-year][aria-pressed=true]{background:var(--surface-elevated);color:var(--foreground)}
+#badgeJourneyStart{color:var(--lunar);border-color:var(--border-strong)}
+.badge-board-footer svg{color:var(--moonlight)}
+.badge-collection :is(.badge-discover,.badge-timeline button,.badge-timeline summary,#badgeJourneyStart):focus-visible{outline-color:var(--focus)}
+/* Panels borrow the same surface palette; fabric and printed cards keep their identities. */
+.badge-filters,.badge-story{background:var(--surface);border-color:var(--border-strong);color:var(--foreground);box-shadow:0 12px 32px rgb(0 0 0 / .24)}
+.badge-filters summary{color:var(--foreground-secondary);border-color:var(--border)}
+.badge-filter-label,.badge-year-heading{color:var(--foreground-muted);border-color:var(--border)}
+.badge-category-filters button,.badge-category-filters button>span,.badge-category-filters button small,.badge-year-filters button{color:var(--foreground-secondary)}
+.badge-category-filters button.is-active,.badge-year-filters button[aria-pressed=true]{background:var(--surface-elevated);color:var(--foreground)}
+.badge-category-filters button.is-active>span,.badge-year-heading button{color:var(--lunar)}
+.badge-category-filters button:hover{background:var(--surface-elevated)}
+.badge-year-filters button{border-color:var(--border-strong)}
+.badge-year-filters button[aria-pressed=true]{border-color:var(--decorative)}
+.badge-story h2{color:var(--foreground)}
+.badge-story-organization,.badge-story-meta,.badge-story-location,.badge-story-short,#badgeFullStory>p{color:var(--foreground-secondary)}
+.badge-story-eyebrow,.badge-story-bottom,.badge-story-photos figcaption{color:var(--foreground-muted)}
+.badge-story-close,.badge-story-bottom button{color:var(--foreground-secondary);background:var(--surface-elevated);border-color:var(--border-strong)}
+.badge-story-meta>span+span{color:var(--lunar);background:var(--surface-elevated)}
+.badge-read-more,#badgeFullStory blockquote{color:var(--lunar-warm);border-color:var(--border-strong)}
+.badge-story-bottom{border-color:var(--border)}
+.badge-story :focus-visible,.badge-filters :focus-visible{outline-color:var(--focus)}
+.badge-photo-missing{color:var(--foreground-muted);border-color:var(--border-strong);background:var(--background-secondary)}
+body:has(#badgeCollection:not([hidden])) .site-footer{background:#0a0a0b;border-color:rgb(216 207 189 / .08);color:#89867f}
+body:has(#badgeCollection:not([hidden])) .site-footer button,body:has(#badgeCollection:not([hidden])) .site-footer>span:first-child{color:#c1bdb4}
+[data-theme="light"] body:has(#badgeCollection:not([hidden])) .site-footer{background:#f6f4ef;border-color:rgb(20 20 19 / .10);color:#76736b}
+[data-theme="light"] body:has(#badgeCollection:not([hidden])) .site-footer button,[data-theme="light"] body:has(#badgeCollection:not([hidden])) .site-footer>span:first-child{color:#4a4843}
