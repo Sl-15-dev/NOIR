@@ -1,17 +1,36 @@
 # NOIR reference studies
 
-These 18 components are original implementations. They adapt interaction ideas and general component patterns; they do not include third-party source code, illustrations, templates, or paid packs. They retain NOIR's neutral palette and dependency-free HTML/CSS/JavaScript exports.
+All studies use original NOIR HTML, CSS, and JavaScript, semantic light/dark tokens, responsive layouts, and reduced-motion behavior. They are standalone visual interpretations, not imports or framework ports of the reference components.
 
-| Reference | Adapted ideas | Added components |
+## Direct references reviewed November 6, 2026
+
+After the environment was published, the reference sites became accessible. Board UI's supplied `/ar?via=componest` path returns 404; its current root and component documentation were used instead. Rare UI's pages and Motion UI's footer category were inspected as HTML and in Chromium.
+
+The user explicitly chose **original visual adaptations** after the source licensing and Motion+ access differences were explained. Rare UI source is not copied or redistributed, and no Motion+ source, registry item, or paid asset is included.
+
+| Reference reviewed | NOIR study | What was adapted and changed |
 | --- | --- | --- |
-| [Designeer](https://designeer.xyz/) | Curated resource discovery and creator indexes | Resource explorer, faceted index, format comparison, creator index, collection builder, grouped link index |
-| [Colorfigures by April Zhu](https://april-zhu.com/colorfigures) | Playable everyday objects, inspectable parts, labeled illustrations | Washing machine, record player, electric kettle, desk lamp, vending machine, parcel locker |
-| [Tinycharts by April Zhu](https://april-zhu.com/tinycharts) | Interactive diagrams driven by explicit state and transition rules | Order sequence, refund decision flow, playable statechart, allocation flow, queue simulator, dependency pipeline |
+| [Board UI: Button Group](https://www.boardui.com/components/button-group) | Fused editorial toolbar | Shared border, hairline separators, pressed states; controls now modify a live typography specimen. |
+| [Board UI: Checkbox](https://www.boardui.com/components/checkbox) | Selection cards | Mixed/checked states and selectable rows; a native checkbox manifest updates its file summary. |
+| [Board UI: Date Picker](https://www.boardui.com/components/date-picker) | Commit date picker | Pending versus committed selection, editable date chip, Cancel/Apply; rebuilt with native dialog, month grid, and keyboard navigation. |
+| [Rare UI: Duration Picker](https://www.rareui.com/components/durationpicker) | Duration capsule | Segments separate for editing and join on confirmation; original CSS, native numeric inputs, clamping, Escape cancellation, and saved state. |
+| [Rare UI: Gravity Letters](https://www.rareui.com/components/gravityletters) | Type fall | Type dropping into a composition; new bounded four-column letterpress layout and native keyframe motion, rather than Rare UI's physics simulation. |
+| [Rare UI: Folder component](https://www.rareui.com/components/foldercomponent) | Folio folder | Fanning documents and a tilting flap; new three-document reader with keyboard opening and content selection. |
+| [Motion UI: Footer: Sticky reveal](https://motion.dev/ui/footers) | Under-page footer | Public under-page reveal pattern, scroll feedback, and staggered wordmark; original nested-scroll implementation with reveal/reset controls. |
+| [Motion UI: Footer: Newsletter](https://motion.dev/ui/footers) | Newsletter closing note | Public newsletter/footer pattern, quiet hover motion, and inline feedback; original local validation/confirmation/reset flow. No backend subscription occurs. |
 
-## Research and provenance
+Board UI's free Button Group, Checkbox, and Date Picker registry sources and [MIT license](https://github.com/BoardUI/boardui/blob/main/LICENSE) were consulted to understand the documented states. The implementation here does not bundle those React sources or dependencies. Board UI Pro templates were not used.
 
-Reviewed on November 5, 2026. Colorfigures and Tinycharts were reviewed through their public product and example pages. Designeer's official pages were inaccessible to the research tool; the discovery studies were informed by indexed descriptions from [Index](https://index.chele.bi/r/designeer/) and other search results. They are not represented as ports of a verified Designeer component implementation.
+Rare UI's [license](https://github.com/swamimalode07/rare-ui/blob/main/LICENSE) prohibits republishing its components or ports as a competing library. These are independently written studies of public interaction concepts, with visible source links in NOIR's detail panels. No Rare UI component implementation source was copied.
 
-Colorfigures' public page describes an MIT-licensed skill with attribution requirements. No Colorfigures code or assets were imported. Tinycharts' public page distinguishes personal-use free templates from its commercial Pro pack; neither pack was downloaded or incorporated. Diagram logic, SVG markup, controls, styling, and example data in these studies were written for NOIR.
+Motion's footer category is public; editable footer source is offered through [Motion+](https://motion.dev/plus). The separately hosted live example frames were blocked by the preview-host allowlist, so the two original footer studies follow the category's public patterns and are not represented as pixel-matched ports of its live demos.
 
-These are simplified interface and illustration studies, not full mechanical simulations or full 3D models. Labels and schematic see-through views are available on the object studies. No claims of physical accuracy are made.
+Reference links also travel inside standalone HTML exports as provenance comments.
+
+## Earlier motion studies
+
+The earlier 22 additions include six typography, six background, five layout, and five motion studies. Motion's [official repository documentation](https://github.com/motiondivision/motion) and [animation skill](https://github.com/motiondivision/ai-kit) informed spring-like movement, transforms, layout continuity, SVG paths, gestures, staggering, and reduced motion. They use native browser APIs; Motion is not a runtime dependency.
+
+## Skill discovery
+
+[Vercel find-skills](https://github.com/vercel-labs/skills/tree/main/skills/find-skills) and Motion's official skill were installed. Source records are retained in `skills-lock.json`. Initial discovery searches returned no matches while skills.sh was blocked; the official Motion skill was found through Motion's own README.

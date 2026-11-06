@@ -1,0 +1,12 @@
+import core from './catalog-core.js';
+import motion from './catalog-motion.js';
+import compositions from './catalog-compositions.js';
+import coreExtra from './catalog-core-extra.js';
+import motionExtra from './catalog-motion-extra.js';
+import compositionsExtra from './catalog-compositions-extra.js';
+import studio from './catalog-studio.js';
+import references from './catalog-references.js';
+import {prepareComponent} from './preview.js';
+export const categories=[{id:'essentials',name:'UI essentials',icon:'button'},{id:'navigation',name:'Navigation',icon:'navigation'},{id:'forms',name:'Forms & inputs',icon:'forms'},{id:'layouts',name:'Layouts & grids',icon:'grid'},{id:'typography',name:'Text & typography',icon:'type'},{id:'motion',name:'Motion & interactions',icon:'motion'},{id:'backgrounds',name:'Backgrounds & effects',icon:'background'},{id:'data',name:'Data display',icon:'chart'},{id:'feedback',name:'Feedback & overlays',icon:'feedback'},{id:'mockups',name:'Mockups',icon:'monitor'}];
+const allowed=new Set(categories.map(c=>c.id));
+export default [...references,...studio,...core,...motion,...compositions,...coreExtra,...motionExtra,...compositionsExtra].filter(c=>allowed.has(c.category)).map(prepareComponent);

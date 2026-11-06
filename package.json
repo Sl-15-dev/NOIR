@@ -3,13 +3,18 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "168 standalone interactive design components, motion experiments, mockups, and templates.",
+  "description": "Theme-aware standalone UI components, motion studies, typography, backgrounds, and layouts.",
   "scripts": {
     "dev": "node scripts/serve.mjs",
     "start": "node scripts/serve.mjs",
-    "check": "node --check dist/app.js && node --check scripts/serve.mjs"
+    "check": "node scripts/check.mjs",
+    "test": "node --test tests/catalog.test.mjs",
+    "test:browser": "playwright test"
   },
   "engines": {
     "node": ">=20"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.65.0"
   }
 }
