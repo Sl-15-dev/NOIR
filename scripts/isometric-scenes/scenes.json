@@ -7,5 +7,5 @@
   {"key":"checkout-terminal","file":"checkout-terminal.svg","title":"Checkout Terminal","summary":"A tap becomes an approved payment","accent":"#c4506e","icon":"M4 6h16v12H4zM4 9h16m-12 5h4m3 0 1.5 1.5L19 13"},
   {"key":"document-indexer","file":"document-indexer.svg","title":"Document Indexer","summary":"A document becomes a searchable index","accent":"#5178d8","icon":"M4 3h10l4 4v4M4 3v18h6M14 3v5h4M7 8h4m-4 4h5m-5 4h2m9.3 2.3L21 21m-1.5-5.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"},
   {"key":"access-key","file":"access-key.svg","title":"Access Key","summary":"A verified credential opens a gate","accent":"#bc872e","icon":"M8 14a5 5 0 1 1 5-5l8 8-2 2-2-2-2 2-4-5H8Z M8 8h.01"},
-  {"key":"siyaq-call-brief","file":"siyaq-call-brief.svg","title":"Siyaq Call Brief","summary":"A customer’s history follows the call","accent":"#4cabc3","icon":"M4 14v-3a8 8 0 0 1 16 0v3M4 12h4v7H6a2 2 0 0 1-2-2Zm12 0h4v5a2 2 0 0 1-2 2h-2Zm2 7v1l-3 2h-4"}
+  {"key":"siyaq-call-brief","file":"siyaq-call-brief.svg","title":"Siyaq Case File","summary":"Build a brief from three channels","accent":"#9271ea","icon":"M3 7h6l2 2h10v10H3ZM3 12h18m-13 3h6"}
 ]

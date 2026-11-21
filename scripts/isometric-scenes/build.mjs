@@ -5,10 +5,11 @@ import { makeZip } from './zip.mjs';
 const dir = new URL('../../dist/isometric-scenes/', import.meta.url);
 const source = filename => readFile(new URL(filename, import.meta.url), 'utf8');
 const output = (filename, content) => writeFile(new URL(filename, dir), content);
-const [rawManifest, template, css, app, zipSource] = await Promise.all([
-  source('scenes.json'), source('gallery.template.html'), source('gallery.css'), source('gallery.js'), source('zip.mjs'),
+const [rawManifest, template, css, app, zipSource, motionSource, rawActions] = await Promise.all([
+  source('scenes.json'), source('gallery.template.html'), source('gallery.css'), source('gallery.js'), source('zip.mjs'), source('interactions.js'), source('actions.json'),
 ]);
 const manifest = JSON.parse(rawManifest);
+const configs = JSON.parse(rawActions);
 assert(Array.isArray(manifest) && manifest.length > 0, 'Add at least one scene to scenes.json');
 const keys = new Set();
 const files = new Set();
@@ -19,6 +20,17 @@ for (const scene of manifest) {
   assert(!keys.has(key) && !files.has(file), `Duplicate scene or file ${key}`);
   assert(/^#[a-f\d]{6}$/i.test(accent), `Invalid accent for ${key}`);
   assert([title, summary, icon].every(value => typeof value === 'string' && value.trim()), `Incomplete scene ${key}`);
+  const config = configs[key];
+  assert(config && ['timeline', 'case'].includes(config.kind) && Array.isArray(config.actions), `Missing action configuration for ${key}`);
+  const actions = new Set();
+  for (const action of config.actions) {
+    assert(action.id && action.label && !actions.has(action.id), `Invalid or repeated action for ${key}`);
+    assert(Number.isFinite(action.x) && action.x >= 0 && action.x <= 800 && Number.isFinite(action.y) && action.y >= 0 && action.y <= 640, `Action must be inside the SVG in ${key}`);
+    if (config.kind === 'timeline') assert(action.result && Number.isFinite(action.start) && action.start >= 0 && Number.isFinite(action.end) && action.end > action.start, `Invalid timeline action for ${key}`);
+    actions.add(action.id);
+  }
+  assert(actions.size > 0, `No actions for ${key}`);
+  if (config.kind === 'case') assert.deepEqual(actions, new Set(['call', 'chat', 'email', 'brief', 'answer', 'save']));
   keys.add(key);
   files.add(file);
 }
@@ -44,6 +56,11 @@ const scenes = await Promise.all(manifest.map(async (scene, index) => {
   assert(/<title\b/.test(artwork) && /<desc\b/.test(artwork), `Accessible title and description required in ${scene.file}`);
   assert(/prefers-reduced-motion\s*:\s*reduce/.test(artwork), `Missing reduced-motion stylesheet in ${scene.file}`);
   assert(!/<(?:script|foreignObject)\b|\son\w+\s*=|(?:\bxlink:href|\bhref)\s*=\s*['"](?!#)/i.test(artwork), `Use standalone, script-free SVG in ${scene.file}`);
+  if (configs[scene.key].kind === 'case') {
+    for (const part of ['call', 'chat', 'email', 'brief', 'transcript', 'saved']) {
+      assert(artwork.includes(`data-si-part="${part}"`), `Missing ${part} layer in ${scene.file}`);
+    }
+  }
   return { ...scene, svg, panel: `        <div class="preview-panel" id="panel-${scene.key}" role="tabpanel" aria-labelledby="tab-${scene.key}"${index ? ' hidden' : ''}>
           <template>${artwork}</template>
           <div class="preview-mount"></div>
@@ -55,7 +72,9 @@ function insert(text, marker, replacement) {
   return text.replace(marker, () => replacement);
 }
 
-const script = insert(app, '  /* GALLERY_ZIP */', zipSource.replace('export function makeZip', 'function makeZip').trimEnd().split('\n').map(line => line ? '  ' + line : '').join('\n'));
+let script = insert(app, '  /* GALLERY_ZIP */', zipSource.replace('export function makeZip', 'function makeZip').trimEnd().split('\n').map(line => line ? '  ' + line : '').join('\n'));
+script = insert(script, '  /* GALLERY_INTERACTIONS */', motionSource.trimEnd().split('\n').map(line => line ? '  ' + line : '').join('\n'));
+script = insert(script, '/* SCENE_ACTION_DATA */ {}', rawActions.trim().replaceAll('<', '\\u003c'));
 let page = insert(template, '/* GALLERY_STYLE */', css.trimEnd());
 page = insert(page, '/* GALLERY_SCRIPT */', script.trimEnd());
 page = insert(page, '<!-- SCENE_TABS -->', scenes.map(renderTab).join('\n'));

@@ -36,9 +36,9 @@ Object controls: grab a badge or its fabric to move the pendant; release to let 
 
 ## Isometric scenes
 
-Choose **Scenes** in NOIR or open `/isometric-scenes/`. The gallery provides playback controls, brand accent presets or a custom hex colour, System, Light, and Dark appearance, individual animated SVGs, and an offline ZIP.
+Choose **Scenes** in NOIR or open `/isometric-scenes/`. Choose **Interact** to click an object in the artwork or run the same action from the keyboard. In **Siyaq Case File**, select history sources, build a brief, answer the call, and save the example record. The gallery also provides loop playback, custom brand colours, light and dark appearance, animated SVG downloads, and an interactive offline ZIP.
 
-Add a standalone SVG to `dist/isometric-scenes/`, register it in `scripts/isometric-scenes/scenes.json`, and run `npm run build:scenes`. Use the [isometric-scenes agent skill](.agents/skills/isometric-scenes/SKILL.md) for the drawing, motion, and export workflow.
+Add a standalone SVG to `dist/isometric-scenes/`, register it in `scripts/isometric-scenes/scenes.json`, define its interaction cues in `scripts/isometric-scenes/actions.json`, and run `npm run build:scenes`. Use the [isometric-scenes agent skill](.agents/skills/isometric-scenes/SKILL.md) for the drawing, motion, and export workflow.
 
 ## Explore
 

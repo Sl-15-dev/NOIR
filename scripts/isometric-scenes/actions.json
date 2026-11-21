@@ -1,0 +1,49 @@
+{
+  "agent": { "kind": "timeline", "actions": [
+    {"id": "load", "label": "Load prompt", "x": 236, "y": 283, "start": 400, "end": 1750, "result": "The prompt reaches the agent."},
+    {"id": "process", "label": "Run analysis", "x": 433, "y": 231, "start": 1750, "end": 3660, "result": "The agent prepares a result."},
+    {"id": "review", "label": "Review result", "x": 488, "y": 387, "start": 4070, "end": 6230, "result": "The reviewed result is ready."}
+  ] },
+  "workflow": { "kind": "timeline", "actions": [
+    {"id": "load", "label": "Load task", "x": 257, "y": 303, "start": 510, "end": 1350, "result": "The input station receives the task."},
+    {"id": "relay", "label": "Route task", "x": 439, "y": 215, "start": 1320, "end": 4200, "result": "The relay forwards the signal."},
+    {"id": "deliver", "label": "Deliver receipt", "x": 549, "y": 359, "start": 3990, "end": 6030, "result": "The output station delivers a checked receipt."}
+  ] },
+  "analytics": { "kind": "timeline", "actions": [
+    {"id": "sweep", "label": "Sweep chart", "x": 468, "y": 480, "start": 670, "end": 4350, "result": "The cursor traces the trend across the chart."},
+    {"id": "insight", "label": "Reveal insight", "x": 552, "y": 271, "start": 4100, "end": 5250, "result": "The final data point and insight meter light up."}
+  ] },
+  "cryptopulse-mqtt": { "kind": "timeline", "actions": [
+    {"id": "sample", "label": "Sample RF signal", "x": 282, "y": 157, "start": 1570, "end": 3170, "result": "The receiver picks up a change in the RF signal."},
+    {"id": "classify", "label": "Run edge detection", "x": 316, "y": 390, "start": 3190, "end": 4600, "result": "The Arduino model flags the anomaly."},
+    {"id": "alert", "label": "Show dashboard alert", "x": 527, "y": 253, "start": 4600, "end": 6500, "result": "The RF alert reaches the dashboard while MQTT traffic continues."}
+  ] },
+  "stroke-lesion-review": { "kind": "timeline", "actions": [
+    {"id": "scan", "label": "Scan MRI slice", "x": 228, "y": 389, "start": 650, "end": 2330, "result": "The lightbox scans the illustrative MRI slice."},
+    {"id": "predict", "label": "Show prediction", "x": 358, "y": 254, "start": 2180, "end": 3560, "result": "The U-Net prediction highlights a region."},
+    {"id": "compare", "label": "Compare annotation", "x": 543, "y": 352, "start": 3650, "end": 5280, "result": "The dashed dataset annotation reveals a disagreement."}
+  ] },
+  "checkout-terminal": { "kind": "timeline", "actions": [
+    {"id": "tap", "label": "Tap card", "x": 274, "y": 224, "start": 750, "end": 2200, "result": "The reader picks up the contactless card."},
+    {"id": "approve", "label": "Approve payment", "x": 465, "y": 264, "start": 2070, "end": 4220, "result": "The terminal approves the simulated payment."},
+    {"id": "print", "label": "Print receipt", "x": 528, "y": 153, "start": 4140, "end": 6050, "result": "The receipt emerges from the printer."}
+  ] },
+  "document-indexer": { "kind": "timeline", "actions": [
+    {"id": "scan", "label": "Scan page", "x": 296, "y": 304, "start": 680, "end": 3080, "result": "The scan head sweeps over the page."},
+    {"id": "index", "label": "Index chunks", "x": 545, "y": 357, "start": 2990, "end": 4550, "result": "The text is divided into searchable records."},
+    {"id": "match", "label": "Find match", "x": 480, "y": 421, "start": 4650, "end": 6140, "result": "The matching record rises from the index."}
+  ] },
+  "access-key": { "kind": "timeline", "actions": [
+    {"id": "verify", "label": "Dock passkey", "x": 417, "y": 414, "start": 630, "end": 2350, "result": "The dock verifies the passkey."},
+    {"id": "open", "label": "Open vault", "x": 329, "y": 279, "start": 2680, "end": 4530, "result": "The latch releases and the door swings open."},
+    {"id": "close", "label": "Lock vault", "x": 175, "y": 291, "start": 6070, "end": 8050, "result": "The vault door closes and locks."}
+  ] },
+  "siyaq-call-brief": { "kind": "case", "actions": [
+    {"id": "call", "label": "Add call history", "x": 157, "y": 254},
+    {"id": "chat", "label": "Add chat history", "x": 293, "y": 129},
+    {"id": "email", "label": "Add email history", "x": 556, "y": 129},
+    {"id": "brief", "label": "Build brief", "x": 481, "y": 329},
+    {"id": "answer", "label": "Answer call", "x": 588, "y": 457},
+    {"id": "save", "label": "Save record", "x": 654, "y": 511}
+  ] }
+}

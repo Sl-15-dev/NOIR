@@ -20,6 +20,7 @@ See [Geometry, paint, and animation](references/art-direction.md) for projection
 ## Add it to NOIR
 
 - Put the standalone file in `dist/isometric-scenes/` and add one entry to `scripts/isometric-scenes/scenes.json`. Use a unique lowercase hyphenated key, the SVG filename, a short title and summary, a six-digit accent hex, and a 24 × 24 line icon path.
+- Map visible objects to named actions in `scripts/isometric-scenes/actions.json`. Use SVG coordinates for each marker and time a one-shot action to its loop interval. Provide keyboard-accessible buttons and a clear result for each action. For a stateful scene, expose meaningfully separate SVG layers so choices change the art.
 - Run `npm run build:scenes` to regenerate the integrated gallery and offline ZIP. Update the gallery through its manifest, template, CSS, and JavaScript in `scripts/isometric-scenes/`. Keep generated HTML and ZIP in sync with their source.
 - Run `npm run check`, `npm test`, and `npm run test:browser -- isometric-scenes.spec.mjs` where Chromium and Playwright are available. Open `/isometric-scenes/?scene=<key>` to check the new scene directly.
 
@@ -30,4 +31,5 @@ Outside NOIR, the SVG is the complete asset. Test it as a standalone file or in 
 - Confirm the action reads in the first seconds and the resting pose makes sense with motion disabled.
 - Check crisp edges, uncut shadows, and readable labels at desktop and narrow sizes.
 - Test a custom brand accent and both light and dark appearances. Check that annotation accents remain legible and the SVG download reflects the selected appearance.
+- Check pointer and keyboard actions. With reduced motion, an action should show its result immediately.
 - Check the new scene's direct link, SVG and ZIP exports, and any existing scenes affected by shared changes.

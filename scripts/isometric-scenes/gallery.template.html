@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Preview animated isometric illustrations and customise their colours.">
+<meta name="description" content="Interact with isometric illustrations and customise their colours.">
 <title>Isometric Scenes | NOIR</title>
 <style>
 /* GALLERY_STYLE */
@@ -22,7 +22,7 @@
   <header class="preview-masthead">
     <div>
       <h1 class="preview-title">Isometric scenes</h1>
-      <p class="preview-intro">Animated illustrations for SaaS, AI, and research.</p>
+      <p class="preview-intro">Interactive illustrations for SaaS, AI, and research.</p>
     </div>
     <label class="preview-appearance" for="appearance">
       Appearance
@@ -49,8 +49,13 @@
         <span class="preview-register" aria-hidden="true"></span>
         <span class="preview-register" aria-hidden="true"></span>
 <!-- SCENE_PANELS -->
+        <svg class="preview-hotspots" viewBox="0 0 800 640" aria-hidden="true" hidden><g></g></svg>
       </div>
       <div class="preview-controls" role="group" aria-label="Preview controls">
+        <button class="preview-control preview-interact" type="button" aria-pressed="false" aria-controls="preview-actions">
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="5.3" stroke="currentColor" stroke-width="1.4"/><circle cx="8" cy="8" r="1.55" fill="currentColor"/></svg>
+          <span>Interact</span>
+        </button>
         <button class="preview-control preview-toggle" type="button">
           <svg data-icon="pause" width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5.5 3.25v9.5m5-9.5v9.5" stroke="currentColor" stroke-width="1.65" stroke-linecap="round"/></svg>
           <svg data-icon="play" width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true" hidden><path d="m5 3 7.5 5L5 13z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
@@ -65,6 +70,13 @@
           <span>Download SVG</span>
         </button>
       </div>
+      <section id="preview-actions" class="preview-actions" aria-label="Scene actions" hidden>
+        <div class="preview-action-bar">
+          <div class="preview-action-buttons" role="group" aria-label="Actions"></div>
+          <button class="preview-action preview-action-reset" type="button" hidden>Reset case</button>
+        </div>
+        <p class="preview-action-result" role="status" aria-live="polite"></p>
+      </section>
       <ul class="preview-key" data-key-for="cryptopulse-mqtt" aria-label="Signal colours" hidden>
         <li>Secure MQTT traffic</li>
         <li class="is-annotation">RF anomaly alert</li>

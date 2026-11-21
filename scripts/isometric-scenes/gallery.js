@@ -1,6 +1,8 @@
 (() => {
   const SVG_NS = 'http://www.w3.org/2000/svg';
   const PAINTS = ['fill', 'stroke', 'stop-color', 'flood-color', 'lighting-color'];
+  /* GALLERY_INTERACTIONS */
+  const actionConfigs = /* SCENE_ACTION_DATA */ {};
   const NOIR_THEME = 'noir-theme';
   const STORAGE = 'isometric-scenes.appearance.v1';
   const COLOUR_FALLBACK = '#7861d8';
@@ -131,6 +133,7 @@
   const status = document.getElementById('preview-status');
   const toggle = gallery.querySelector('.preview-toggle');
   const replay = gallery.querySelector('.preview-replay');
+  const interact = gallery.querySelector('.preview-interact');
   const download = gallery.querySelector('.preview-download');
   const bundle = gallery.querySelector('.preview-bundle');
   const appearanceSelect = document.getElementById('appearance');
@@ -142,6 +145,7 @@
   const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
   const darkMode = matchMedia('(prefers-color-scheme: dark)');
   const horizontalTabs = matchMedia('(max-width: 900px)');
+  const sceneActions = createSceneActions(gallery, actionConfigs, animations, reducedMotion);
   const isExport = root.dataset.exportViewer === 'yes';
   let stored = {};
   let libraryAppearance;
@@ -168,7 +172,19 @@
     scene.styles = Array.from(svg.querySelectorAll('style'), element => ({ element, text: element.textContent }));
     const shadow = panel.querySelector('.preview-mount').attachShadow({ mode: 'open' });
     const frameStyle = document.createElement('style');
-    frameStyle.textContent = ':host > svg{display:block;width:100%;height:100%;transform:scale(1.06)}';
+    frameStyle.textContent = `
+      :host > svg { display:block; width:100%; height:100%; transform:scale(1.06) }
+      svg[data-si-demo] * { animation:none !important }
+      svg[data-si-demo] [data-si-part], svg[data-si-demo] [data-si-route] { transition:opacity .35s ease, translate .4s cubic-bezier(.24,.79,.31,1) }
+      svg[data-si-demo] [data-si-part="call"], svg[data-si-demo] [data-si-part="chat"], svg[data-si-demo] [data-si-part="email"] { opacity:.49 }
+      svg[data-si-demo] [data-si-route] { opacity:.15 }
+      svg[data-si-demo] [data-si-part="brief"], svg[data-si-demo] [data-si-part="transcript"], svg[data-si-demo] [data-si-part="saved"] { opacity:0; translate:0 11px; pointer-events:none }
+      svg[data-si-demo] [data-si-selected], svg[data-si-demo] [data-si-visible] { opacity:1 !important }
+      svg[data-si-demo] [data-si-visible] { translate:0 0 !important }
+      @media (prefers-reduced-motion: reduce) {
+        svg[data-si-demo] [data-si-part], svg[data-si-demo] [data-si-route] { transition:none }
+      }
+    `;
     shadow.append(frameStyle, svg);
     return scene;
   });
@@ -230,7 +246,7 @@
   function applyMotionPreference() {
     for (const scene of scenes) {
       for (const { element, text } of scene.styles) {
-        const css = reducedMotion.matches && motionRequested
+        const css = reducedMotion.matches && (motionRequested || sceneActions.usesTimeline)
           ? text.replace(/@media\s*\(\s*prefers-reduced-motion\s*:\s*reduce\s*\)/gi, '@media not all')
           : text;
         if (element.textContent !== css) element.textContent = css;
@@ -240,6 +256,8 @@
 
   function selectScene(next, { focus = false, updateUrl = false } = {}) {
     if (next !== active) {
+      const wasInteractive = sceneActions.active;
+      sceneActions.close();
       for (const animation of animations(scenes[active])) animation.pause();
       tabs[active].setAttribute('aria-selected', 'false');
       tabs[active].tabIndex = -1;
@@ -250,7 +268,11 @@
       tabs[active].tabIndex = 0;
       paintActiveScene();
       scenes[active].panel.hidden = false;
-      run(scenes[active], true);
+      if (wasInteractive || actionConfigs[scenes[active].key].kind === 'case') setInteractive(true);
+      else {
+        applyMotionPreference();
+        run(scenes[active], true);
+      }
     }
     for (const key of keys) key.hidden = key.dataset.keyFor !== scenes[active].key;
     if (focus) tabs[active].focus();
@@ -261,7 +283,21 @@
     }
   }
 
+  function setInteractive(enabled) {
+    if (sceneActions.active === enabled) return;
+    if (enabled) {
+      playing = false;
+      sceneActions.open(scenes[active]);
+    } else sceneActions.close();
+    applyMotionPreference();
+    run(scenes[active], false);
+    sceneActions.settle();
+    interact.setAttribute('aria-pressed', String(enabled));
+    showPlayback();
+  }
+
   function setPlaying(value, restart = false) {
+    if (value && sceneActions.active) setInteractive(false);
     if (value && reducedMotion.matches && !motionRequested) {
       motionRequested = true;
       applyMotionPreference();
@@ -326,6 +362,7 @@
       colourError.hidden = false;
     }
   });
+  interact.addEventListener('click', () => setInteractive(!sceneActions.active));
   toggle.addEventListener('click', () => setPlaying(!playing));
   replay.addEventListener('click', () => setPlaying(true, true));
   download.addEventListener('click', () => {
@@ -340,26 +377,35 @@
     page.dataset.exportAppearance = appearance;
     page.dataset.exportBrand = brand;
     page.dataset.exportScene = scenes[active].key;
+    page.dataset.exportMode = sceneActions.active ? 'interact' : 'loop';
     const files = [['animated-isometric-scenes.html', '<!doctype html>\n' + page.outerHTML]];
     for (const scene of scenes) files.push([scene.file, exportSvg(scene, brandHsl, appearance)]);
     saveFile(makeZip(files), 'animated-isometric-scenes.zip');
   });
   reducedMotion.addEventListener('change', () => {
     motionRequested = false;
-    playing = !reducedMotion.matches;
+    playing = !sceneActions.active && !reducedMotion.matches;
     applyMotionPreference();
-    run(scenes[active], true);
+    run(scenes[active], !sceneActions.active);
+    sceneActions.settle();
     showPlayback();
   });
   darkMode.addEventListener('change', applyAppearance);
   const orient = () => tablist.setAttribute('aria-orientation', horizontalTabs.matches ? 'horizontal' : 'vertical');
   horizontalTabs.addEventListener('change', orient);
 
-  const requested = isExport ? root.dataset.exportScene : new URLSearchParams(window.location.search).get('scene');
+  const search = new URLSearchParams(window.location.search);
+  const requested = isExport ? root.dataset.exportScene : search.get('scene');
+  const requestedMode = isExport ? root.dataset.exportMode : search.get('mode');
   const initial = scenes.findIndex(scene => scene.key === requested);
   applyAppearance();
   applyBrand();
   selectScene(Math.max(0, initial));
+  if (requestedMode === 'interact') setInteractive(true);
+  if (requestedMode === 'loop') {
+    setInteractive(false);
+    if (!reducedMotion.matches) setPlaying(true, true);
+  }
   orient();
   showPlayback();
 })();
