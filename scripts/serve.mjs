@@ -6,7 +6,7 @@ import { parseArgs } from 'node:util';
 
 const { values } = parseArgs({
   options: {
-    port: { type: 'string', short: 'p', default: process.env.PORT || '3000' },
+    port: { type: 'string', short: 'p', default: process.env.PORT || '3001' },
     host: { type: 'string', default: process.env.HOST || '0.0.0.0' },
   },
 });
