@@ -50,8 +50,9 @@ svg.icon { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-w
 .main-shell { margin-left: var(--sidebar); }
 .topbar { position: sticky; top: 0; z-index: 25; height: var(--header); display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 0 36px; background: var(--noir-090909); border-bottom: 1px solid var(--border); }
 .top-nav { display: flex; align-items: center; height: 100%; gap: 25px; }
-.top-nav button { position: relative; height: 100%; padding: 0; font-size: 13px; color:var(--muted); }
-.top-nav button.active, .top-nav button:hover { color: var(--noir-fafafa); }
+.top-nav button, .top-nav a { position: relative; height: 100%; padding: 0; font-size: 13px; color:var(--muted); }
+.top-nav a { display: inline-flex; align-items: center; }
+.top-nav button.active, .top-nav button:hover, .top-nav a:hover { color: var(--noir-fafafa); }
 .top-actions { display: flex; align-items: center; gap: 24px; }
 .search-trigger { display: flex; align-items: center; gap: 8px; width: 215px; height: 32px; padding: 0 10px; border: 1px solid var(--border); border-radius: 6px; background: var(--noir-111111); text-align: left; color:var(--muted); font-size: 12px; }
 .search-trigger svg { width: 14px; height: 14px; }
@@ -257,9 +258,12 @@ dialog::backdrop { background: var(--noir-000000aa); }
 @media (max-width: 600px) {
   :root { --header: 58px; }
   .topbar { padding: 0 14px; gap: 10px; }
-  .top-nav { gap: 19px; }
-  .top-nav button { font-size: 12px; }
-  .top-nav button:nth-child(3) { display: none; }
+  .top-nav { min-width: 0; gap: 19px; overflow-x: auto; scrollbar-width: none; }
+  .top-nav :is(button, a) { flex: 0 0 auto; }
+  .top-nav :is(button, a):focus-visible { outline-offset: -2px; }
+  .top-actions { flex: 0 0 auto; }
+  .top-nav button, .top-nav a { font-size: 12px; }
+  .top-nav #navBadges { display: none; }
   .search-trigger { width: 32px; height: 32px; padding: 7px; border: 0; background: none; }
   .search-trigger > span:nth-child(2), .search-trigger kbd { display: none; }
   .search-trigger svg { width: 17px; height: 17px; }

@@ -34,6 +34,12 @@ Object controls: grab a badge or its fabric to move the pendant; release to let 
 
 `npm run test:browser -- tests/badges.spec.mjs tests/badge-physics.spec.mjs tests/badge-layout.spec.mjs` covers every badge, expanded stories, combined/empty filters, mouse and keyboard navigation, drag-versus-click behavior, real touch input, reduced motion, narrow layouts, object dragging on a fixed board, fixed hooks, release bounds, spring settling with no idle frames, touch cancellation, page scrolling, live collection counts, chronological story navigation, and missing-image fallbacks.
 
+## Isometric scenes
+
+Choose **Scenes** in NOIR or open `/isometric-scenes/`. The gallery provides playback controls, brand accent presets or a custom hex colour, System, Light, and Dark appearance, individual animated SVGs, and an offline ZIP.
+
+Add a standalone SVG to `dist/isometric-scenes/`, register it in `scripts/isometric-scenes/scenes.json`, and run `npm run build:scenes`. Use the [isometric-scenes agent skill](.agents/skills/isometric-scenes/SKILL.md) for the drawing, motion, and export workflow.
+
 ## Explore
 
 - Browse, search, filter, and save components in this browser.

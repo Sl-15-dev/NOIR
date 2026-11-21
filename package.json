@@ -9,7 +9,8 @@
     "start": "node scripts/serve.mjs",
     "check": "node scripts/check.mjs",
     "test": "node --test tests/catalog.test.mjs",
-    "test:browser": "playwright test"
+    "test:browser": "playwright test",
+    "build:scenes": "node scripts/isometric-scenes/build.mjs"
   },
   "engines": {
     "node": ">=20"

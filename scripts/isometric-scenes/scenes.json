@@ -1,0 +1,10 @@
+[
+  {"key":"agent","file":"agent-workbench.svg","title":"Agent Workbench","summary":"From prompt to reviewed result","accent":"#c46a43","icon":"M4 10 12 5l8 5v7l-8 4-8-4zM4 10l8 4 8-4m-8 4v7m0-19v4m-2-2h4"},
+  {"key":"workflow","file":"workflow-relay.svg","title":"Workflow Relay","summary":"A signal runs through automated steps","accent":"#8264d7","icon":"m4 6 4-2 4 2-4 2zM4 6v4l4 2 4-2V6M8 8v4m5 5 4-2 4 2-4 2zM13 17v4l4 2 4-2v-4m-4 2v4M15 7h3a2 2 0 0 1 2 2v4m-2-2 2 2 2-2"},
+  {"key":"analytics","file":"analytics-desk.svg","title":"Analytics Desk","summary":"A scan reveals a standout data point","accent":"#43a589","icon":"m3 17 7 4 11-6M6 16v-4l3-1.7v7.4m3 1.1v-9l3-1.7v9m3-1.5V5l3-1.7v10.4"},
+  {"key":"cryptopulse-mqtt","file":"cryptopulse-mqtt.svg","title":"CryptoPulse MQTT","summary":"RF detection on Arduino R4","accent":"#439b9b","icon":"M12 3 4.5 6v5.2c0 4.2 2.3 7.2 7.5 9.8 5.2-2.6 7.5-5.6 7.5-9.8V6L12 3ZM7.9 12h2.3l1.25-2.6 1.8 5 1.2-2.4h1.65"},
+  {"key":"stroke-lesion-review","file":"stroke-lesion-review.svg","title":"Stroke Lesion Review","summary":"U-Net and MRI mask comparison","accent":"#8f75dd","icon":"M12 5.5c-3.2-3-7-.9-7.6 2.2a3.7 3.7 0 0 0-.6 5.6c-.3 3.6 3.1 6.5 6.3 5.2l1.9-1.8 1.9 1.8c3.2 1.3 6.6-1.6 6.3-5.2a3.7 3.7 0 0 0-.6-5.6c-.6-3.1-4.4-5.2-7.6-2.2Zm0 0v11.2m-5.2-7 2.2 1.6m5.9 2.4 2-1.5m-10.3 2.8H9"},
+  {"key":"checkout-terminal","file":"checkout-terminal.svg","title":"Checkout Terminal","summary":"A tap becomes an approved payment","accent":"#c4506e","icon":"M4 6h16v12H4zM4 9h16m-12 5h4m3 0 1.5 1.5L19 13"},
+  {"key":"document-indexer","file":"document-indexer.svg","title":"Document Indexer","summary":"A document becomes a searchable index","accent":"#5178d8","icon":"M4 3h10l4 4v4M4 3v18h6M14 3v5h4M7 8h4m-4 4h5m-5 4h2m9.3 2.3L21 21m-1.5-5.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"},
+  {"key":"access-key","file":"access-key.svg","title":"Access Key","summary":"A verified credential opens a gate","accent":"#bc872e","icon":"M8 14a5 5 0 1 1 5-5l8 8-2 2-2-2-2 2-4-5H8Z M8 8h.01"}
+]

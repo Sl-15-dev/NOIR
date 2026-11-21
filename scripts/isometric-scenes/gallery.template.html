@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Preview animated isometric illustrations and customise their colours.">
+<title>Isometric Scenes | NOIR</title>
+<style>
+/* GALLERY_STYLE */
+</style>
+</head>
+<body>
+<nav class="scenes-navigation" aria-label="NOIR navigation">
+  <div class="nav-inner">
+    <a class="noir-mark" href="../" aria-label="NOIR home">NOIR</a>
+    <a href="../#components">Components</a>
+    <a href="../#badges">Badges</a>
+    <span aria-current="page">Scenes</span>
+  </div>
+</nav>
+<main class="preview-page">
+  <header class="preview-masthead">
+    <div>
+      <h1 class="preview-title">Isometric scenes</h1>
+      <p class="preview-intro">Animated illustrations for SaaS, AI, and research.</p>
+    </div>
+    <label class="preview-appearance" for="appearance">
+      Appearance
+      <select id="appearance">
+        <option value="system">System</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+      </select>
+    </label>
+  </header>
+
+  <section class="preview-gallery" data-scene="agent" aria-label="Animated scene collection">
+    <div class="preview-picker">
+      <h2 class="preview-picker-title">Browse scenes</h2>
+      <div class="preview-tabs" role="tablist" aria-label="Scenes" aria-orientation="vertical">
+<!-- SCENE_TABS -->
+      </div>
+    </div>
+
+    <div class="preview-viewer">
+      <div class="preview-artboard">
+        <span class="preview-register" aria-hidden="true"></span>
+        <span class="preview-register" aria-hidden="true"></span>
+        <span class="preview-register" aria-hidden="true"></span>
+        <span class="preview-register" aria-hidden="true"></span>
+<!-- SCENE_PANELS -->
+      </div>
+      <div class="preview-controls" role="group" aria-label="Preview controls">
+        <button class="preview-control preview-toggle" type="button">
+          <svg data-icon="pause" width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5.5 3.25v9.5m5-9.5v9.5" stroke="currentColor" stroke-width="1.65" stroke-linecap="round"/></svg>
+          <svg data-icon="play" width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true" hidden><path d="m5 3 7.5 5L5 13z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+          <span>Pause</span>
+        </button>
+        <button class="preview-control preview-replay" type="button">
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 6a5.25 5.25 0 1 1-.15 4m.15-4V2m0 4h4" stroke="currentColor" stroke-width="1.45" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>Replay</span>
+        </button>
+        <button class="preview-control preview-download" type="button">
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 2v8m-3-3 3 3 3-3M3 11.5V14h10v-2.5" stroke="currentColor" stroke-width="1.45" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>Download SVG</span>
+        </button>
+      </div>
+      <ul class="preview-key" data-key-for="cryptopulse-mqtt" aria-label="Signal colours" hidden>
+        <li>Secure MQTT traffic</li>
+        <li class="is-annotation">RF anomaly alert</li>
+      </ul>
+      <ul class="preview-key" data-key-for="stroke-lesion-review" aria-label="MRI comparison" hidden>
+        <li>U-Net prediction</li>
+        <li class="is-annotation">Dataset annotation</li>
+        <li class="is-metric">ISLES 2022 · ≈0.83 initial Dice</li>
+      </ul>
+      <div class="preview-sr-only" role="status" id="preview-status"></div>
+      <noscript><p>Enable JavaScript to preview and customise scenes.</p></noscript>
+    </div>
+
+    <section class="preview-palette" aria-labelledby="brand-title">
+      <h2 id="brand-title">In your brand colours</h2>
+      <p>Your palette on every scene, so they sit on your pages as part of your product.</p>
+      <div class="preview-presets" role="group" aria-label="Brand colour presets">
+        <button class="preview-swatch is-original" type="button" data-colour="" aria-pressed="true">Original</button>
+        <button class="preview-swatch" type="button" data-colour="#7861d8" style="--swatch:#7861d8" aria-label="Violet" aria-pressed="false"><span aria-hidden="true"></span></button>
+        <button class="preview-swatch" type="button" data-colour="#238f7d" style="--swatch:#238f7d" aria-label="Teal" aria-pressed="false"><span aria-hidden="true"></span></button>
+        <button class="preview-swatch" type="button" data-colour="#437aca" style="--swatch:#437aca" aria-label="Blue" aria-pressed="false"><span aria-hidden="true"></span></button>
+        <button class="preview-swatch" type="button" data-colour="#c25380" style="--swatch:#c25380" aria-label="Rose" aria-pressed="false"><span aria-hidden="true"></span></button>
+      </div>
+      <div class="preview-custom">
+        <input id="brand-picker" type="color" value="#7861d8" aria-label="Custom brand colour">
+        <input id="brand-hex" type="text" placeholder="#7861D8" maxlength="7" spellcheck="false" autocomplete="off" aria-label="Brand hex colour" aria-describedby="brand-error">
+      </div>
+      <p class="preview-colour-error" id="brand-error" hidden>Enter a six-digit hex colour.</p>
+      <a class="preview-bundle" href="animated-isometric-scenes.zip" download>Download all scenes + preview</a>
+    </section>
+  </section>
+</main>
+<script>
+/* GALLERY_SCRIPT */
+</script>
+</body>
+</html>

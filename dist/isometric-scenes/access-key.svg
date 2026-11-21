@@ -1,0 +1,397 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="640" viewBox="0 0 800 640" role="img" aria-labelledby="ak-title ak-desc" stroke-linecap="round" stroke-linejoin="round">
+<title id="ak-title">Access Key</title>
+<desc id="ak-desc">A brass passkey lowers into its dock. The amber display confirms access and the compact tabletop vault swings open.</desc>
+<style>
+  .ak-token { animation: ak-dock 8.8s cubic-bezier(.44,.06,.30,1) infinite; }
+  .ak-door { animation: ak-hinge 8.8s linear infinite; }
+  .ak-outer { animation: ak-outside 8.8s linear infinite; }
+  .ak-inner { animation: ak-inside 8.8s linear infinite; }
+  .ak-signal { animation: ak-signal 8.8s linear infinite; }
+  .ak-confirm { animation: ak-confirm 8.8s ease-in-out infinite; }
+  .ak-idle { animation: ak-idle 8.8s ease-in-out infinite; }
+  .ak-room-light { animation: ak-room-light 8.8s ease-in-out infinite; }
+  .ak-lock { animation: ak-release 8.8s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+  @keyframes ak-dock { 0%,8%,95%,100% { transform: translateY(0); } 21%,83% { transform: translateY(14px); } }
+  @keyframes ak-hinge {
+    0% { transform: scaleX(0.86603) skewY(26.56505deg); }
+    31% { transform: scaleX(0.86603) skewY(26.56505deg); }
+    33% { transform: scaleX(0.78725) skewY(28.44331deg); }
+    35% { transform: scaleX(0.59377) skewY(31.7347deg); }
+    37% { transform: scaleX(0.29629) skewY(34.45412deg); }
+    39% { transform: scaleX(-0.08543) skewY(35.19854deg); }
+    41% { transform: scaleX(-0.4588) skewY(33.24957deg); }
+    43% { transform: scaleX(-0.70248) skewY(30.08062deg); }
+    45% { transform: scaleX(-0.83527) skewY(27.34553deg); }
+    48% { transform: scaleX(-0.89572) skewY(25.74549deg); }
+    70% { transform: scaleX(-0.89572) skewY(25.74549deg); }
+    72% { transform: scaleX(-0.86603) skewY(26.56505deg); }
+    74% { transform: scaleX(-0.77076) skewY(28.7899deg); }
+    76% { transform: scaleX(-0.53689) skewY(32.43773deg); }
+    78% { transform: scaleX(-0.21267) skewY(34.85197deg); }
+    80% { transform: scaleX(0.19159) skewY(34.93049deg); }
+    82% { transform: scaleX(0.5176) skewY(32.65404deg); }
+    84% { transform: scaleX(0.71989) skewY(29.77221deg); }
+    86% { transform: scaleX(0.83527) skewY(27.34553deg); }
+    88% { transform: scaleX(0.86603) skewY(26.56505deg); }
+    100% { transform: scaleX(0.86603) skewY(26.56505deg); }
+  }
+  @keyframes ak-outside { 0%,38.54%,79.05%,100% { opacity: 1; } 38.55%,79.04% { opacity: 0; } }
+  @keyframes ak-inside { 0%,38.54%,79.05%,100% { opacity: 0; } 38.55%,79.04% { opacity: 1; } }
+  @keyframes ak-signal {
+    0%,19% { opacity: 0; stroke-dashoffset: 14; }
+    20% { opacity: .95; stroke-dashoffset: 14; }
+    33% { opacity: .95; stroke-dashoffset: -110; }
+    34%,100% { opacity: 0; stroke-dashoffset: -125; }
+  }
+  @keyframes ak-confirm { 0%,25%,90%,100% { opacity: 0; } 33%,82% { opacity: 1; } }
+  @keyframes ak-idle { 0%,24%,93%,100% { opacity: 1; } 31%,83% { opacity: 0; } }
+  @keyframes ak-room-light { 0%,35%,87%,100% { opacity: 0; } 46%,78% { opacity: 1; } }
+  @keyframes ak-release { 0%,26%,90%,100% { transform: rotate(0); } 34%,85% { transform: rotate(38deg); } }
+  @media (prefers-reduced-motion: reduce) {
+    .ak-token,.ak-door,.ak-outer,.ak-inner,.ak-signal,.ak-confirm,.ak-idle,.ak-room-light,.ak-lock { animation: none; }
+  }
+</style>
+<defs>
+<linearGradient id="ak-plinth" x1="0%" y1="0%" x2="65%" y2="100%" >
+<stop offset="0%" stop-color="#f9f2e1"/>
+<stop offset="100%" stop-color="#e6dac7"/>
+</linearGradient>
+<linearGradient id="ak-plinth-front" x1="0%" y1="0%" x2="65%" y2="100%" >
+<stop offset="0%" stop-color="#ded0ba"/>
+<stop offset="100%" stop-color="#ac9d8a"/>
+</linearGradient>
+<linearGradient id="ak-plinth-side" x1="0%" y1="0%" x2="65%" y2="100%" >
+<stop offset="0%" stop-color="#c6b6a0"/>
+<stop offset="100%" stop-color="#978672"/>
+</linearGradient>
+<linearGradient id="ak-gasket" x1="0%" y1="0%" x2="65%" y2="100%" >
+<stop offset="0%" stop-color="#574943"/>
+<stop offset="100%" stop-color="#2d2926"/>
+</linearGradient>
+<linearGradient id="ak-cab-top" x1="0%" y1="0%" x2="65%" y2="100%" >
+<stop offset="0%" stop-color="#fcf5e7"/>
+<stop offset="100%" stop-color="#ddd0b9"/>
+</linearGradient>
+<linearGradient id="ak-cab-front" x1="0%" y1="0%" x2="65%" y2="100%" >
+<stop offset="0%" stop-color="#f6ead6"/>
+<stop offset="100%" stop-color="#d9cbaf"/>
+</linearGradient>
+<linearGradient id="ak-cab-side" x1="0%" y1="0%" x2="65%" y2="100%" >
+<stop offset="0%" stop-color="#d5c3a8"/>
+<stop offset="100%" stop-color="#a28d76"/>
+</linearGradient>
+<linearGradient id="ak-steel" x1="0%" y1="0%" x2="65%" y2="100%" >
+<stop offset="0%" stop-color="#77746d"/>
+<stop offset="100%" stop-color="#383530"/>
+</linearGradient>
+<linearGradient id="ak-steel-side" x1="0%" y1="0%" x2="65%" y2="100%" >
+<stop offset="0%" stop-color="#60584d"/>
+<stop offset="100%" stop-color="#2b2622"/>
+</linearGradient>
+<linearGradient id="ak-chamber" x1="0%" y1="0%" x2="65%" y2="100%" >
+<stop offset="0%" stop-color="#3d332a"/>
+<stop offset="100%" stop-color="#1c1a18"/>
+</linearGradient>
+<linearGradient id="ak-shelf" x1="0%" y1="0%" x2="65%" y2="100%" >
+<stop offset="0%" stop-color="#675244"/>
+<stop offset="100%" stop-color="#3c322c"/>
+</linearGradient>
+<linearGradient id="ak-door-front" x1="0%" y1="0%" x2="65%" y2="100%" >
+<stop offset="0%" stop-color="#f8edda"/>
+<stop offset="100%" stop-color="#dac6a8"/>
+</linearGradient>
+<linearGradient id="ak-door-back" x1="0%" y1="0%" x2="65%" y2="100%" >
+<stop offset="0%" stop-color="#64584a"/>
+<stop offset="100%" stop-color="#342a25"/>
+</linearGradient>
+<linearGradient id="ak-door-pad" x1="0%" y1="0%" x2="65%" y2="100%" >
+<stop offset="0%" stop-color="#57483b"/>
+<stop offset="100%" stop-color="#26221f"/>
+</linearGradient>
+<linearGradient id="ak-screen" x1="0%" y1="0%" x2="65%" y2="100%" >
+<stop offset="0%" stop-color="#4b3429"/>
+<stop offset="100%" stop-color="#271e19"/>
+</linearGradient>
+<linearGradient id="ak-white" x1="0%" y1="0%" x2="65%" y2="100%" >
+<stop offset="0%" stop-color="#fff7e9"/>
+<stop offset="100%" stop-color="#ece0c9"/>
+</linearGradient>
+<linearGradient id="ak-honey" x1="0%" y1="10%" x2="80%" y2="100%" data-paint-policy="accent">
+<stop offset="0%" stop-color="#fff0ac"/>
+<stop offset="37%" stop-color="#f2c46a"/>
+<stop offset="100%" stop-color="#d4822e"/>
+</linearGradient>
+<linearGradient id="ak-dark-gold" x1="0%" y1="0%" x2="60%" y2="100%" data-paint-policy="accent">
+<stop offset="0%" stop-color="#e5aa4d"/>
+<stop offset="62%" stop-color="#bb742a"/>
+<stop offset="100%" stop-color="#8e4d20"/>
+</linearGradient>
+<linearGradient id="ak-gold-brush" x1="0%" y1="0%" x2="100%" y2="75%" data-paint-policy="accent">
+<stop offset="0%" stop-color="#f7db84"/>
+<stop offset="31%" stop-color="#bb7533"/>
+<stop offset="53%" stop-color="#ffe3a1"/>
+<stop offset="100%" stop-color="#d79442"/>
+</linearGradient>
+<filter id="ak-ground" x="-25%" y="-35%" width="151%" height="175%"><feGaussianBlur stdDeviation="13"/></filter>
+<filter id="ak-contact" x="-28%" y="-47%" width="160%" height="197%"><feGaussianBlur stdDeviation="5"/></filter>
+<filter id="ak-glow" x="-70%" y="-110%" width="250%" height="320%"><feGaussianBlur stdDeviation="4.5"/></filter>
+<clipPath id="ak-cavity"><rect x="19" y="23" width="207" height="123" rx="13"/></clipPath>
+<clipPath id="ak-dock-mask" clipPathUnits="userSpaceOnUse">
+<path d="M383.33975 362 L460.41601 406.5 L460.41601 491.5 L383.33975 447 Z" fill="#fff" stroke="none" stroke-width="1.24" />
+</clipPath></defs>
+<g aria-label="Ceramic tabletop base">
+<path d="M346.96668 248 L687.31466 444.5 L443.0955 593.5 L100.14944 395.5 Z" fill="#3b2c27" stroke="none" stroke-width="1.24" opacity=".22" filter="url(#ak-ground)"/>
+<path d="M345.23463 237 L678.65441 429.5 L444.82755 576.5 L108.80969 382.5 Z" fill="#3a2924" stroke="none" stroke-width="1.24" opacity=".20" filter="url(#ak-contact)"/>
+<path d="M117.46995 343.5 Q98.41739 354.5 117.46995 365.5 L420.57884 540.5 Q439.6314 551.5 458.68396 540.5 L458.68396 553.5 Q439.6314 564.5 420.57884 553.5 L117.46995 378.5 Q98.41739 367.5 117.46995 356.5 Z" fill="#766957" stroke="#42382e" stroke-width="1.28" />
+<path d="M458.68396 540.5 L665.66403 421 Q684.71659 410 665.66403 399 L665.66403 412 Q684.71659 423 665.66403 434 L458.68396 553.5 Z" fill="#584b3f" stroke="#42382e" stroke-width="1.28" />
+<path d="M362.55514 224 L665.66403 399 Q684.71659 410 665.66403 421 L458.68396 540.5 Q439.6314 551.5 420.57884 540.5 L117.46995 365.5 Q98.41739 354.5 117.46995 343.5 L324.45002 224 Q343.50258 213 362.55514 224 Z" fill="#8c7966" stroke="#42382e" stroke-width="1.28" />
+<path d="M114.87187 325 Q94.08726 337 114.87187 349 L419.71281 525 Q440.49742 537 461.28203 525 L461.28203 546 Q440.49742 558 419.71281 546 L114.87187 370 Q94.08726 358 114.87187 346 Z" fill="url(#ak-plinth-front)" stroke="#42382e" stroke-width="1.28" />
+<path d="M461.28203 525 L669.12813 405 Q689.91274 393 669.12813 381 L669.12813 402 Q689.91274 414 669.12813 426 L461.28203 546 Z" fill="url(#ak-plinth-side)" stroke="#42382e" stroke-width="1.28" />
+<path d="M364.28719 205 L669.12813 381 Q689.91274 393 669.12813 405 L461.28203 525 Q440.49742 537 419.71281 525 L114.87187 349 Q94.08726 337 114.87187 325 L322.71797 205 Q343.50258 193 364.28719 205 Z" fill="url(#ak-plinth)" stroke="#42382e" stroke-width="1.28" />
+<g transform="matrix(0.86602540 .5 -0.86602540 .5 343.50258 193)" >
+<rect x="7" y="7" width="386" height="274" rx="19" fill="none" stroke="#fff9e9" stroke-width="1.3" opacity=".88"/>
+<rect x="14" y="14" width="372" height="260" rx="16" fill="none" stroke="#a6886b" stroke-width="1" opacity=".45"/>
+<circle cx="26" cy="26" r="4.1" fill="#d2c0a4" stroke="#8c7c68" stroke-width="0.8" />
+<path d="M 24.2 26 h3.6" fill="none" stroke="#7f6e5c" stroke-width="0.8" />
+<circle cx="375" cy="26" r="4.1" fill="#d2c0a4" stroke="#8c7c68" stroke-width="0.8" />
+<path d="M 373.2 26 h3.6" fill="none" stroke="#7f6e5c" stroke-width="0.8" />
+<circle cx="26" cy="263" r="4.1" fill="#d2c0a4" stroke="#8c7c68" stroke-width="0.8" />
+<path d="M 24.2 263 h3.6" fill="none" stroke="#7f6e5c" stroke-width="0.8" />
+<circle cx="375" cy="263" r="4.1" fill="#d2c0a4" stroke="#8c7c68" stroke-width="0.8" />
+<path d="M 373.2 263 h3.6" fill="none" stroke="#7f6e5c" stroke-width="0.8" />
+<path d="M 36 229 v13" fill="none" stroke="#aa947c" stroke-width="1" opacity=".51"/>
+<path d="M 42 229 v13" fill="none" stroke="#aa947c" stroke-width="1" opacity=".51"/>
+<path d="M 48 229 v13" fill="none" stroke="#aa947c" stroke-width="1" opacity=".51"/>
+<path d="M 54 229 v13" fill="none" stroke="#aa947c" stroke-width="1" opacity=".51"/>
+<path d="M 60 229 v13" fill="none" stroke="#aa947c" stroke-width="1" opacity=".51"/>
+<path d="M53 201 H97 Q104 201 104 194 V185 M57 207h45q9 0 9-9v-10 M57 213h52q9 0 9-9v-15" fill="none" stroke="#b4a089" stroke-width="0.9" opacity=".57"/>
+<circle cx="49" cy="201" r="1.65" fill="#bda78c" stroke="none" stroke-width="1" />
+<circle cx="49" cy="207" r="1.65" fill="#bda78c" stroke="none" stroke-width="1" />
+<circle cx="49" cy="213" r="1.65" fill="#bda78c" stroke="none" stroke-width="1" />
+</g>
+<path d="M114.87187 355 L417.98076 530" fill="none" stroke="#f8e7ce" stroke-width="0.94" opacity=".68"/>
+<path d="M669.12813 411 L465.61216 528.5" fill="none" stroke="#dfcbb1" stroke-width="1" opacity=".64"/>
+<g transform="matrix(0.86602540 .5 0 1 242.17761 429.5)" >
+<rect x="0" y="0" width="1.7" height="7" rx="0.85" fill="#796856" stroke="none" stroke-width="1" opacity=".73"/>
+<rect x="5" y="0" width="1.7" height="7" rx="0.85" fill="#796856" stroke="none" stroke-width="1" opacity=".73"/>
+<rect x="10" y="0" width="1.7" height="7" rx="0.85" fill="#796856" stroke="none" stroke-width="1" opacity=".73"/>
+<rect x="15" y="0" width="1.7" height="7" rx="0.85" fill="#796856" stroke="none" stroke-width="1" opacity=".73"/>
+<rect x="20" y="0" width="1.7" height="7" rx="0.85" fill="#796856" stroke="none" stroke-width="1" opacity=".73"/>
+<rect x="25" y="0" width="1.7" height="7" rx="0.85" fill="#796856" stroke="none" stroke-width="1" opacity=".73"/>
+<rect x="30" y="0" width="1.7" height="7" rx="0.85" fill="#796856" stroke="none" stroke-width="1" opacity=".73"/>
+<rect x="35" y="0" width="1.7" height="7" rx="0.85" fill="#796856" stroke="none" stroke-width="1" opacity=".73"/>
+<rect x="40" y="0" width="1.7" height="7" rx="0.85" fill="#796856" stroke="none" stroke-width="1" opacity=".73"/>
+<rect x="45" y="0" width="1.7" height="7" rx="0.85" fill="#796856" stroke="none" stroke-width="1" opacity=".73"/>
+<rect x="50" y="0" width="1.7" height="7" rx="0.85" fill="#796856" stroke="none" stroke-width="1" opacity=".73"/>
+<rect x="55" y="0" width="1.7" height="7" rx="0.85" fill="#796856" stroke="none" stroke-width="1" opacity=".73"/>
+<rect x="60" y="0" width="1.7" height="7" rx="0.85" fill="#796856" stroke="none" stroke-width="1" opacity=".73"/>
+<rect x="71" y="-1" width="39" height="10" rx="3" fill="#c3ae92" stroke="#9b876d" stroke-width="0.75" />
+<path d="M 79 4 h 3" fill="none" stroke="#796652" stroke-width="1" />
+<path d="M 88 4 h 5" fill="none" stroke="#796652" stroke-width="1" />
+<path d="M 97 4 h 7" fill="none" stroke="#796652" stroke-width="1" />
+</g>
+</g>
+<g aria-label="Secure vault shell">
+<path d="M378.14359 241 L616.30058 377.5 L456.08588 474 L212.73274 339.5 Z" fill="#49352c" stroke="none" stroke-width="1.24" opacity=".36" filter="url(#ak-contact)"/>
+<path d="M242.17761 314.5 Q230.91927 321 242.17761 327.5 L451.75575 448.5 Q463.01408 455 474.27241 448.5 L474.27241 463.5 Q463.01408 470 451.75575 463.5 L242.17761 342.5 Q230.91927 336 242.17761 329.5 Z" fill="url(#ak-gasket)" stroke="#42382e" stroke-width="1.28" />
+<path d="M474.27241 448.5 L603.3102 374 Q614.56853 367.5 603.3102 361 L603.3102 376 Q614.56853 382.5 603.3102 389 L474.27241 463.5 Z" fill="url(#ak-steel-side)" stroke="#42382e" stroke-width="1.28" />
+<path d="M393.73205 240 L603.3102 361 Q614.56853 367.5 603.3102 374 L474.27241 448.5 Q463.01408 455 451.75575 448.5 L242.17761 327.5 Q230.91927 321 242.17761 314.5 L371.21539 240 Q382.47372 233.5 393.73205 240 Z" fill="#63564a" stroke="#42382e" stroke-width="1.28" />
+<path d="M245.64171 169.5 L388.5359 87 Q388.5359 70 403.25833 78.5 L592.91789 188 Q607.64033 196.5 607.64033 213.5 L464.74613 296 Q464.74613 279 450.0237 270.5 L260.36414 161 Q245.64171 152.5 245.64171 169.5 Z" fill="url(#ak-cab-top)" stroke="#42382e" stroke-width="1.24" />
+<path d="M592.91789 188 Q607.64033 196.5 607.64033 213.5 L607.64033 348.5 Q607.64033 365.5 592.91789 357 L450.0237 439.5 Q464.74613 448 464.74613 431 L464.74613 296 Q464.74613 279 450.0237 270.5 Z" fill="url(#ak-cab-side)" stroke="#42382e" stroke-width="1.24" />
+<g transform="matrix(0.86602540 .5 0 1 245.64171 152.5)" >
+<rect x="0" y="0" width="253" height="169" rx="17" fill="url(#ak-cab-front)" stroke="#42382e" stroke-width="1.5" />
+</g>
+<g transform="matrix(0.86602540 .5 -0.86602540 .5 388.5359 70)" >
+<rect x="14" y="12" width="224" height="136" rx="12" fill="none" stroke="#ab987b" stroke-width="1.2" opacity=".62"/>
+<rect x="19" y="16" width="216" height="128" rx="10" fill="none" stroke="#fff8e7" stroke-width="1.2" opacity=".85"/>
+<rect x="71" y="43" width="111" height="63" rx="11" fill="#eadcc4" stroke="#b4a085" stroke-width="1" />
+<rect x="76" y="48" width="101" height="53" rx="9" fill="none" stroke="#fff3d8" stroke-width="1.05" />
+<path d="M122 60l14 6v14q0 11-14 15-14-4-14-15V66z" fill="none" stroke="#b29473" stroke-width="1.6" />
+<path d="m117 78 4 4 8-9" fill="none" stroke="#b29473" stroke-width="1.75" />
+</g>
+<g transform="matrix(0.86602540 .5 -0.86602540 .5 388.5359 70)" >
+<circle cx="25" cy="26" r="3.2" fill="#c7bba9" stroke="#84776a" stroke-width="0.84" />
+<path d="M 23.55 26 h 2.9" fill="none" stroke="#6d6259" stroke-width="0.8" />
+<circle cx="229" cy="26" r="3.2" fill="#c7bba9" stroke="#84776a" stroke-width="0.84" />
+<path d="M 227.55 26 h 2.9" fill="none" stroke="#6d6259" stroke-width="0.8" />
+<circle cx="25" cy="137" r="3.2" fill="#c7bba9" stroke="#84776a" stroke-width="0.84" />
+<path d="M 23.55 137 h 2.9" fill="none" stroke="#6d6259" stroke-width="0.8" />
+<circle cx="229" cy="137" r="3.2" fill="#c7bba9" stroke="#84776a" stroke-width="0.84" />
+<path d="M 227.55 137 h 2.9" fill="none" stroke="#6d6259" stroke-width="0.8" />
+</g>
+<g transform="matrix(-0.86602540 .5 0 1 607.64033 196.5)" >
+<path d="M17 11 H148" fill="none" stroke="#f7ddba" stroke-width="1.2" opacity=".74"/>
+<path d="M11 145 H149" fill="none" stroke="#887764" stroke-width="1.1" opacity=".62"/>
+<rect x="24" y="33" width="107" height="48" rx="8" fill="#8c735d" stroke="#9d8368" stroke-width="1.2" />
+<rect x="26" y="35" width="103" height="44" rx="7" fill="url(#ak-screen)" stroke="#473227" stroke-width="1.35" />
+<rect x="29" y="38" width="97" height="38" rx="5" fill="none" stroke="#ad865e" stroke-width="0.75" opacity=".57"/>
+<g transform="translate(155 0) scale(-1 1)">
+<g class="ak-idle" opacity="0">
+<circle cx="43" cy="57" r="4" fill="#bd9a74" stroke="none" stroke-width="1" />
+<text x="54" y="60" fill="#b5a291" font-family="system-ui,sans-serif" font-size="8.15" font-weight="680" letter-spacing="1.2" >READY</text>
+</g>
+<g class="ak-confirm">
+<circle cx="43" cy="56.5" r="8" fill="#eaaa47" stroke="none" stroke-width="1" data-paint-policy="accent" opacity=".6" filter="url(#ak-glow)"/>
+<circle cx="43" cy="56.5" r="6.85" fill="#e1a748" stroke="none" stroke-width="1" data-paint-policy="accent"/>
+<path d="m40 57 2 2 4-4.6" fill="none" stroke="#523923" stroke-width="1.35" />
+<text x="55" y="59.7" fill="#f8c970" font-family="system-ui,sans-serif" font-size="8.1" font-weight="680" letter-spacing="1.1" data-paint-policy="accent">VERIFIED</text>
+</g>
+</g>
+<rect x="28" y="99" width="3.25" height="27" rx="1.6" fill="#8c7560" stroke="none" stroke-width="1" opacity=".78"/>
+<path d="M 29 101 v21" fill="none" stroke="#6e5948" stroke-width="0.7" />
+<path d="M 31 103 v21" fill="none" stroke="#edd6b4" stroke-width="0.52" opacity=".77"/>
+<rect x="35" y="99" width="3.25" height="27" rx="1.6" fill="#8c7560" stroke="none" stroke-width="1" opacity=".78"/>
+<path d="M 36 101 v21" fill="none" stroke="#6e5948" stroke-width="0.7" />
+<path d="M 38 103 v21" fill="none" stroke="#edd6b4" stroke-width="0.52" opacity=".77"/>
+<rect x="42" y="99" width="3.25" height="27" rx="1.6" fill="#8c7560" stroke="none" stroke-width="1" opacity=".78"/>
+<path d="M 43 101 v21" fill="none" stroke="#6e5948" stroke-width="0.7" />
+<path d="M 45 103 v21" fill="none" stroke="#edd6b4" stroke-width="0.52" opacity=".77"/>
+<rect x="49" y="99" width="3.25" height="27" rx="1.6" fill="#8c7560" stroke="none" stroke-width="1" opacity=".78"/>
+<path d="M 50 101 v21" fill="none" stroke="#6e5948" stroke-width="0.7" />
+<path d="M 52 103 v21" fill="none" stroke="#edd6b4" stroke-width="0.52" opacity=".77"/>
+<rect x="56" y="99" width="3.25" height="27" rx="1.6" fill="#8c7560" stroke="none" stroke-width="1" opacity=".78"/>
+<path d="M 57 101 v21" fill="none" stroke="#6e5948" stroke-width="0.7" />
+<path d="M 59 103 v21" fill="none" stroke="#edd6b4" stroke-width="0.52" opacity=".77"/>
+<rect x="63" y="99" width="3.25" height="27" rx="1.6" fill="#8c7560" stroke="none" stroke-width="1" opacity=".78"/>
+<path d="M 64 101 v21" fill="none" stroke="#6e5948" stroke-width="0.7" />
+<path d="M 66 103 v21" fill="none" stroke="#edd6b4" stroke-width="0.52" opacity=".77"/>
+<rect x="70" y="99" width="3.25" height="27" rx="1.6" fill="#8c7560" stroke="none" stroke-width="1" opacity=".78"/>
+<path d="M 71 101 v21" fill="none" stroke="#6e5948" stroke-width="0.7" />
+<path d="M 73 103 v21" fill="none" stroke="#edd6b4" stroke-width="0.52" opacity=".77"/>
+<rect x="95" y="101" width="32" height="25" rx="4" fill="#b8a48a" stroke="#9a8269" stroke-width="0.88" />
+<path d="M101 110h19m-19 6h12" fill="none" stroke="#7e6955" stroke-width="0.95" />
+</g>
+</g>
+<g aria-label="Vault opening and recessed locking chamber">
+<g transform="matrix(0.86602540 .5 0 1 245.12209 152.8)" >
+<rect x="10" y="12" width="232" height="145" rx="13" fill="#baa385" stroke="#a18a70" stroke-width="1.25" />
+<rect x="14" y="17" width="222" height="135" rx="12" fill="url(#ak-steel-side)" stroke="#6f5946" stroke-width="1.5" />
+<rect x="19" y="23" width="207" height="123" rx="13" fill="url(#ak-chamber)" stroke="#342820" stroke-width="1.6" />
+<g clip-path="url(#ak-cavity)">
+<path d="M17 20 H227 V28 L35 57 17 61 Z" fill="#29221d" stroke="none" stroke-width="1" />
+<path d="M19 23 40 51 V115 L19 146Z" fill="#4c3a2d" stroke="none" stroke-width="1" />
+<path d="M43 49 226 34 226 106 43 122Z" fill="#3c332c" stroke="#2f2721" stroke-width="1.15" />
+<path d="M23 141 47 114 230 96 231 143Z" fill="url(#ak-shelf)" stroke="#382c25" stroke-width="1.1" />
+<path d="M33 143 54 123 215 108" fill="none" stroke="#9b7860" stroke-width="1.1" opacity=".53"/>
+<path d="M48 64 H212 M48 73H212" fill="none" stroke="#695044" stroke-width="0.9" opacity=".45"/>
+<rect x="86" y="100" width="66" height="22" rx="6" fill="#2d241f" stroke="#5d4b39" stroke-width="1.02" />
+<rect x="91" y="96" width="56" height="20" rx="5" fill="#89725a" stroke="#3d3027" stroke-width="1.03" />
+<rect x="103" y="79" width="33" height="28" rx="5" fill="url(#ak-gold-brush)" stroke="#6a482b" stroke-width="1.18" />
+<rect x="108" y="83" width="23" height="9" rx="2" fill="#593b26" stroke="#aa773d" stroke-width="0.65" />
+<path d="M109 98h20" fill="none" stroke="#f9d485" stroke-width="1.2" data-paint-policy="accent"/>
+<g class="ak-room-light">
+<rect x="49" y="38" width="144" height="8" rx="3" fill="#ffd176" stroke="none" stroke-width="1" data-paint-policy="accent" opacity=".42" filter="url(#ak-glow)"/>
+<rect x="54" y="38" width="134" height="3.2" rx="1.6" fill="#ffd888" stroke="none" stroke-width="1" data-paint-policy="accent"/>
+<rect x="100" y="79" width="39" height="28" rx="5" fill="#ffc45e" stroke="none" stroke-width="1" data-paint-policy="accent" opacity=".22" filter="url(#ak-glow)"/>
+</g>
+</g>
+<rect x="20" y="24" width="205" height="121" rx="12" fill="none" stroke="#c0a183" stroke-width="0.75" opacity=".58"/>
+</g>
+</g>
+<g aria-label="Token dock with routed connection">
+<path d="M440.49742 491 L456.95191 500.5 L469.07626 501.5 L507.18138 479.5 L508.91343 475.5 L482.06664 460 L481.20062 451.5" fill="none" stroke="#7a624e" stroke-width="6" />
+<path d="M440.49742 491 L456.95191 500.5 L469.07626 501.5 L507.18138 479.5 L508.91343 475.5 L482.06664 460 L481.20062 451.5" fill="none" stroke="#bd9868" stroke-width="2.3" />
+<path d="M440.49742 491 L456.95191 500.5 L469.07626 501.5 L507.18138 479.5 L508.91343 475.5 L482.06664 460 L481.20062 451.5" fill="none" stroke="#ffc55e" stroke-width="3" data-paint-policy="accent" class="ak-signal" opacity="0" pathLength="100" stroke-dasharray="13 120"/>
+<path d="M396.33013 450.5 L482.93267 500.5 L441.36345 526.5 L351.29681 479.5 Z" fill="#49372b" stroke="none" stroke-width="1.24" opacity=".34" filter="url(#ak-contact)"/>
+<path d="M359.95706 457.5 Q351.29681 462.5 359.95706 467.5 L433.56922 510 Q442.22947 515 450.88973 510 L450.88973 523 Q442.22947 528 433.56922 523 L359.95706 480.5 Q351.29681 475.5 359.95706 470.5 Z" fill="url(#ak-gasket)" stroke="#42382e" stroke-width="1.28" />
+<path d="M450.88973 510 L479.46857 493.5 Q488.12882 488.5 479.46857 483.5 L479.46857 496.5 Q488.12882 501.5 479.46857 506.5 L450.88973 523 Z" fill="url(#ak-steel-side)" stroke="#42382e" stroke-width="1.28" />
+<path d="M405.85641 441 L479.46857 483.5 Q488.12882 488.5 479.46857 493.5 L450.88973 510 Q442.22947 515 433.56922 510 L359.95706 467.5 Q351.29681 462.5 359.95706 457.5 L388.5359 441 Q397.19615 436 405.85641 441 Z" fill="#746250" stroke="#42382e" stroke-width="1.28" />
+<path d="M364.28719 447 Q355.62693 452 364.28719 457 L433.56922 497 Q442.22947 502 450.88973 497 L450.88973 511 Q442.22947 516 433.56922 511 L364.28719 471 Q355.62693 466 364.28719 461 Z" fill="url(#ak-plinth-front)" stroke="#42382e" stroke-width="1.28" />
+<path d="M450.88973 497 L476.00446 482.5 Q484.66472 477.5 476.00446 472.5 L476.00446 486.5 Q484.66472 491.5 476.00446 496.5 L450.88973 511 Z" fill="url(#ak-plinth-side)" stroke="#42382e" stroke-width="1.28" />
+<path d="M406.72243 432.5 L476.00446 472.5 Q484.66472 477.5 476.00446 482.5 L450.88973 497 Q442.22947 502 433.56922 497 L364.28719 457 Q355.62693 452 364.28719 447 L389.40192 432.5 Q398.06218 427.5 406.72243 432.5 Z" fill="url(#ak-cab-top)" stroke="#42382e" stroke-width="1.28" />
+<g transform="matrix(0.86602540 .5 -0.86602540 .5 398.06218 427.5)" >
+<rect x="7" y="7" width="86" height="35" rx="7" fill="none" stroke="#a99174" stroke-width="0.95" />
+<rect x="12" y="14" width="75" height="20" rx="7" fill="#ac9274" stroke="#846b51" stroke-width="1" />
+<rect x="15" y="17" width="69" height="14" rx="5" fill="#4d3d31" stroke="#785939" stroke-width="0.95" />
+<rect x="20" y="20" width="59" height="7" rx="2.5" fill="#342a23" stroke="none" stroke-width="1" />
+</g>
+<g transform="matrix(0.86602540 .5 0 1 355.62693 452)" >
+<rect x="13" y="4" width="25" height="9" rx="3" fill="#a58869" stroke="#80654d" stroke-width="0.75" />
+<rect x="16" y="6.6" width="19" height="3.5" rx="1.7" fill="#665243" stroke="none" stroke-width="1" />
+<rect x="16" y="6.6" width="19" height="3.5" rx="1.7" fill="#ffd070" stroke="none" stroke-width="1" data-paint-policy="accent" class="ak-confirm"/>
+</g>
+<g clip-path="url(#ak-dock-mask)">
+<g class="ak-token" aria-label="Brass passkey token">
+<g transform="matrix(0.86602540 .5 0 1 389.40192 384.5)" >
+<path d="M11 2 H55 Q59 2 62 6 L66 11 V51 L60 58 H10 L3 51 V11 Z" fill="url(#ak-dark-gold)" stroke="#684627" stroke-width="1.3" />
+<path d="M8 0 H51 Q55 0 58 3 L62 8 V48 L56 55 H8 L0 48 V8 Z" fill="url(#ak-honey)" stroke="#8b5d31" stroke-width="1.45" />
+<path d="M10 5 H49 Q53 5 55 8 L57 11 V44 L52 49 H10 L5 44 V11 Z" fill="none" stroke="#fff0b5" stroke-width="1.25" data-paint-policy="accent" opacity=".83"/>
+<circle cx="31" cy="25" r="12" fill="#aa702d" stroke="#a06a2e" stroke-width="0.88" data-paint-policy="accent"/>
+<circle cx="31" cy="24" r="10.9" fill="#60432c" stroke="none" stroke-width="1" />
+<circle cx="31" cy="24" r="10.9" fill="none" stroke="#f8d781" stroke-width="1.05" data-paint-policy="accent"/>
+<path d="M30 23a3.55 3.55 0 1 0-7.1 0 3.55 3.55 0 0 0 7.1 0Zm0 0h8m-3.5 0v3.1m3.5-3.1v2.2" fill="none" stroke="#ffd879" stroke-width="1.52" data-paint-policy="accent"/>
+<rect x="21" y="46" width="4" height="4" rx="1.2" fill="#885124" stroke="none" stroke-width="1" data-paint-policy="accent"/>
+<rect x="29" y="46" width="4" height="4" rx="1.2" fill="#885124" stroke="none" stroke-width="1" data-paint-policy="accent"/>
+<rect x="37" y="46" width="4" height="4" rx="1.2" fill="#885124" stroke="none" stroke-width="1" data-paint-policy="accent"/>
+</g>
+</g>
+</g>
+</g>
+<g aria-label="Hinged steel door">
+<g transform="matrix(0.86602540 .5 0 1 254.47517 170.4)" >
+<rect x="0" y="7" width="16" height="37" rx="7" fill="url(#ak-steel)" stroke="#5b4940" stroke-width="1.16" />
+<rect x="0" y="107" width="16" height="37" rx="7" fill="url(#ak-steel)" stroke="#5b4940" stroke-width="1.16" />
+<path d="M5 13v22 M5 113v22" fill="none" stroke="#cbaa87" stroke-width="1.1" />
+</g>
+<g transform="translate(259.49811 184.5)"><g class="ak-door" transform="matrix(-0.89572 0.48225 0 1 0 0)">
+<rect x="0" y="0" width="205" height="128" rx="12" fill="#302821" stroke="#615040" stroke-width="6.5" vector-effect="non-scaling-stroke"/>
+<g class="ak-outer" opacity="0">
+<rect x="0" y="0" width="205" height="128" rx="12" fill="url(#ak-door-front)" stroke="#4b3c2e" stroke-width="1.48" />
+<rect x="6" y="7" width="192" height="115" rx="9" fill="none" stroke="#fff7e3" stroke-width="1.15" />
+<rect x="12" y="12" width="180" height="103" rx="9" fill="none" stroke="#a68e71" stroke-width="0.91" />
+<rect x="16" y="51" width="7" height="28" rx="3" fill="#b9a388" stroke="#8b7158" stroke-width="0.94" />
+<circle cx="132" cy="63" r="34" fill="#b49a7b" stroke="#8a7157" stroke-width="1.28" />
+<circle cx="132" cy="63" r="30" fill="url(#ak-door-pad)" stroke="#574437" stroke-width="1.3" />
+<circle cx="132" cy="63" r="25" fill="#4a3a2d" stroke="#9d7851" stroke-width="1" />
+<circle cx="132" cy="63" r="20" fill="url(#ak-gold-brush)" stroke="#937145" stroke-width="1.5" />
+<g class="ak-lock">
+<rect x="111" y="58" width="42" height="10" rx="5" fill="url(#ak-honey)" stroke="#8e5b2e" stroke-width="1.35" />
+<path d="M118 60h27" fill="none" stroke="#ffe298" stroke-width="0.85" data-paint-policy="accent" opacity=".9"/>
+<circle cx="132" cy="63" r="4.5" fill="#7b5132" stroke="none" stroke-width="1" />
+</g>
+<circle cx="23" cy="22" r="3.2" fill="#b8a180" stroke="#7c664f" stroke-width="0.85" />
+<path d="M 21.7 22 h2.6" fill="none" stroke="#7c664f" stroke-width="0.8" />
+<circle cx="179" cy="22" r="3.2" fill="#b8a180" stroke="#7c664f" stroke-width="0.85" />
+<path d="M 177.7 22 h2.6" fill="none" stroke="#7c664f" stroke-width="0.8" />
+<circle cx="23" cy="105" r="3.2" fill="#b8a180" stroke="#7c664f" stroke-width="0.85" />
+<path d="M 21.7 105 h2.6" fill="none" stroke="#7c664f" stroke-width="0.8" />
+<circle cx="179" cy="105" r="3.2" fill="#b8a180" stroke="#7c664f" stroke-width="0.85" />
+<path d="M 177.7 105 h2.6" fill="none" stroke="#7c664f" stroke-width="0.8" />
+</g>
+<g class="ak-inner">
+<rect x="0" y="0" width="205" height="128" rx="12" fill="url(#ak-door-back)" stroke="#584436" stroke-width="1.48" />
+<rect x="6" y="6" width="193" height="116" rx="9" fill="none" stroke="#936f51" stroke-width="1.17" />
+<rect x="11" y="11" width="183" height="106" rx="8" fill="none" stroke="#29231f" stroke-width="1.09" />
+<rect x="18" y="18" width="169" height="93" rx="7" fill="#54443a" stroke="#836655" stroke-width="1.02" />
+<rect x="33" y="28" width="125" height="72" rx="7" fill="#3c322a" stroke="#2d2622" stroke-width="1.25" />
+<rect x="39" y="34" width="113" height="60" rx="5" fill="none" stroke="#716153" stroke-width="0.91" />
+<rect x="68" y="42" width="55" height="45" rx="6" fill="url(#ak-steel)" stroke="#2c2520" stroke-width="1.18" />
+<circle cx="95" cy="64" r="16" fill="url(#ak-gold-brush)" stroke="#483021" stroke-width="1.28" />
+<circle cx="95" cy="64" r="8" fill="#68462d" stroke="#ffdf87" stroke-width="0.88" />
+<path d="m91 64 3 3 5-6" fill="none" stroke="#fce2a3" stroke-width="1.48" data-paint-policy="accent"/>
+<path d="M120 53h43v22h-43" fill="none" stroke="#28231f" stroke-width="7" />
+<path d="M121 53h48v23h-48" fill="none" stroke="#aa7a4b" stroke-width="2.2" data-paint-policy="accent"/>
+<rect x="167" y="30" width="30" height="15" rx="4" fill="url(#ak-gold-brush)" stroke="#7a512f" stroke-width="1.12" />
+<path d="M172 33h21" fill="none" stroke="#ffe29e" stroke-width="0.82" data-paint-policy="accent"/>
+<rect x="167" y="56" width="30" height="15" rx="4" fill="url(#ak-gold-brush)" stroke="#7a512f" stroke-width="1.12" />
+<path d="M172 59h21" fill="none" stroke="#ffe29e" stroke-width="0.82" data-paint-policy="accent"/>
+<rect x="167" y="82" width="30" height="15" rx="4" fill="url(#ak-gold-brush)" stroke="#7a512f" stroke-width="1.12" />
+<path d="M172 85h21" fill="none" stroke="#ffe29e" stroke-width="0.82" data-paint-policy="accent"/>
+<circle cx="25" cy="25" r="3" fill="#9c8a74" stroke="#383029" stroke-width="0.78" />
+<path d="M 23.9 25 h2.2" fill="none" stroke="#4b3b31" stroke-width="0.75" />
+<circle cx="179" cy="23" r="3" fill="#9c8a74" stroke="#383029" stroke-width="0.78" />
+<path d="M 177.9 23 h2.2" fill="none" stroke="#4b3b31" stroke-width="0.75" />
+<circle cx="25" cy="102" r="3" fill="#9c8a74" stroke="#383029" stroke-width="0.78" />
+<path d="M 23.9 102 h2.2" fill="none" stroke="#4b3b31" stroke-width="0.75" />
+<circle cx="179" cy="105" r="3" fill="#9c8a74" stroke="#383029" stroke-width="0.78" />
+<path d="M 177.9 105 h2.2" fill="none" stroke="#4b3b31" stroke-width="0.75" />
+</g>
+</g>
+</g>
+<g transform="matrix(0.86602540 .5 0 1 256.90004 186)" >
+<rect x="-2" y="8" width="7" height="23" rx="3" fill="url(#ak-steel)" stroke="#5c483b" stroke-width="0.85" />
+<rect x="-2" y="96" width="7" height="23" rx="3" fill="url(#ak-steel)" stroke="#5c483b" stroke-width="0.85" />
+<path d="M0 11v17m0 72v17" fill="none" stroke="#d0ad88" stroke-width="0.92" opacity=".64"/>
+</g>
+</g>
+</svg>
